@@ -1,0 +1,26 @@
+﻿[
+  {
+    "name": "John Lacombe",
+    "role": "Co-Owner & Master Installer",
+    "bio": "John has been installing gutters and eavestroughs for over 30 years. His attention to detail and commitment to quality have made him one of the most respected gutter professionals in Central Alberta. John personally oversees every installation project to ensure it meets our high standards.",
+    "image": "/images/team/john-lacombe.jpg"
+  },
+  {
+    "name": "Mike Peterson",
+    "role": "Co-Owner & Operations Manager",
+    "bio": "With 25 years in the industry, Mike brings extensive knowledge of materials, techniques, and project management to every job. He handles the day-to-day operations of the company and ensures that every customer receives exceptional service from start to finish.",
+    "image": "/images/team/mike-peterson.jpg"
+  },
+  {
+    "name": "Sarah Johnson",
+    "role": "Customer Relations Manager",
+    "bio": "Sarah has been with Lacombe Gutters for 10 years and is often the first point of contact for our customers. Her knowledge of our services and commitment to customer satisfaction ensure that every client receives personalized attention and the right solutions for their needs.",
+    "image": "/images/team/sarah-johnson.jpg"
+  },
+  {
+    "name": "Robert Wilson",
+    "role": "Lead Installer",
+    "bio": "Robert has been installing gutters for over 15 years and leads one of our installation teams. His expertise in handling complex installations and attention to detail make him an invaluable member of our team.",
+    "image": "/images/team/robert-wilson.jpg"
+  }
+]

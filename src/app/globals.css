@@ -1,26 +1,213 @@
-@import "tailwindcss";
+/* tailwind directives */
+/* stylelint-disable-next-line */
+@tailwind base;
+/* stylelint-disable-next-line */
+@tailwind components;
+/* stylelint-disable-next-line */
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --foreground-rgb: 28, 28, 28;
+  --background-start-rgb: 26, 26, 26;
+  --background-end-rgb: 241, 241, 241;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Original code with subtle transitions added */
 body {
-  background: var(--background);
+  color: rgb(var(--foreground-rgb));
+}
+
+/* Simple hover transitions */
+a, button {
+  transition: all 0.2s ease-in-out;
+}
+
+a:hover, button:hover {
+  transform: translateY(-1px);
+}
+
+/* Construction screw elements for banners */
+.screw-corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle, #999 10%, #777 60%, #444 100%);
+  border-radius: 50%;
+  box-shadow: inset -1px -1px 2px rgba(0,0,0,0.5), inset 1px 1px 2px rgba(255,255,255,0.3);
+  z-index: 10;
+}
+
+.screw-corner::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 1px;
+  background: #333;
+}
+
+.screw-top-left {
+  top: 5px;
+  left: 5px;
+}
+
+.screw-top-right {
+  top: 5px;
+  right: 5px;
+}
+
+.screw-bottom-left {
+  bottom: 5px;
+  left: 5px;
+}
+
+.screw-bottom-right {
+  bottom: 5px;
+  right: 5px;
+}
+
+/* Dark mode styles */
+.dark-mode {
+  --background: #1c1c1c;
+  --foreground: #f5f7f9;
+  --card-bg: #2d2d2d;
+  --card-border: #3d3d3d;
+  --header-bg: #181818;
+  --footer-bg: #181818;
+  color-scheme: dark;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(to bottom, #000000, #0a0a0a 10%, #1c1c1c 20%, #2d2d2d 35%, #4d4d4d 55%, #979797 75%, #f5f5f5 90%, #ffffff 100%) !important;
+  min-height: 100vh;
+}
+
+/* OVERRIDE ALL BG-GRAY-100 ELEMENTS IN DARK MODE */
+.dark-mode .bg-gray-100,
+.dark-mode section.bg-gray-100,
+.dark-mode section.py-16,
+.dark-mode [class*="bg-gray-100"] {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Reset white backgrounds in dark mode */
+.dark-mode .bg-white {
+  background-color: #2d2d2d !important;
+  color: var(--foreground);
+}
+
+/* Force consistent backgrounds in dark mode */
+.dark-mode .bg-transparent {
+  background-color: #1c1c1c !important;
+}
+
+.dark-mode .bg-neutral-light {
+  background-color: #1c1c1c !important;
+}
+
+.dark-mode .border-gray-200,
+.dark-mode .border,
+.dark-mode .border-t,
+.dark-mode .border-b,
+.dark-mode .border-l,
+.dark-mode .border-r {
+  border-color: var(--card-border);
+}
+
+.dark-mode .shadow-md,
+.dark-mode .shadow-lg,
+.dark-mode .shadow-sm,
+.dark-mode .shadow {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode .text-gray-600, 
+.dark-mode .text-gray-700,
+.dark-mode .text-gray-800,
+.dark-mode .text-neutral-dark {
+  color: #e0e0e0;
+}
+
+.dark-mode h3, 
+.dark-mode p, 
+.dark-mode .text-gray-600 {
+  color: #e0e0e0;
+}
+
+.dark-mode .text-black,
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h4,
+.dark-mode h5,
+.dark-mode h6,
+.dark-mode span,
+.dark-mode li {
+  color: var(--foreground);
+}
+
+/* Add dark mode styling for the header and navigation */
+.dark-mode .bg-primary {
+  background-color: #184c66; /* Darker version of the primary blue */
+}
+
+.dark-mode .bg-secondary {
+  background-color: #d9a520; /* Darker version of the secondary yellow */
+}
+
+.dark-mode .text-primary {
+  color: #5ca1c1; /* Lighter version of primary for better contrast */
+}
+
+.dark-mode .text-secondary {
+  color: #ffd053; /* Lighter version of secondary for better contrast */
+}
+
+/* Dark mode transitions */
+.transition-colors {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Metal strip styling */
+.metal-strip {
+  background: linear-gradient(to bottom, #d1d1d1 0%, #f0f0f0 50%, #d1d1d1 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.metal-strip::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(255,255,255,0.7);
+}
+
+/* Make dark mode toggle more visible */
+.fixed.bottom-6.right-6.z-50 button {
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.fixed.bottom-6.right-6.z-50 button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.fixed.bottom-6.right-6.z-50 button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
 }
