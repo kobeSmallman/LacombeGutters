@@ -6,7 +6,6 @@ import {
   CONTACT_EMAIL, 
   CONTACT_ADDRESS,
   FACEBOOK_URL,
-  NAVIGATION_ITEMS,
   SERVICES
 } from "@/lib/constants";
 

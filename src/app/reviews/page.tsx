@@ -46,7 +46,7 @@ export default function ReviewsPage() {
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold font-heading mb-4 text-center">Customer Reviews</h1>
         <p className="text-xl text-center mb-12 max-w-3xl mx-auto">
-          Don't just take our word for it. Read what our customers have to say about our gutter and eavestrough services.
+          Don&apos;t just take our word for it. Read what our customers have to say about our gutter and eavestrough services.
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
