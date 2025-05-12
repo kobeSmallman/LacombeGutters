@@ -13,37 +13,37 @@ const services = [
   {
     slug: "5-inch-gutters",
     name: "5\" Gutters",
-    excerpt: "Standard residential gutters for most homes, available in aluminum and steel.",
+    excerpt: "Standard residential gutters for most homes, available in both aluminum and steel options. These gutters offer excellent water flow capacity and are ideal for typical residential applications in central Alberta.",
     hero: "/images/gallery/ModernHouse.png"
   },
   {
     slug: "6-inch-gutters",
     name: "6\" Gutters",
-    excerpt: "Larger capacity gutters for homes with steep roofs or high rainfall areas.",
+    excerpt: "Larger capacity gutters designed for properties with steep roofs, large surface areas, or areas with heavy rainfall. These heavy-duty gutters can handle up to 40% more water than standard 5\" gutters.",
     hero: "/images/gallery/snowyField.png"
   },
   {
     slug: "soffit-fascia",
     name: "Soffit & Fascia",
-    excerpt: "Protect and ventilate your roofline with our expert soffit and fascia installation.",
+    excerpt: "Complete your roofline with our quality soffit and fascia installation. These components not only enhance your home's appearance but also provide crucial ventilation and protection for your roof structure.",
     hero: "/images/gallery/LadderWorker.png"
   },
   {
     slug: "gutter-cleaning",
     name: "Gutter Cleaning",
-    excerpt: "Regular maintenance to keep your gutters flowing freely and prevent water damage.",
+    excerpt: "Regular maintenance service to keep your gutters flowing freely and prevent water damage. We remove all debris, check for proper drainage, and inspect for any potential issues or repairs needed.",
     hero: "/images/gallery/filledGutter.png"
   },
   {
     slug: "downspouts",
     name: "Downspouts",
-    excerpt: "Properly direct water away from your foundation with our downspout installation services.",
+    excerpt: "Properly direct water away from your foundation with our expertly installed downspouts. We offer various styles and materials to match your home while ensuring water is channeled safely away from your structure.",
     hero: "/images/gallery/Downspout.png"
   },
   {
     slug: "industrial-eavestrough",
     name: "Industrial-scale Eavestrough",
-    excerpt: "Heavy-duty gutter solutions for commercial and industrial buildings.",
+    excerpt: "Heavy-duty gutter solutions specifically designed for commercial and industrial buildings. These systems can handle larger volumes of water and are built with durability in mind for long-term performance.",
     hero: "/images/gallery/LacombeGuttersTrailerTruck.png"
   }
 ];
@@ -88,10 +88,7 @@ export default function ServicesPage() {
                 </div>
               </div>
               <div className="p-6">
-                <p className="mb-4 text-gray-600">{service.excerpt}</p>
-                <Link href={`/services/${service.slug}`}>
-                  <Button variant="primary">Learn More</Button>
-                </Link>
+                <p className="text-gray-600">{service.excerpt}</p>
               </div>
             </div>
           ))}

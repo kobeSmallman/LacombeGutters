@@ -98,7 +98,7 @@ export default function Home() {
                 <p className="text-gray-600 mb-4">
                   Our standard 5&quot; gutters are perfect for most residential applications, offering excellent water flow capacity.
                 </p>
-                <Link href="/services/5-inch-gutters">
+                <Link href="/services">
                   <Button variant="primary" size="sm">Learn More</Button>
                 </Link>
               </div>
@@ -125,7 +125,7 @@ export default function Home() {
                 <p className="text-gray-600 mb-4">
                   Larger capacity 6&quot; gutters for areas with heavy rainfall or larger roof surfaces, ensuring proper drainage.
                 </p>
-                <Link href="/services/6-inch-gutters">
+                <Link href="/services">
                   <Button variant="primary" size="sm">Learn More</Button>
                 </Link>
               </div>
@@ -152,7 +152,7 @@ export default function Home() {
                 <p className="text-gray-600 mb-4">
                   Complete your roofline with our quality soffit and fascia installation, providing ventilation and protection.
                 </p>
-                <Link href="/services/soffit-fascia">
+                <Link href="/services">
                   <Button variant="primary" size="sm">Learn More</Button>
                 </Link>
               </div>
