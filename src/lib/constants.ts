@@ -19,7 +19,8 @@ export const SERVICE_AREA_BOUNDS = {
   north: "Leduc",
   south: "Airdrie",
   west: "Nordegg",
-  east: "Stettler"
+  east: "Stettler",
+  description: "Central Alberta including communities from Airdrie to Leduc, Nordegg to Stettler, and surrounding areas."
 };
 
 export const SERVICES = [
@@ -35,14 +36,14 @@ export const SERVICES = [
 export const TEAM_MEMBERS = [
   {
     name: "Rob",
-    role: "Operations Manager & Truck Boss",
-    bio: "Co-founder of Lacombe Gutters with over 25 years of experience in the industry. Oversees all operations and leads installation crews.",
+    role: "President & Founder",
+    bio: "Founder and visionary behind Lacombe Gutters with decades of industry expertise. As President and Operations Manager, Rob oversees all aspects of the business while maintaining the company's commitment to quality craftsmanship.",
     image: "/images/gallery/Rob.png"
   },
   {
     name: "Ryan",
-    role: "Truck Boss & Project Lead",
-    bio: "Co-founder with extensive experience in gutter installation and project management. Leads work crews and ensures quality on all installations.",
+    role: "Co-Owner & Crew Manager",
+    bio: "As Co-Owner and Team Lead, Ryan brings exceptional leadership to every project. His hands-on approach to crew management ensures that Lacombe Gutters consistently delivers superior installations that stand the test of time.",
     image: "/images/gallery/Ryan.png"
   }
 ];

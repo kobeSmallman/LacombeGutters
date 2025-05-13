@@ -2,8 +2,11 @@ import {
   CONTACT_PHONE_ROB, 
   CONTACT_PHONE_RYAN, 
   CONTACT_EMAIL, 
-  CONTACT_ADDRESS
+  CONTACT_ADDRESS,
+  SERVICE_AREA_BOUNDS
 } from "@/lib/constants";
+import ContactForm from "@/components/ContactForm";
+import JobApplicationForm from "@/components/JobApplicationForm";
 
 export const metadata = {
   title: "Contact Us",
@@ -72,7 +75,7 @@ export default function ContactPage() {
             
             <div>
               <h3 className="text-lg font-bold mb-2">Service Area</h3>
-              <p>Central Alberta, including St. Albert, Okotoks, Hinton, and Wainwright.</p>
+              <p>{SERVICE_AREA_BOUNDS.description}</p>
             </div>
           </div>
           
@@ -88,88 +91,7 @@ export default function ContactPage() {
             <div className="absolute top-0 left-0 w-full h-1 bg-gray-700"></div>
             
             <h2 className="text-2xl font-bold mb-6">Get a Free Estimate</h2>
-            <form className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="name" className="block mb-2 font-medium">Name</label>
-                  <input type="text" id="name" className="w-full p-3 border border-gray-300 rounded-lg" required />
-                </div>
-                <div>
-                  <label htmlFor="phone" className="block mb-2 font-medium">Phone</label>
-                  <input type="tel" id="phone" className="w-full p-3 border border-gray-300 rounded-lg" required />
-                </div>
-              </div>
-              
-              <div>
-                <label htmlFor="email" className="block mb-2 font-medium">Email</label>
-                <input type="email" id="email" className="w-full p-3 border border-gray-300 rounded-lg" required />
-              </div>
-              
-              <div>
-                <label htmlFor="address" className="block mb-2 font-medium">Project Address</label>
-                <input type="text" id="address" className="w-full p-3 border border-gray-300 rounded-lg" />
-              </div>
-              
-              <div>
-                <label className="block mb-2 font-medium">Services Needed (select all that apply)</label>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 p-3 border border-gray-300 rounded-lg bg-white dark:bg-gray-800">
-                  <label className="flex items-center space-x-2 cursor-pointer hover:bg-primary/10 p-2 rounded transition-colors">
-                    <input type="checkbox" name="services" value="5-inch-gutters" className="h-4 w-4 text-primary focus:ring-primary" />
-                    <span className="text-black dark:text-white">5&quot; Gutters</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer hover:bg-primary/10 p-2 rounded transition-colors">
-                    <input type="checkbox" name="services" value="6-inch-gutters" className="h-4 w-4 text-primary focus:ring-primary" />
-                    <span className="text-black dark:text-white">6&quot; Gutters</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer hover:bg-primary/10 p-2 rounded transition-colors">
-                    <input type="checkbox" name="services" value="soffit-fascia" className="h-4 w-4 text-primary focus:ring-primary" />
-                    <span className="text-black dark:text-white">Soffit &amp; Fascia</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer hover:bg-primary/10 p-2 rounded transition-colors">
-                    <input type="checkbox" name="services" value="gutter-cleaning" className="h-4 w-4 text-primary focus:ring-primary" />
-                    <span className="text-black dark:text-white">Gutter Cleaning</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer hover:bg-primary/10 p-2 rounded transition-colors">
-                    <input type="checkbox" name="services" value="downspouts" className="h-4 w-4 text-primary focus:ring-primary" />
-                    <span className="text-black dark:text-white">Downspouts</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer hover:bg-primary/10 p-2 rounded transition-colors">
-                    <input type="checkbox" name="services" value="industrial" className="h-4 w-4 text-primary focus:ring-primary" />
-                    <span className="text-black dark:text-white">Industrial Eavestrough</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer hover:bg-primary/10 p-2 rounded transition-colors">
-                    <input type="checkbox" name="services" value="other" className="h-4 w-4 text-primary focus:ring-primary" />
-                    <span className="text-black dark:text-white">Other (please specify)</span>
-                  </label>
-                </div>
-              </div>
-              
-              <div>
-                <label htmlFor="message" className="block mb-2 font-medium">Project Details</label>
-                <textarea id="message" rows={4} className="w-full p-3 border border-gray-300 rounded-lg" 
-                  placeholder="Please include details about your project, including any specific requirements or questions."
-                  required
-                ></textarea>
-              </div>
-              
-              <div>
-                <label htmlFor="attachment" className="block mb-2 font-medium">
-                  Attachment (optional) - Upload images of your project (Max 3MB)
-                </label>
-                <input type="file" id="attachment" className="w-full p-3 border border-gray-300 rounded-lg" 
-                  accept="image/*" 
-                  multiple
-                />
-                <p className="text-sm text-gray-500 mt-1">You can attach photos of your current gutters or project area to help us provide a more accurate estimate.</p>
-              </div>
-              
-              <button 
-                type="submit" 
-                className="bg-primary text-white py-3 px-6 rounded-lg font-bold hover:bg-primary/90 transition-colors relative btn-construction"
-              >
-                Submit Request
-              </button>
-            </form>
+            <ContactForm />
           </div>
         </div>
         
@@ -195,59 +117,7 @@ export default function ContactPage() {
           
           <div className="bg-white p-8 rounded-lg">
             <h3 className="text-2xl font-bold mb-6">Apply Now</h3>
-            <form className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="job-name" className="block mb-2 font-medium">Full Name</label>
-                  <input type="text" id="job-name" className="w-full p-3 border border-gray-300 rounded-lg" required />
-                </div>
-                <div>
-                  <label htmlFor="job-phone" className="block mb-2 font-medium">Phone Number</label>
-                  <input type="tel" id="job-phone" className="w-full p-3 border border-gray-300 rounded-lg" required />
-                </div>
-              </div>
-              
-              <div>
-                <label htmlFor="job-email" className="block mb-2 font-medium">Email</label>
-                <input type="email" id="job-email" className="w-full p-3 border border-gray-300 rounded-lg" required />
-              </div>
-              
-              <div>
-                <label htmlFor="position" className="block mb-2 font-medium">Position</label>
-                <select id="position" className="w-full p-3 border border-gray-300 rounded-lg" required>
-                  <option value="">Select a position</option>
-                  <option value="installer">Gutter Installer</option>
-                  <option value="helper">Installation Helper</option>
-                  <option value="driver">Driver (Class 5 License)</option>
-                  <option value="other">Other (please specify)</option>
-                </select>
-              </div>
-              
-              <div>
-                <label htmlFor="experience" className="block mb-2 font-medium">Experience</label>
-                <textarea id="experience" rows={3} className="w-full p-3 border border-gray-300 rounded-lg" 
-                  placeholder="Please describe your relevant experience, skills, and qualifications."
-                  required
-                ></textarea>
-              </div>
-              
-              <div>
-                <label htmlFor="resume" className="block mb-2 font-medium">
-                  Resume (PDF format preferred)
-                </label>
-                <input type="file" id="resume" className="w-full p-3 border border-gray-300 rounded-lg" 
-                  accept=".pdf,.doc,.docx" 
-                  required
-                />
-              </div>
-              
-              <button 
-                type="submit" 
-                className="bg-primary text-white py-3 px-6 rounded-lg font-bold hover:bg-primary/90 transition-colors btn-construction"
-              >
-                Submit Application
-              </button>
-            </form>
+            <JobApplicationForm />
           </div>
         </div>
       </div>
