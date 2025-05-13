@@ -9,6 +9,26 @@ export default function ContactForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
 
+  // Function to format phone number as user types
+  const formatPhoneNumber = (value: string) => {
+    // Strip all non-numeric characters
+    const phoneDigits = value.replace(/\D/g, '');
+    
+    // Format based on length
+    if (phoneDigits.length <= 3) {
+      return phoneDigits;
+    } else if (phoneDigits.length <= 6) {
+      return `${phoneDigits.slice(0, 3)}-${phoneDigits.slice(3)}`;
+    } else {
+      return `${phoneDigits.slice(0, 3)}-${phoneDigits.slice(3, 6)}-${phoneDigits.slice(6, 10)}`;
+    }
+  };
+
+  const handlePhoneInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formattedValue = formatPhoneNumber(e.target.value);
+    e.target.value = formattedValue;
+  };
+
   const validateForm = (formData: FormData): boolean => {
     const errors: {[key: string]: string} = {};
     
@@ -179,6 +199,10 @@ ${name}
             id="phone"
             name="phone"
             className={`w-full px-3 py-2 border ${validationErrors['phone'] ? 'border-red-500 bg-red-50' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-1 focus:ring-primary`}
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            placeholder="123-456-7890"
+            onInput={handlePhoneInput}
+            maxLength={12}
             required
             data-error={!!validationErrors['phone']}
           />
