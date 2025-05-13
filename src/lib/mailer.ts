@@ -15,6 +15,7 @@ try {
       pass: process.env.SMTP_PASS,
     }
   });
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 } catch (e) {
   // Fallback to port 587 with STARTTLS
   console.log('Falling back to port 587 configuration...');
@@ -56,12 +57,14 @@ export const getTransporter = async () => {
       await alternativeTransporter.verify();
       console.log('Alternative Gmail configuration working!');
       return alternativeTransporter;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (fallbackError) {
       console.error('All Gmail configurations failed.');
       console.error('Returning a test transporter that will log but not send.');
       
       // Create a fake transporter for development
       return {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         sendMail: async (options: any) => {
           console.log('==== EMAIL WOULD BE SENT (CONNECTION FAILED) ====');
           console.log('From:', options.from);

@@ -77,7 +77,7 @@ export async function GET() {
     
     return NextResponse.json({ 
       ok: false, 
-      error: error.message,
+      error: error instanceof Error ? error.message : String(error),
       message: 'Failed to send test email. Check server logs for details.',
     }, { 
       status: 500 
