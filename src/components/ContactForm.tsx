@@ -74,167 +74,167 @@ ${name}</p>
       
       // Reset form after a short delay
       setTimeout(() => {
-        form.reset();
         setIsSubmitting(false);
+        
+        // Open the mailto link
+        window.location.href = mailtoLink;
       }, 1000);
-      
-      // Open mail client (after a slight delay to ensure user sees the message)
-      setTimeout(() => {
-        window.open(mailtoLink, '_self');
-      }, 1500);
       
     } catch (error) {
       console.error('Error preparing email:', error);
+      setIsSubmitting(false);
       setSubmitResult({
         success: false,
-        message: 'There was an issue preparing your email. Please try again or contact us directly at kobe4smallman@gmail.com.'
+        message: 'There was a problem preparing your email. Please try again or contact us directly.'
       });
-      setIsSubmitting(false);
     }
   };
 
   return (
-    <form 
-      ref={formRef}
-      onSubmit={handleSubmit}
-      className="space-y-6 bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 shadow-md relative" 
-    >
-      {/* Construction themed corner elements */}
-      <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-primary"></div>
-      <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-primary"></div>
-      <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-primary"></div>
-      <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-primary"></div>
-      
-      {/* Faux metal strip at the top */}
-      <div className="absolute top-0 left-6 right-6 h-1 bg-gradient-to-r from-gray-300 via-gray-100 to-gray-300"></div>
-      <div className="absolute top-1 left-8 w-2 h-2 rounded-full bg-gray-400 border border-gray-500"></div>
-      <div className="absolute top-1 right-8 w-2 h-2 rounded-full bg-gray-400 border border-gray-500"></div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label htmlFor="name" className="block mb-2 font-medium">Name</label>
-          <input type="text" id="name" name="name" className="w-full p-3 border border-gray-300 rounded-lg" required />
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+            Name <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+            required
+          />
         </div>
+        
         <div>
-          <label htmlFor="phone" className="block mb-2 font-medium">Phone</label>
-          <input type="tel" id="phone" name="phone" className="w-full p-3 border border-gray-300 rounded-lg" required />
+          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+            Phone <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+            required
+          />
         </div>
       </div>
       
       <div>
-        <label htmlFor="email" className="block mb-2 font-medium">Email</label>
-        <input type="email" id="email" name="email" className="w-full p-3 border border-gray-300 rounded-lg" required />
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+          Email <span className="text-red-500">*</span>
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+          required
+        />
       </div>
       
       <div>
-        <label htmlFor="address" className="block mb-2 font-medium">Project Address</label>
-        <input type="text" id="address" name="address" className="w-full p-3 border border-gray-300 rounded-lg" />
+        <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
+          Address <span className="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          id="address"
+          name="address"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+          placeholder="Street address, city"
+          required
+        />
       </div>
       
       <div>
-        <label className="block mb-2 font-medium">Services Needed (select all that apply)</label>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 p-3 border border-gray-300 rounded-lg bg-white dark:bg-gray-800">
-          <label className="flex items-center space-x-2 cursor-pointer hover:bg-primary/10 p-2 rounded transition-colors">
-            <input type="checkbox" name="services" value="5-inch-gutters" className="h-4 w-4 text-primary focus:ring-primary" />
-            <span className="text-black dark:text-white">5&quot; Gutters</span>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Services Needed <span className="text-red-500">*</span>
+        </label>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-50">
+            <input type="checkbox" name="services" value="5-inch-gutters" className="h-4 w-4 text-primary" />
+            <span>5-Inch Gutters</span>
           </label>
-          <label className="flex items-center space-x-2 cursor-pointer hover:bg-primary/10 p-2 rounded transition-colors">
-            <input type="checkbox" name="services" value="6-inch-gutters" className="h-4 w-4 text-primary focus:ring-primary" />
-            <span className="text-black dark:text-white">6&quot; Gutters</span>
+          
+          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-50">
+            <input type="checkbox" name="services" value="6-inch-gutters" className="h-4 w-4 text-primary" />
+            <span>6-Inch Gutters</span>
           </label>
-          <label className="flex items-center space-x-2 cursor-pointer hover:bg-primary/10 p-2 rounded transition-colors">
-            <input type="checkbox" name="services" value="soffit-fascia" className="h-4 w-4 text-primary focus:ring-primary" />
-            <span className="text-black dark:text-white">Soffit &amp; Fascia</span>
+          
+          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-50">
+            <input type="checkbox" name="services" value="soffit-fascia" className="h-4 w-4 text-primary" />
+            <span>Soffit & Fascia</span>
           </label>
-          <label className="flex items-center space-x-2 cursor-pointer hover:bg-primary/10 p-2 rounded transition-colors">
-            <input type="checkbox" name="services" value="gutter-cleaning" className="h-4 w-4 text-primary focus:ring-primary" />
-            <span className="text-black dark:text-white">Gutter Cleaning</span>
+          
+          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-50">
+            <input type="checkbox" name="services" value="downspouts" className="h-4 w-4 text-primary" />
+            <span>Downspouts</span>
           </label>
-          <label className="flex items-center space-x-2 cursor-pointer hover:bg-primary/10 p-2 rounded transition-colors">
-            <input type="checkbox" name="services" value="downspouts" className="h-4 w-4 text-primary focus:ring-primary" />
-            <span className="text-black dark:text-white">Downspouts</span>
+          
+          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-50">
+            <input type="checkbox" name="services" value="gutter-cleaning" className="h-4 w-4 text-primary" />
+            <span>Gutter Cleaning</span>
           </label>
-          <label className="flex items-center space-x-2 cursor-pointer hover:bg-primary/10 p-2 rounded transition-colors">
-            <input type="checkbox" name="services" value="industrial" className="h-4 w-4 text-primary focus:ring-primary" />
-            <span className="text-black dark:text-white">Industrial Eavestrough</span>
-          </label>
-          <label className="flex items-center space-x-2 cursor-pointer hover:bg-primary/10 p-2 rounded transition-colors">
-            <input type="checkbox" name="services" value="other" className="h-4 w-4 text-primary focus:ring-primary" />
-            <span className="text-black dark:text-white">Other (please specify)</span>
+          
+          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-50">
+            <input type="checkbox" name="services" value="other" className="h-4 w-4 text-primary" />
+            <span>Other</span>
           </label>
         </div>
       </div>
       
       <div>
-        <label htmlFor="message" className="block mb-2 font-medium">Project Details</label>
-        <textarea 
-          id="message" 
-          name="message" 
-          rows={4} 
-          className="w-full p-3 border border-gray-300 rounded-lg" 
-          placeholder="Please include details about your project, including any specific measurements (if known), requirements, or questions."
+        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+          Project Details <span className="text-red-500">*</span>
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          rows={4}
+          placeholder="Please describe your project and provide approximate measurements if possible."
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
           required
         ></textarea>
         <p className="mt-1 text-xs text-gray-500">Approximate measurements (if available) help us provide a more accurate estimate.</p>
       </div>
       
-      {/* Photo instructions */}
-      <div className="relative border border-gray-200 rounded-lg bg-white shadow-sm overflow-hidden p-4">
-        {/* Construction theme elements */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-gray-300"></div>
-        <div className="absolute top-1 left-1 w-2 h-2 bg-gray-400 rounded-full"></div>
-        <div className="absolute top-1 right-1 w-2 h-2 bg-gray-400 rounded-full"></div>
-        
-        <div className="flex items-start space-x-3 pt-2">
-          <div className="text-primary">
+      <div className="bg-gray-50 border-l-4 border-primary p-4 mb-4">
+        <div className="flex">
+          <div className="flex-shrink-0 text-primary">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <div>
-            <p className="text-sm text-gray-700">
-              <strong>Photos Help Us Provide Accurate Estimates</strong><br/>
-              When your default email app opens, you&apos;ll be able to attach photos of your existing gutters or project area to help us provide the most accurate estimate.
+          <div className="ml-3">
+            <p className="text-sm">
+              <strong>Photos Help Us Provide Accurate Estimates</strong> - When your default email app opens, you&apos;ll be able to attach photos of your existing gutters or project area.
             </p>
-          </div>
-        </div>
-      </div>
-      
-      <div className="relative border border-gray-200 rounded-lg bg-white shadow-sm overflow-hidden p-4">
-        {/* Construction theme elements */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-gray-300"></div>
-        <div className="absolute top-1 left-1 w-2 h-2 bg-gray-400 rounded-full"></div>
-        <div className="absolute top-1 right-1 w-2 h-2 bg-gray-400 rounded-full"></div>
-        
-        <div className="flex items-start space-x-3 pt-2">
-          <div className="text-primary">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <div>
-            <p className="mt-2 text-xs text-gray-500">
+            <p className="text-xs text-gray-500 mt-1">
               Note: This form will open your device&apos;s default email application. We will respond to the email address you provided above.
             </p>
           </div>
         </div>
       </div>
       
-      <Button 
-        type="submit" 
-        variant="primary" 
-        size="lg"
-        className={`w-full sm:w-auto transition-colors ${isSubmitting ? 'bg-green-600 hover:bg-green-700' : ''}`}
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? 'Form Info Ready...' : 'Prepare Email'}
-      </Button>
-      
-      {submitResult && (
-        <div className={`mt-4 p-4 rounded border ${submitResult.success ? 'bg-green-100 border-green-200' : 'bg-red-100 border-red-200'}`}>
-          <p className="text-sm font-medium">{submitResult.message}</p>
-        </div>
-      )}
+      <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+        <Button 
+          type="submit" 
+          variant="primary" 
+          size="lg"
+          className={`w-full sm:w-auto transition-colors ${isSubmitting ? 'bg-green-600 hover:bg-green-700' : ''}`}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? 'Form Info Ready...' : 'Prepare Email'}
+        </Button>
+        
+        {submitResult && (
+          <div className={`text-sm px-4 py-2 rounded-md ${submitResult.success ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>
+            {submitResult.message}
+          </div>
+        )}
+      </div>
     </form>
   );
 }
