@@ -16,10 +16,10 @@ export const NAVIGATION_ITEMS = [
 ];
 
 export const SERVICE_AREA_BOUNDS = {
-  north: "St. Albert",
-  south: "Okotoks",
-  west: "Hinton",
-  east: "Wainwright"
+  north: "Leduc",
+  south: "Airdrie",
+  west: "Nordegg",
+  east: "Stettler"
 };
 
 export const SERVICES = [

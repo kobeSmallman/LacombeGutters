@@ -171,16 +171,31 @@ export default function GalleryClient() {
             </div>
           ))}
         </div>
-        
-        <div className="bg-secondary p-8 rounded-lg text-center">
-          <h2 className="text-2xl font-bold mb-4 text-primary">Ready to transform your property?</h2>
-          <p className="mb-6 text-primary/80">
+             
+        {/* Yellow Banner Section - exact match to services page */}
+   <section className="py-8 mb-8">
+        <div className="container mx-auto px-4">
+          <div className="bg-secondary p-8 rounded-lg text-center relative">
+            {/* Simple dots in corners */}
+            <div className="absolute top-4 left-4 w-2 h-2 bg-gray-700 rounded-full"></div>
+            <div className="absolute top-4 right-4 w-2 h-2 bg-gray-700 rounded-full"></div>
+            <div className="absolute bottom-4 left-4 w-2 h-2 bg-gray-700 rounded-full"></div>
+            <div className="absolute bottom-4 right-4 w-2 h-2 bg-gray-700 rounded-full"></div>
+            
+            {/* Metal strips at top and bottom */}
+            <div className="absolute top-0 left-0 w-full h-1 bg-gray-700"></div>
+            <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-700"></div>
+            
+            <h2 className="text-2xl font-bold mb-4 text-primary">Ready to transform your property?</h2>
+            <p className="mb-6 text-primary/80">
             Contact us today to discuss your project and get a free estimate.
-          </p>
-          <Link href="/contact">
-            <Button variant="primary" size="lg">Get a Free Estimate</Button>
-          </Link>
+            </p>
+            <Link href="/contact">
+              <Button variant="primary" size="lg">GET A FREE ESTIMATE</Button>
+            </Link>
+          </div>
         </div>
+      </section>
       </div>
     </div>
   );

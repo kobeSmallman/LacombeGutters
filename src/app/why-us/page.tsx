@@ -146,7 +146,7 @@ export default function WhyUsPage() {
                 "Landscaping from erosion",
                 "Roof structure from water infiltration"
               ].map((item, index) => (
-                <li key={index} className="flex items-center bg-gray-50 p-3 rounded-lg border-l-4 border-primary">
+                <li key={index} className="flex items-center bg-gray-50 p-3 rounded-lg border-l-4 border-primary text-black font-medium">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>

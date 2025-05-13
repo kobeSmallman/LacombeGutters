@@ -111,17 +111,37 @@ export default function ContactPage() {
               </div>
               
               <div>
-                <label htmlFor="service" className="block mb-2 font-medium">Service Needed</label>
-                <select id="service" className="w-full p-3 border border-gray-300 rounded-lg" required>
-                  <option value="">Select a service</option>
-                  <option value="5-inch-gutters">5&quot; Gutters</option>
-                  <option value="6-inch-gutters">6&quot; Gutters</option>
-                  <option value="soffit-fascia">Soffit &amp; Fascia</option>
-                  <option value="gutter-cleaning">Gutter Cleaning</option>
-                  <option value="downspouts">Downspouts</option>
-                  <option value="industrial">Industrial Eavestrough</option>
-                  <option value="other">Other (please specify)</option>
-                </select>
+                <label className="block mb-2 font-medium">Services Needed (select all that apply)</label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 p-3 border border-gray-300 rounded-lg bg-white dark:bg-gray-800">
+                  <label className="flex items-center space-x-2 cursor-pointer hover:bg-primary/10 p-2 rounded transition-colors">
+                    <input type="checkbox" name="services" value="5-inch-gutters" className="h-4 w-4 text-primary focus:ring-primary" />
+                    <span className="text-black dark:text-white">5&quot; Gutters</span>
+                  </label>
+                  <label className="flex items-center space-x-2 cursor-pointer hover:bg-primary/10 p-2 rounded transition-colors">
+                    <input type="checkbox" name="services" value="6-inch-gutters" className="h-4 w-4 text-primary focus:ring-primary" />
+                    <span className="text-black dark:text-white">6&quot; Gutters</span>
+                  </label>
+                  <label className="flex items-center space-x-2 cursor-pointer hover:bg-primary/10 p-2 rounded transition-colors">
+                    <input type="checkbox" name="services" value="soffit-fascia" className="h-4 w-4 text-primary focus:ring-primary" />
+                    <span className="text-black dark:text-white">Soffit &amp; Fascia</span>
+                  </label>
+                  <label className="flex items-center space-x-2 cursor-pointer hover:bg-primary/10 p-2 rounded transition-colors">
+                    <input type="checkbox" name="services" value="gutter-cleaning" className="h-4 w-4 text-primary focus:ring-primary" />
+                    <span className="text-black dark:text-white">Gutter Cleaning</span>
+                  </label>
+                  <label className="flex items-center space-x-2 cursor-pointer hover:bg-primary/10 p-2 rounded transition-colors">
+                    <input type="checkbox" name="services" value="downspouts" className="h-4 w-4 text-primary focus:ring-primary" />
+                    <span className="text-black dark:text-white">Downspouts</span>
+                  </label>
+                  <label className="flex items-center space-x-2 cursor-pointer hover:bg-primary/10 p-2 rounded transition-colors">
+                    <input type="checkbox" name="services" value="industrial" className="h-4 w-4 text-primary focus:ring-primary" />
+                    <span className="text-black dark:text-white">Industrial Eavestrough</span>
+                  </label>
+                  <label className="flex items-center space-x-2 cursor-pointer hover:bg-primary/10 p-2 rounded transition-colors">
+                    <input type="checkbox" name="services" value="other" className="h-4 w-4 text-primary focus:ring-primary" />
+                    <span className="text-black dark:text-white">Other (please specify)</span>
+                  </label>
+                </div>
               </div>
               
               <div>

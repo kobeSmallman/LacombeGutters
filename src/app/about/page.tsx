@@ -47,7 +47,7 @@ export default function AboutPage() {
               </p>
               <p className="text-lg">
                 Our commitment to excellence has made us the go-to gutter specialists in central Alberta, 
-                serving communities from St. Albert to Okotoks and from Hinton to Wainwright.
+                serving communities from Airdrie to Leduc, Nordegg to Stettler, and surrounding areas.
               </p>
             </div>
           </div>
@@ -88,34 +88,34 @@ export default function AboutPage() {
         </div>
         
         {/* Service Area Section */}
-        <div className="bg-primary text-white p-8 rounded-lg shadow-md mb-12 relative">
+        <div className="bg-primary text-white p-4 md:p-8 rounded-lg shadow-md mb-8 md:mb-12 relative">
           {/* Construction screws in corners */}
           <div className="screw-corner screw-top-left"></div>
           <div className="screw-corner screw-top-right"></div>
           <div className="screw-corner screw-bottom-left"></div>
           <div className="screw-corner screw-bottom-right"></div>
           
-          <h2 className="text-2xl font-bold mb-4 text-center">Our Service Area</h2>
-          <p className="text-center mb-6">
-            We proudly serve communities throughout central Alberta, including but not limited to:
+          <h2 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 text-center">Our Service Area</h2>
+          <p className="text-center mb-4 md:mb-6 text-sm md:text-base">
+            We proudly serve communities throughout central Alberta from Airdrie to Leduc, Nordegg to Stettler, and surrounding areas.
           </p>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div className="bg-white/10 p-3 rounded text-center">
-              <h3 className="font-bold mb-2">North</h3>
-              <p>St. Albert</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 mb-4 md:mb-6">
+            <div className="bg-white/10 p-2 md:p-3 rounded text-center">
+              <h3 className="font-bold mb-1 md:mb-2 text-sm md:text-base">North</h3>
+              <p className="text-sm md:text-base">Leduc</p>
             </div>
-            <div className="bg-white/10 p-3 rounded text-center">
-              <h3 className="font-bold mb-2">South</h3>
-              <p>Okotoks</p>
+            <div className="bg-white/10 p-2 md:p-3 rounded text-center">
+              <h3 className="font-bold mb-1 md:mb-2 text-sm md:text-base">South</h3>
+              <p className="text-sm md:text-base">Airdrie</p>
             </div>
-            <div className="bg-white/10 p-3 rounded text-center">
-              <h3 className="font-bold mb-2">West</h3>
-              <p>Hinton</p>
+            <div className="bg-white/10 p-2 md:p-3 rounded text-center">
+              <h3 className="font-bold mb-1 md:mb-2 text-sm md:text-base">West</h3>
+              <p className="text-sm md:text-base">Nordegg</p>
             </div>
-            <div className="bg-white/10 p-3 rounded text-center">
-              <h3 className="font-bold mb-2">East</h3>
-              <p>Wainwright</p>
+            <div className="bg-white/10 p-2 md:p-3 rounded text-center">
+              <h3 className="font-bold mb-1 md:mb-2 text-sm md:text-base">East</h3>
+              <p className="text-sm md:text-base">Stettler</p>
             </div>
           </div>
           

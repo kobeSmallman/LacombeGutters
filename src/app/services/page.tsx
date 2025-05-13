@@ -108,7 +108,7 @@ export default function ServicesPage() {
           
           <h2 className="text-2xl font-bold mb-6 text-center">Our Service Area</h2>
           <p className="text-center mb-8 max-w-3xl mx-auto">
-            Based in Red Deer, our service area covers central Alberta. We serve communities from {SERVICE_AREA_BOUNDS.north} in the north to {SERVICE_AREA_BOUNDS.south} in the south, and from {SERVICE_AREA_BOUNDS.west} in the west to {SERVICE_AREA_BOUNDS.east} in the east.
+            Based in Red Deer, our service area covers central Alberta from {SERVICE_AREA_BOUNDS.south} to {SERVICE_AREA_BOUNDS.north}, {SERVICE_AREA_BOUNDS.west} to {SERVICE_AREA_BOUNDS.east}, and surrounding areas. Contact us to confirm if we service your location.
           </p>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">

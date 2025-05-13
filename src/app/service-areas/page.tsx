@@ -55,7 +55,7 @@ export default function ServiceAreasPage() {
             </div>
             
             <p className="mb-6">
-              Our central location allows us to efficiently serve a wide area of central Alberta. If you&apos;re 
+              Our central location allows us to efficiently serve a wide area of central Alberta from Airdrie to Leduc, Nordegg to Stettler, and surrounding areas. If you&apos;re 
               not sure if your location is within our service area, please contact us for confirmation.
             </p>
             
