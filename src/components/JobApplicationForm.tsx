@@ -30,28 +30,24 @@ export default function JobApplicationForm() {
       const position = formData.get('position') as string;
       const experience = formData.get('experience') as string;
       
-      // Build email body with construction-themed formatting
+      // Build email body with plain text formatting (no HTML)
       const emailBody = `
-<div style="font-size: 14pt; font-family: Arial, sans-serif;">
-<p>Hello Lacombe Gutters,</p>
+Hello Lacombe Gutters,
 
-<p>I would like to apply for the position of: <strong>${position}</strong></p>
+I would like to apply for the position of: ${position}
 
-<p>About me:</p>
-<ul>
-<li><strong>Name:</strong> ${name}</li>
-<li><strong>Phone:</strong> ${phone}</li>
-<li><strong>Email:</strong> ${email}</li>
-</ul>
+About me:
+- Name: ${name}
+- Phone: ${phone}
+- Email: ${email}
 
-<p><strong>Experience and Skills:</strong></p>
-<p>${experience}</p>
+Experience and Skills:
+${experience}
 
-<p>Thank you for considering my application. I look forward to the opportunity to discuss how my skills and experience can benefit your team.</p>
+Thank you for considering my application. I look forward to the opportunity to discuss how my skills and experience can benefit your team.
 
-<p>Best regards,<br/>
-${name}</p>
-</div>
+Best regards,
+${name}
       `.trim();
       
       // Create a mailto link with all form data

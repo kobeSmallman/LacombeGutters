@@ -39,28 +39,23 @@ export default function ContactForm() {
         service.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
       ).join(', ');
       
-      // Build a cleaner email body
+      // Build a cleaner email body with PLAIN TEXT formatting (no HTML)
       const emailBody = `
-<div style="font-size: 14pt; font-family: Arial, sans-serif;">
-<p>Hello Lacombe Gutters,</p>
+Hello Lacombe Gutters,
 
-<p>I would like to request information on the following service(s):<br/> 
-<strong>${formattedServices}</strong></p>
+I would like to request information on the following service(s): 
+${formattedServices}
 
-<p>Details about my project:</p>
-<p>${message}</p>
+Details about my project:
+${message}
 
-<p>My contact information:</p>
-<ul>
-<li><strong>Name:</strong> ${name}</li>
-<li><strong>Phone:</strong> ${phone}</li>
-<li><strong>Email:</strong> ${email}</li>
-${address ? `<li><strong>Address:</strong> ${address}</li>` : ''}
-</ul>
+My contact information:
+- Name: ${name}
+- Phone: ${phone}
+- Email: ${email}${address ? `\n- Address: ${address}` : ''}
 
-<p>Thank you,<br/>
-${name}</p>
-</div>
+Thank you,
+${name}
       `.trim();
       
       // Create a mailto link with all form data
