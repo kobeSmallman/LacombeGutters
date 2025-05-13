@@ -7,14 +7,79 @@ export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitResult, setSubmitResult] = useState<{success: boolean; message: string} | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
+
+  const validateForm = (formData: FormData): boolean => {
+    const errors: {[key: string]: string} = {};
+    
+    // Check name
+    const name = formData.get('name') as string;
+    if (!name || name.trim() === '') {
+      errors['name'] = 'Please enter your name';
+    }
+    
+    // Check phone - ensure it has at least 10 digits
+    const phone = formData.get('phone') as string;
+    if (!phone || phone.trim() === '') {
+      errors['phone'] = 'Please enter your phone number';
+    } else if (phone.replace(/\D/g, '').length < 10) {
+      errors['phone'] = 'Please enter a valid phone number with at least 10 digits';
+    }
+    
+    // Check email
+    const email = formData.get('email') as string;
+    if (!email || email.trim() === '') {
+      errors['email'] = 'Please enter your email address';
+    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+      errors['email'] = 'Please enter a valid email address';
+    }
+    
+    // Check address
+    const address = formData.get('address') as string;
+    if (!address || address.trim() === '') {
+      errors['address'] = 'Please enter your address';
+    }
+    
+    // Check if at least one service is selected
+    const services = formData.getAll('services') as string[];
+    if (services.length === 0) {
+      errors['services'] = 'Please select at least one service';
+    }
+    
+    // Check project details
+    const message = formData.get('message') as string;
+    if (!message || message.trim() === '') {
+      errors['message'] = 'Please enter project details';
+    }
+    
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     if (!formRef.current) return;
     
-    setIsSubmitting(true);
+    // Clear previous validation errors and results
+    setValidationErrors({});
     setSubmitResult(null);
+    
+    // Get form data
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    
+    // Validate form
+    if (!validateForm(formData)) {
+      // Scroll to the first error
+      const firstErrorField = document.querySelector('[data-error="true"]');
+      if (firstErrorField) {
+        firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return;
+    }
+    
+    setIsSubmitting(true);
     
     try {
       console.log('Starting form submission...');
@@ -96,9 +161,13 @@ ${name}
             type="text"
             id="name"
             name="name"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+            className={`w-full px-3 py-2 border ${validationErrors['name'] ? 'border-red-500 bg-red-50' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-1 focus:ring-primary`}
             required
+            data-error={!!validationErrors['name']}
           />
+          {validationErrors['name'] && (
+            <p className="mt-1 text-sm text-red-600">{validationErrors['name']}</p>
+          )}
         </div>
         
         <div>
@@ -109,9 +178,13 @@ ${name}
             type="tel"
             id="phone"
             name="phone"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+            className={`w-full px-3 py-2 border ${validationErrors['phone'] ? 'border-red-500 bg-red-50' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-1 focus:ring-primary`}
             required
+            data-error={!!validationErrors['phone']}
           />
+          {validationErrors['phone'] && (
+            <p className="mt-1 text-sm text-red-600">{validationErrors['phone']}</p>
+          )}
         </div>
       </div>
       
@@ -123,9 +196,13 @@ ${name}
           type="email"
           id="email"
           name="email"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+          className={`w-full px-3 py-2 border ${validationErrors['email'] ? 'border-red-500 bg-red-50' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-1 focus:ring-primary`}
           required
+          data-error={!!validationErrors['email']}
         />
+        {validationErrors['email'] && (
+          <p className="mt-1 text-sm text-red-600">{validationErrors['email']}</p>
+        )}
       </div>
       
       <div>
@@ -136,10 +213,14 @@ ${name}
           type="text"
           id="address"
           name="address"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+          className={`w-full px-3 py-2 border ${validationErrors['address'] ? 'border-red-500 bg-red-50' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-1 focus:ring-primary`}
           placeholder="Street address, city"
           required
+          data-error={!!validationErrors['address']}
         />
+        {validationErrors['address'] && (
+          <p className="mt-1 text-sm text-red-600">{validationErrors['address']}</p>
+        )}
       </div>
       
       <div>
@@ -147,7 +228,7 @@ ${name}
           Services Needed <span className="text-red-500">*</span>
         </label>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <div className={`grid grid-cols-1 sm:grid-cols-2 gap-2 ${validationErrors['services'] ? 'border border-red-500 bg-red-50 p-2 rounded-md' : ''}`} data-error={!!validationErrors['services']}>
           <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-50">
             <input type="checkbox" name="services" value="5-inch-gutters" className="h-4 w-4 text-primary" />
             <span>5-Inch Gutters</span>
@@ -178,6 +259,9 @@ ${name}
             <span>Other</span>
           </label>
         </div>
+        {validationErrors['services'] && (
+          <p className="mt-1 text-sm text-red-600">{validationErrors['services']}</p>
+        )}
       </div>
       
       <div>
@@ -189,9 +273,13 @@ ${name}
           name="message"
           rows={4}
           placeholder="Please describe your project and provide approximate measurements if possible."
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+          className={`w-full px-3 py-2 border ${validationErrors['message'] ? 'border-red-500 bg-red-50' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-1 focus:ring-primary`}
           required
+          data-error={!!validationErrors['message']}
         ></textarea>
+        {validationErrors['message'] && (
+          <p className="mt-1 text-sm text-red-600">{validationErrors['message']}</p>
+        )}
         <p className="mt-1 text-xs text-gray-500">Approximate measurements (if available) help us provide a more accurate estimate.</p>
       </div>
       

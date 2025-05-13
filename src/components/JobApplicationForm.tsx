@@ -7,14 +7,73 @@ export default function JobApplicationForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitResult, setSubmitResult] = useState<{success: boolean; message: string} | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
+
+  const validateForm = (formData: FormData): boolean => {
+    const errors: {[key: string]: string} = {};
+    
+    // Check name
+    const name = formData.get('job-name') as string;
+    if (!name || name.trim() === '') {
+      errors['job-name'] = 'Please enter your name';
+    }
+    
+    // Check phone - ensure it has at least 10 digits
+    const phone = formData.get('job-phone') as string;
+    if (!phone || phone.trim() === '') {
+      errors['job-phone'] = 'Please enter your phone number';
+    } else if (phone.replace(/\D/g, '').length < 10) {
+      errors['job-phone'] = 'Please enter a valid phone number with at least 10 digits';
+    }
+    
+    // Check email
+    const email = formData.get('job-email') as string;
+    if (!email || email.trim() === '') {
+      errors['job-email'] = 'Please enter your email address';
+    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+      errors['job-email'] = 'Please enter a valid email address';
+    }
+    
+    // Check position
+    const position = formData.get('position') as string;
+    if (!position || position.trim() === '') {
+      errors['position'] = 'Please select a position';
+    }
+    
+    // Check experience
+    const experience = formData.get('experience') as string;
+    if (!experience || experience.trim() === '') {
+      errors['experience'] = 'Please describe your experience and skills';
+    }
+    
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     if (!formRef.current) return;
     
-    setIsSubmitting(true);
+    // Clear previous validation errors and results
+    setValidationErrors({});
     setSubmitResult(null);
+    
+    // Get form data
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    
+    // Validate form
+    if (!validateForm(formData)) {
+      // Scroll to the first error
+      const firstErrorField = document.querySelector('[data-error="true"]');
+      if (firstErrorField) {
+        firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return;
+    }
+    
+    setIsSubmitting(true);
     
     try {
       console.log('Starting job application submission...');
@@ -88,45 +147,66 @@ ${name}
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label htmlFor="job-name" className="block mb-2 font-medium">Full Name</label>
+          <label htmlFor="job-name" className="block text-sm font-medium text-gray-700 mb-1">
+            Full Name <span className="text-red-500">*</span>
+          </label>
           <input 
             type="text" 
             id="job-name" 
             name="job-name" 
-            className="w-full p-3 border border-gray-300 rounded-lg"
+            className={`w-full p-3 border ${validationErrors['job-name'] ? 'border-red-500 bg-red-50' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-1 focus:ring-primary`}
             required 
+            data-error={!!validationErrors['job-name']}
           />
+          {validationErrors['job-name'] && (
+            <p className="mt-1 text-sm text-red-600">{validationErrors['job-name']}</p>
+          )}
         </div>
         <div>
-          <label htmlFor="job-phone" className="block mb-2 font-medium">Phone Number</label>
+          <label htmlFor="job-phone" className="block text-sm font-medium text-gray-700 mb-1">
+            Phone Number <span className="text-red-500">*</span>
+          </label>
           <input 
             type="tel" 
             id="job-phone" 
             name="job-phone" 
-            className="w-full p-3 border border-gray-300 rounded-lg"
+            className={`w-full p-3 border ${validationErrors['job-phone'] ? 'border-red-500 bg-red-50' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-1 focus:ring-primary`}
             required 
+            data-error={!!validationErrors['job-phone']}
           />
+          {validationErrors['job-phone'] && (
+            <p className="mt-1 text-sm text-red-600">{validationErrors['job-phone']}</p>
+          )}
         </div>
       </div>
       
       <div>
-        <label htmlFor="job-email" className="block mb-2 font-medium">Email Address</label>
+        <label htmlFor="job-email" className="block text-sm font-medium text-gray-700 mb-1">
+          Email Address <span className="text-red-500">*</span>
+        </label>
         <input 
           type="email" 
           id="job-email" 
           name="job-email" 
-          className="w-full p-3 border border-gray-300 rounded-lg"
+          className={`w-full p-3 border ${validationErrors['job-email'] ? 'border-red-500 bg-red-50' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-1 focus:ring-primary`}
           required 
+          data-error={!!validationErrors['job-email']}
         />
+        {validationErrors['job-email'] && (
+          <p className="mt-1 text-sm text-red-600">{validationErrors['job-email']}</p>
+        )}
       </div>
       
       <div>
-        <label htmlFor="position" className="block mb-2 font-medium">Position</label>
+        <label htmlFor="position" className="block text-sm font-medium text-gray-700 mb-1">
+          Position <span className="text-red-500">*</span>
+        </label>
         <select 
           id="position" 
           name="position" 
-          className="w-full p-3 border border-gray-300 rounded-lg"
+          className={`w-full p-3 border ${validationErrors['position'] ? 'border-red-500 bg-red-50' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-1 focus:ring-primary`}
           required
+          data-error={!!validationErrors['position']}
         >
           <option value="">Select a position...</option>
           <option value="Gutter Installer">Gutter Installer</option>
@@ -136,18 +216,27 @@ ${name}
           <option value="Office Admin">Office Admin</option>
           <option value="Other">Other</option>
         </select>
+        {validationErrors['position'] && (
+          <p className="mt-1 text-sm text-red-600">{validationErrors['position']}</p>
+        )}
       </div>
       
       <div>
-        <label htmlFor="experience" className="block mb-2 font-medium">Experience</label>
+        <label htmlFor="experience" className="block text-sm font-medium text-gray-700 mb-1">
+          Experience <span className="text-red-500">*</span>
+        </label>
         <textarea 
           id="experience" 
           name="experience" 
           rows={5} 
-          className="w-full p-3 border border-gray-300 rounded-lg"
+          className={`w-full p-3 border ${validationErrors['experience'] ? 'border-red-500 bg-red-50' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-1 focus:ring-primary`}
           placeholder="Please describe your relevant experience, skills, and why you're interested in working with us."
           required
+          data-error={!!validationErrors['experience']}
         ></textarea>
+        {validationErrors['experience'] && (
+          <p className="mt-1 text-sm text-red-600">{validationErrors['experience']}</p>
+        )}
       </div>
       
       {/* Resume instructions */}
