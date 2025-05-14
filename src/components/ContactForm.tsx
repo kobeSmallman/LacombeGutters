@@ -142,7 +142,7 @@ ${name}
       `.trim();
       
       // Try to open default email client first
-      const mailtoLink = `mailto:kobe4smallman@gmail.com?subject=Gutter Estimate Request - ${encodeURIComponent(name)}&body=${encodeURIComponent(emailBody)}`;
+      const mailtoLink = `mailto:lacombegutters@gmail.com?subject=Gutter Estimate Request - ${encodeURIComponent(name)}&body=${encodeURIComponent(emailBody)}`;
       
       // Show success message with copy options
       setSubmitResult({
@@ -155,7 +155,7 @@ ${name}
       
       // Store email content for copying
       setEmailContent({
-        to: 'kobe4smallman@gmail.com',
+        to: 'lacombegutters@gmail.com',
         subject: `Gutter Estimate Request - ${name}`,
         body: emailBody
       });
