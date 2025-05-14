@@ -8,6 +8,8 @@ export default function ContactForm() {
   const [submitResult, setSubmitResult] = useState<{success: boolean; message: string} | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
+  const [emailContent, setEmailContent] = useState<{to: string; subject: string; body: string} | null>(null);
+  const [showCopyOptions, setShowCopyOptions] = useState(false);
 
   // Function to format phone number as user types
   const formatPhoneNumber = (value: string) => {
@@ -104,11 +106,7 @@ export default function ContactForm() {
     try {
       console.log('Starting form submission...');
       
-      // Get form data
-      const form = e.target as HTMLFormElement;
-      const formData = new FormData(form);
-      
-      // Extract values for mailto link
+      // Extract values for email content
       const name = formData.get('name') as string;
       const email = formData.get('email') as string;
       const phone = formData.get('phone') as string;
@@ -143,22 +141,27 @@ Thank you,
 ${name}
       `.trim();
       
-      // Create a mailto link with all form data
+      // Try to open default email client first
       const mailtoLink = `mailto:kobe4smallman@gmail.com?subject=Gutter Estimate Request - ${encodeURIComponent(name)}&body=${encodeURIComponent(emailBody)}`;
       
-      // Show alert with custom styling
+      // Show success message with copy options
       setSubmitResult({
         success: true,
-        message: 'Opening your default email app... Please review and attach any relevant photos if needed.'
+        message: 'Email prepared! If your email app doesn\'t open, please copy the information below.'
       });
       
-      // Reset form after a short delay
-      setTimeout(() => {
-        setIsSubmitting(false);
-        
-        // Open the mailto link
-        window.location.href = mailtoLink;
-      }, 1000);
+      // Reset submitting state
+      setIsSubmitting(false);
+      
+      // Store email content for copying
+      setEmailContent({
+        to: 'kobe4smallman@gmail.com',
+        subject: `Gutter Estimate Request - ${name}`,
+        body: emailBody
+      });
+      
+      // Try to open mailto link
+      window.location.href = mailtoLink;
       
     } catch (error) {
       console.error('Error preparing email:', error);
@@ -339,9 +342,102 @@ ${name}
         {submitResult && (
           <div className={`text-sm px-4 py-2 rounded-md ${submitResult.success ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>
             {submitResult.message}
+            {submitResult.success && !showCopyOptions && (
+              <button 
+                className="ml-2 underline text-primary"
+                onClick={() => setShowCopyOptions(true)}
+              >
+                Show copy options
+              </button>
+            )}
           </div>
         )}
       </div>
+      
+      {/* Copy options for web-based email clients */}
+      {showCopyOptions && emailContent && (
+        <div className="mt-6 border border-gray-300 rounded-md p-4 bg-gray-50">
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="font-medium">Email Content (Copy/Paste to Gmail)</h3>
+            <button 
+              className="text-sm text-gray-600"
+              onClick={() => setShowCopyOptions(false)}
+            >
+              Hide
+            </button>
+          </div>
+          
+          <div className="space-y-3">
+            <div>
+              <p className="text-sm font-medium mb-1">To:</p>
+              <div className="flex">
+                <input 
+                  type="text" 
+                  readOnly 
+                  value={emailContent.to} 
+                  className="flex-1 p-2 border border-gray-300 rounded-md text-sm bg-white"
+                />
+                <button
+                  className="ml-2 px-3 py-1 bg-primary text-white text-sm rounded-md"
+                  onClick={() => {
+                    navigator.clipboard.writeText(emailContent.to);
+                    alert('Email address copied!');
+                  }}
+                >
+                  Copy
+                </button>
+              </div>
+            </div>
+            
+            <div>
+              <p className="text-sm font-medium mb-1">Subject:</p>
+              <div className="flex">
+                <input 
+                  type="text" 
+                  readOnly 
+                  value={emailContent.subject} 
+                  className="flex-1 p-2 border border-gray-300 rounded-md text-sm bg-white"
+                />
+                <button
+                  className="ml-2 px-3 py-1 bg-primary text-white text-sm rounded-md"
+                  onClick={() => {
+                    navigator.clipboard.writeText(emailContent.subject);
+                    alert('Subject copied!');
+                  }}
+                >
+                  Copy
+                </button>
+              </div>
+            </div>
+            
+            <div>
+              <p className="text-sm font-medium mb-1">Email Body:</p>
+              <div className="flex flex-col">
+                <textarea 
+                  readOnly 
+                  value={emailContent.body} 
+                  className="p-2 border border-gray-300 rounded-md text-sm bg-white h-32"
+                />
+                <button
+                  className="mt-2 px-3 py-1 bg-primary text-white text-sm rounded-md self-end"
+                  onClick={() => {
+                    navigator.clipboard.writeText(emailContent.body);
+                    alert('Email body copied!');
+                  }}
+                >
+                  Copy Email Body
+                </button>
+              </div>
+            </div>
+            
+            <div className="bg-white border-l-4 border-primary p-3 mt-2">
+              <p className="text-sm">
+                <strong>Gmail Instructions:</strong> Open Gmail in a new tab, click &quot;Compose&quot;, and paste the content above into the appropriate fields. Then attach any photos of your project.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </form>
   );
 }

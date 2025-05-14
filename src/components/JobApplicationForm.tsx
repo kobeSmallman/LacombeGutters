@@ -8,6 +8,8 @@ export default function JobApplicationForm() {
   const [submitResult, setSubmitResult] = useState<{success: boolean; message: string} | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
+  const [emailContent, setEmailContent] = useState<{to: string; subject: string; body: string} | null>(null);
+  const [showCopyOptions, setShowCopyOptions] = useState(false);
 
   // Function to format phone number as user types
   const formatPhoneNumber = (value: string) => {
@@ -98,11 +100,7 @@ export default function JobApplicationForm() {
     try {
       console.log('Starting job application submission...');
       
-      // Get form data
-      const form = e.target as HTMLFormElement;
-      const formData = new FormData(form);
-      
-      // Extract values for mailto link
+      // Extract values for email content
       const name = formData.get('job-name') as string;
       const email = formData.get('job-email') as string;
       const phone = formData.get('job-phone') as string;
@@ -129,33 +127,35 @@ Best regards,
 ${name}
       `.trim();
       
-      // Create a mailto link with all form data
+      // Try to open default email client first
       const mailtoLink = `mailto:kobe4smallman@gmail.com?subject=Job Application - ${encodeURIComponent(position)} Position - ${encodeURIComponent(name)}&body=${encodeURIComponent(emailBody)}`;
       
-      // Show alert with custom styling
+      // Show success message with copy options
       setSubmitResult({
         success: true,
-        message: 'Opening your default email app... Please attach your resume before sending.'
+        message: 'Application prepared! If your email app doesn\'t open, please copy the information below.'
       });
       
-      // Reset form after a short delay
-      setTimeout(() => {
-        form.reset();
-        setIsSubmitting(false);
-      }, 1000);
+      // Reset submitting state
+      setIsSubmitting(false);
       
-      // Open mail client (after a slight delay to ensure user sees the message)
-      setTimeout(() => {
-        window.open(mailtoLink, '_self');
-      }, 1500);
+      // Store email content for copying
+      setEmailContent({
+        to: 'kobe4smallman@gmail.com',
+        subject: `Job Application - ${position} Position - ${name}`,
+        body: emailBody
+      });
+      
+      // Try to open mailto link
+      window.location.href = mailtoLink;
       
     } catch (error) {
-      console.error('Error preparing job application email:', error);
+      console.error('Error preparing application:', error);
+      setIsSubmitting(false);
       setSubmitResult({
         success: false,
-        message: 'There was an issue preparing your application. Please try again or contact us directly at kobe4smallman@gmail.com.'
+        message: 'There was a problem preparing your application. Please try again or contact us directly.'
       });
-      setIsSubmitting(false);
     }
   };
 
@@ -304,6 +304,104 @@ ${name}
       {submitResult && (
         <div className={`mt-4 p-4 rounded border ${submitResult.success ? 'bg-green-100 border-green-200' : 'bg-red-100 border-red-200'}`}>
           <p className="text-sm font-medium">{submitResult.message}</p>
+          {submitResult.success && !showCopyOptions && (
+            <button 
+              className="ml-2 underline text-primary text-sm"
+              onClick={() => setShowCopyOptions(true)}
+            >
+              Show copy options
+            </button>
+          )}
+        </div>
+      )}
+      
+      {/* Copy options for web-based email clients */}
+      {showCopyOptions && emailContent && (
+        <div className="mt-6 border border-gray-300 rounded-md p-4 bg-gray-50 relative">
+          {/* Construction theme elements */}
+          <div className="absolute top-0 left-0 w-full h-0.5 bg-gray-300"></div>
+          <div className="absolute top-1 left-1 w-2 h-2 bg-gray-400 rounded-full"></div>
+          <div className="absolute top-1 right-1 w-2 h-2 bg-gray-400 rounded-full"></div>
+          
+          <div className="flex justify-between items-center mb-3 pt-2">
+            <h3 className="font-medium text-primary">Application Content (Copy/Paste to Gmail)</h3>
+            <button 
+              className="text-sm text-gray-600"
+              onClick={() => setShowCopyOptions(false)}
+            >
+              Hide
+            </button>
+          </div>
+          
+          <div className="space-y-3">
+            <div>
+              <p className="text-sm font-medium mb-1">To:</p>
+              <div className="flex">
+                <input 
+                  type="text" 
+                  readOnly 
+                  value={emailContent.to} 
+                  className="flex-1 p-2 border border-gray-300 rounded-md text-sm bg-white"
+                />
+                <button
+                  className="ml-2 px-3 py-1 bg-primary text-white text-sm rounded-md"
+                  onClick={() => {
+                    navigator.clipboard.writeText(emailContent.to);
+                    alert('Email address copied!');
+                  }}
+                >
+                  Copy
+                </button>
+              </div>
+            </div>
+            
+            <div>
+              <p className="text-sm font-medium mb-1">Subject:</p>
+              <div className="flex">
+                <input 
+                  type="text" 
+                  readOnly 
+                  value={emailContent.subject} 
+                  className="flex-1 p-2 border border-gray-300 rounded-md text-sm bg-white"
+                />
+                <button
+                  className="ml-2 px-3 py-1 bg-primary text-white text-sm rounded-md"
+                  onClick={() => {
+                    navigator.clipboard.writeText(emailContent.subject);
+                    alert('Subject copied!');
+                  }}
+                >
+                  Copy
+                </button>
+              </div>
+            </div>
+            
+            <div>
+              <p className="text-sm font-medium mb-1">Email Body:</p>
+              <div className="flex flex-col">
+                <textarea 
+                  readOnly 
+                  value={emailContent.body} 
+                  className="p-2 border border-gray-300 rounded-md text-sm bg-white h-32"
+                />
+                <button
+                  className="mt-2 px-3 py-1 bg-primary text-white text-sm rounded-md self-end"
+                  onClick={() => {
+                    navigator.clipboard.writeText(emailContent.body);
+                    alert('Email body copied!');
+                  }}
+                >
+                  Copy Email Body
+                </button>
+              </div>
+            </div>
+            
+            <div className="bg-white border-l-4 border-primary p-3 mt-2">
+              <p className="text-sm">
+                <strong>Gmail Instructions:</strong> Open Gmail in a new tab, click &quot;Compose&quot;, and paste the content above into the appropriate fields. Don&apos;t forget to attach your resume!
+              </p>
+            </div>
+          </div>
         </div>
       )}
     </form>
