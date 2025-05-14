@@ -41,7 +41,7 @@ export default function Home() {
               </h1>
             </div>
             <p className="text-xl md:text-2xl mb-8">
-              Serving central Alberta since 2009 with 50+ years of combined experience.
+              Serving central Alberta since 2009 with 40+ years of combined experience.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/contact">

@@ -42,7 +42,7 @@ export default function AboutPage() {
                 What started as a small operation has expanded into a full-service company with multiple crews serving residential and commercial clients.
               </p>
               <p className="mb-4 text-lg">
-                With over 50 years of combined experience in the industry, our team brings unmatched expertise to every project. 
+                With 40+ years of combined experience in the industry, our team brings unmatched expertise to every project. 
                 We pride ourselves on quality craftsmanship, using only premium materials, and providing exceptional customer service.
               </p>
               <p className="text-lg">

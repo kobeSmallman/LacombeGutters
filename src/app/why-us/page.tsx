@@ -3,13 +3,13 @@ import { Button } from "@/components/ui/Button";
 
 export const metadata = {
   title: "Why Choose Us",
-  description: "Discover why Lacombe Gutters is the trusted choice for eavestrough services in central Alberta, with 50+ years of combined experience, quality workmanship, and excellent customer service.",
+  description: "Discover why Lacombe Gutters is the trusted choice for eavestrough services in central Alberta, with 40+ years of combined experience, quality workmanship, and excellent customer service.",
 };
 
 const reasons = [
   {
-    title: "50+ Years Combined Experience",
-    description: "Our co-owners bring over five decades of combined experience to every project, ensuring expert knowledge and skilled craftsmanship.",
+    title: "40+ Years Combined Experience",
+    description: "Our co-owners bring over four decades of combined experience to every project, ensuring expert knowledge and skilled craftsmanship.",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
