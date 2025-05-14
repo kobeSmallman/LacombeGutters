@@ -318,10 +318,10 @@ ${name}
             </svg>
           </div>
           <div className="ml-3">
-            <p className="text-sm text-black">
+            <p className="text-sm !text-black" style={{color: 'black !important'}}>
               <strong>Photos Help Us Provide Accurate Estimates</strong> - When your default email app opens, you&apos;ll be able to attach photos of your existing gutters or project area.
             </p>
-            <p className="text-xs text-black mt-1">
+            <p className="text-xs !text-black mt-1" style={{color: 'black !important'}}>
               Note: This form will open your device&apos;s default email application. We will respond to the email address you provided above.
             </p>
           </div>
