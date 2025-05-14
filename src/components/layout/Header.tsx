@@ -14,11 +14,7 @@ export default function Header() {
       <div className="container mx-auto py-4 px-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center relative">
-            {/* Hammer icon in top left */}
-            <div className="absolute -top-2 -left-2 text-gray-700 transform -rotate-12 hidden md:block">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m18 12 4-4a1 1 0 0 0-1-1.73L8 2.08a1 1 0 0 0-1 .92v9"/><path d="m18 12-8 8s-1 .5-2 0l-2-2c-.5-1 0-2 0-2l8-8"/><path d="M10 6.13v-.25"/><path d="m14 10.13-.24-.24"/><path d="m10 10.13-.24-.24"/><path d="m14 6.13-.24-.24"/></svg>
-            </div>
-            
+            {/* Logo and Text */}
             <Link href="/" className="flex items-center hover:opacity-90 transition-opacity relative">
               <Image 
                 src="/images/logos/logo.png" 
