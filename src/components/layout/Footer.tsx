@@ -41,7 +41,10 @@ export default function Footer() {
             <ul className="space-y-2">
               {SERVICES.map((service, index) => (
                 <li key={index}>
-                  <Link href="/services" className="hover:text-secondary transition-colors">
+                  <Link 
+                    href={service === "Free Estimates" ? "/contact" : "/services"} 
+                    className="hover:text-secondary transition-colors"
+                  >
                     {service}
                   </Link>
                 </li>
