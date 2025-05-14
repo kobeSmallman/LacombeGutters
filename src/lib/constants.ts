@@ -1,5 +1,5 @@
 export const SITE_NAME = "Lacombe Gutters";
-export const SITE_DESCRIPTION = "Professional eavestrough, soffit, fascia, and gutter services across central Alberta. 50+ years of combined experience.";
+export const SITE_DESCRIPTION = "Professional eavestrough, soffit, fascia, and gutter services across central Alberta. 40 years of combined experience.";
 export const CONTACT_PHONE_ROB = "1-403-598-9137";
 export const CONTACT_PHONE_RYAN = "1-403-396-5393";
 export const CONTACT_EMAIL = "lacombegutters@gmail.com";

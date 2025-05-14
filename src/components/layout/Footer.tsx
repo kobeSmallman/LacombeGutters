@@ -19,7 +19,7 @@ export default function Footer() {
             <p className="mb-4">
               Lacombe Gutters provides residential & commercial eavestrough, 
               soffit, fascia, and gutter services across central Alberta. 
-              Our co-owners bring 50+ years of combined experience.
+              Our co-owners bring 40+ years of combined experience.
             </p>
             <div className="flex items-center mt-4">
               <a 
