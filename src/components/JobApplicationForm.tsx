@@ -295,10 +295,10 @@ ${name}
         type="submit" 
         variant="primary" 
         size="lg"
-        className={`w-full sm:w-auto transition-colors text-sm sm:text-base px-3 sm:px-4 ${isSubmitting ? 'bg-green-600 hover:bg-green-700' : ''}`}
+        className={`w-full transition-colors ${isSubmitting ? 'bg-green-600 hover:bg-green-700' : ''}`}
         disabled={isSubmitting}
       >
-        {isSubmitting ? 'Form Info Ready...' : <span className="whitespace-normal sm:whitespace-nowrap">Prepare Application Email</span>}
+        {isSubmitting ? 'Form Ready...' : 'Send Application'}
       </Button>
       
       {submitResult && (
