@@ -267,8 +267,8 @@ ${name}
       <div className="relative border border-gray-200 rounded-lg bg-white shadow-sm overflow-hidden p-4">
         {/* Construction theme elements */}
         <div className="absolute top-0 left-0 w-full h-1 bg-gray-300"></div>
-        <div className="absolute top-1 left-1 w-2 h-2 bg-gray-400 rounded-full"></div>
-        <div className="absolute top-1 right-1 w-2 h-2 bg-gray-400 rounded-full"></div>
+        <div className="screw-corner screw-top-left"></div>
+        <div className="screw-corner screw-top-right"></div>
         
         <div className="flex items-start space-x-3 pt-2">
           <div className="text-primary">
@@ -320,8 +320,8 @@ ${name}
         <div className="mt-6 border border-gray-300 rounded-md p-4 bg-gray-50 relative">
           {/* Construction theme elements */}
           <div className="absolute top-0 left-0 w-full h-0.5 bg-gray-300"></div>
-          <div className="absolute top-1 left-1 w-2 h-2 bg-gray-400 rounded-full"></div>
-          <div className="absolute top-1 right-1 w-2 h-2 bg-gray-400 rounded-full"></div>
+          <div className="screw-corner screw-top-left"></div>
+          <div className="screw-corner screw-top-right"></div>
           
           <div className="flex justify-between items-center mb-3 pt-2">
             <h3 className="font-medium text-primary">Application Content (Copy/Paste to Gmail)</h3>

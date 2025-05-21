@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-primary text-white py-20 md:py-32">
+      <section className="relative bg-primary text-white py-28 md:py-40 section-animate">
         <div className="absolute inset-0 opacity-20">
           <Image 
             src="/images/banners/truck.png" 
@@ -78,14 +78,8 @@ export default function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* 5" Eavestrough */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div className="bg-white rounded-lg shadow-md overflow-hidden service-card-left">
               <div className="relative h-52">
-                {/* Add screws in corners */}
-                <div className="screw-corner screw-top-left"></div>
-                <div className="screw-corner screw-top-right"></div>
-                <div className="screw-corner screw-bottom-left"></div>
-                <div className="screw-corner screw-bottom-right"></div>
-                
                 <Image 
                   src="/images/gallery/09_gutter_install_two_workers.png" 
                   alt="5-inch Conventional Gutters" 
@@ -105,14 +99,8 @@ export default function Home() {
             </div>
             
             {/* 6" Gutters */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div className="bg-white rounded-lg shadow-md overflow-hidden service-card-middle">
               <div className="relative h-52">
-                {/* Add screws in corners */}
-                <div className="screw-corner screw-top-left"></div>
-                <div className="screw-corner screw-top-right"></div>
-                <div className="screw-corner screw-bottom-left"></div>
-                <div className="screw-corner screw-bottom-right"></div>
-                
                 <Image 
                   src="/images/gallery/04_long_gutter_summer.png" 
                   alt="6-inch Steel Gutters" 
@@ -123,7 +111,7 @@ export default function Home() {
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-3">6&quot; Steel Gutters</h3>
                 <p className="text-gray-600 mb-4">
-                  Larger capacity 6&quot; gutters for areas with heavy rainfall or larger roof surfaces, ensuring proper drainage.
+                  Our larger 6&quot; gutters provide even greater capacity for heavy rainfall and large roof areas.
                 </p>
                 <Link href="/services">
                   <Button variant="primary" size="sm">Learn More</Button>
@@ -132,14 +120,8 @@ export default function Home() {
             </div>
             
             {/* Soffit & Fascia */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div className="bg-white rounded-lg shadow-md overflow-hidden service-card-right">
               <div className="relative h-52">
-                {/* Add screws in corners */}
-                <div className="screw-corner screw-top-left"></div>
-                <div className="screw-corner screw-top-right"></div>
-                <div className="screw-corner screw-bottom-left"></div>
-                <div className="screw-corner screw-bottom-right"></div>
-                
                 <Image 
                   src="/images/gallery/LadderWorker.png" 
                   alt="Soffit & Fascia" 
@@ -150,7 +132,7 @@ export default function Home() {
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-3">Soffit & Fascia</h3>
                 <p className="text-gray-600 mb-4">
-                  Complete your roofline with our quality soffit and fascia installation, providing ventilation and protection.
+                  Protect your roofline and improve ventilation with our professional soffit and fascia installation.
                 </p>
                 <Link href="/services">
                   <Button variant="primary" size="sm">Learn More</Button>
@@ -212,27 +194,29 @@ export default function Home() {
         </div>
       </section>
 
-        {/* Yellow Banner Section - exact match to services page */}
-   <section className="py-8 mb-8">
+      {/* Yellow Banner Section - exact match to services page */}
+      <section className="py-8 mb-8">
         <div className="container mx-auto px-4">
-          <div className="bg-secondary p-8 rounded-lg text-center relative">
-            {/* Simple dots in corners */}
-            <div className="absolute top-4 left-4 w-2 h-2 bg-gray-700 rounded-full"></div>
-            <div className="absolute top-4 right-4 w-2 h-2 bg-gray-700 rounded-full"></div>
-            <div className="absolute bottom-4 left-4 w-2 h-2 bg-gray-700 rounded-full"></div>
-            <div className="absolute bottom-4 right-4 w-2 h-2 bg-gray-700 rounded-full"></div>
+          <div className="bg-secondary p-8 rounded-lg text-center relative animate-fade-up">
+            {/* Screws in corners with improved design */}
+            <div className="screw-corner screw-top-left"></div>
+            <div className="screw-corner screw-top-right"></div>
+            <div className="screw-corner screw-bottom-left"></div>
+            <div className="screw-corner screw-bottom-right"></div>
             
             {/* Metal strips at top and bottom */}
             <div className="absolute top-0 left-0 w-full h-1 bg-gray-700"></div>
             <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-700"></div>
             
-            <h2 className="text-2xl font-bold mb-4 text-primary">Ready to get started?</h2>
-            <p className="mb-6 text-primary/80">
-            Contact us today for a free estimate on your gutter installation or repair project.
+            <h2 className="text-2xl font-bold mb-4 text-primary animate-fade-right delay-100">Ready to transform your property?</h2>
+            <p className="mb-6 text-primary/80 animate-fade-left delay-200">
+              Contact us today to discuss your project and get a free estimate.
             </p>
-            <Link href="/contact">
-              <Button variant="primary" size="lg">GET A FREE ESTIMATE</Button>
-            </Link>
+            <div className="animate-fade-up delay-300">
+              <Link href="/contact">
+                <Button variant="primary" size="lg">GET A FREE ESTIMATE</Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>

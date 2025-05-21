@@ -146,12 +146,6 @@ export default function GalleryClient() {
           {filteredItems.map((item, index) => (
             <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden transition-colors duration-300">
               <div className="relative h-60">
-                {/* Add screws in corners for construction theme */}
-                <div className="screw-corner screw-top-left" style={{ width: "8px", height: "8px", zIndex: 10 }}></div>
-                <div className="screw-corner screw-top-right" style={{ width: "8px", height: "8px", zIndex: 10 }}></div>
-                <div className="screw-corner screw-bottom-left" style={{ width: "8px", height: "8px", zIndex: 10 }}></div>
-                <div className="screw-corner screw-bottom-right" style={{ width: "8px", height: "8px", zIndex: 10 }}></div>
-                
                 {/* Metal strip at top */}
                 <div className="absolute top-0 left-0 w-full h-0.5 bg-gray-300 z-10"></div>
                 
@@ -176,11 +170,11 @@ export default function GalleryClient() {
    <section className="py-8 mb-8">
         <div className="container mx-auto px-4">
           <div className="bg-secondary p-8 rounded-lg text-center relative">
-            {/* Simple dots in corners */}
-            <div className="absolute top-4 left-4 w-2 h-2 bg-gray-700 rounded-full"></div>
-            <div className="absolute top-4 right-4 w-2 h-2 bg-gray-700 rounded-full"></div>
-            <div className="absolute bottom-4 left-4 w-2 h-2 bg-gray-700 rounded-full"></div>
-            <div className="absolute bottom-4 right-4 w-2 h-2 bg-gray-700 rounded-full"></div>
+            {/* Screws in corners with improved design */}
+            <div className="screw-corner screw-top-left"></div>
+            <div className="screw-corner screw-top-right"></div>
+            <div className="screw-corner screw-bottom-left"></div>
+            <div className="screw-corner screw-bottom-right"></div>
             
             {/* Metal strips at top and bottom */}
             <div className="absolute top-0 left-0 w-full h-1 bg-gray-700"></div>
