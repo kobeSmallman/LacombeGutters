@@ -1,10 +1,12 @@
 /** @type {import('next').NextConfig} */
+const path = require('path');
+
 const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // This is needed for the app to work properly in development
   webpack: (config) => {
+    config.resolve.alias['@'] = path.resolve(__dirname, 'src');
     return config;
   },
 };
