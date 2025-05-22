@@ -9,6 +9,7 @@ export function middleware(request: NextRequest) {
   
   // Map of old/common paths to their correct routes
   const redirects: Record<string, string> = {
+    // Standard variations
     '/About': '/about',
     '/ABOUT': '/about',
     '/about.html': '/about',
@@ -28,12 +29,26 @@ export function middleware(request: NextRequest) {
     '/Why-Us': '/why-us',
     '/WHY-US': '/why-us',
     '/why_us': '/why-us',
+    
+    // Specific old Wix paths found in search results
+    '/page4': '/about',
+    '/book-online/plumbing': '/#free-estimate',
+    '/form__map': '/contact',
+    '/book-online': '/#free-estimate',
   };
 
   // Check if the current path needs to be redirected
   if (pathname in redirects) {
     url.pathname = redirects[pathname];
     return NextResponse.redirect(url);
+  }
+
+  // Handle nested paths like /book-online/plumbing
+  for (const [oldPath, newPath] of Object.entries(redirects)) {
+    if (pathname.startsWith(oldPath + '/')) {
+      url.pathname = newPath;
+      return NextResponse.redirect(url);
+    }
   }
 
   return NextResponse.next();
