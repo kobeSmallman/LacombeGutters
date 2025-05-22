@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "npm install framer-motion@12.12.1 && next build",
+  "buildCommand": "npm install framer-motion@12.12.1 tailwindcss@3.3.5 autoprefixer@10.4.16 postcss@8.4.31 && next build",
   "installCommand": "npm ci",
   "framework": "nextjs",
   "outputDirectory": ".next"
