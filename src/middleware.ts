@@ -16,10 +16,11 @@ export function middleware(request: NextRequest) {
     '/Contact': '/contact',
     '/CONTACT': '/contact',
     '/contact.html': '/contact',
-    '/Free-Estimate': '/#free-estimate',
-    '/FREE-ESTIMATE': '/#free-estimate',
-    '/free-estimate': '/#free-estimate',
-    '/Free_Estimate': '/#free-estimate',
+    '/Free-Estimate': '/contact',
+    '/FREE-ESTIMATE': '/contact',
+    '/free-estimate': '/contact',
+    '/Free_Estimate': '/contact',
+    '/%23free-estimate': '/contact', // Handle URL-encoded # character
     '/Services': '/services',
     '/SERVICES': '/services',
     '/services.html': '/services',
@@ -32,9 +33,9 @@ export function middleware(request: NextRequest) {
     
     // Specific old Wix paths found in search results
     '/page4': '/about',
-    '/book-online/plumbing': '/#free-estimate',
+    '/book-online/plumbing': '/contact',
     '/form__map': '/contact',
-    '/book-online': '/#free-estimate',
+    '/book-online': '/contact',
   };
 
   // Check if the current path needs to be redirected
