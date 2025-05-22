@@ -36,6 +36,16 @@ export function middleware(request: NextRequest) {
     '/book-online/plumbing': '/contact',
     '/form__map': '/contact',
     '/book-online': '/contact',
+    
+    // Old service pages that don't reflect current offerings
+    '/service-page/carpentry': '/services',
+    '/service-page/remodeling': '/services',
+    '/service-page/electrical': '/services',
+    
+    // Handle potential URL variations of service pages
+    '/services/carpentry': '/services',
+    '/services/remodeling': '/services',
+    '/services/electrical': '/services',
   };
 
   // Check if the current path needs to be redirected
@@ -50,6 +60,12 @@ export function middleware(request: NextRequest) {
       url.pathname = newPath;
       return NextResponse.redirect(url);
     }
+  }
+
+  // Handle service-page pattern with any service name (even ones not specifically listed)
+  if (pathname.startsWith('/service-page/')) {
+    url.pathname = '/services';
+    return NextResponse.redirect(url);
   }
 
   return NextResponse.next();
