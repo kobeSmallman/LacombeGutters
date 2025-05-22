@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "buildCommand": "npm install framer-motion@12.12.1 && next build",
+  "installCommand": "npm ci",
+  "framework": "nextjs",
+  "outputDirectory": ".next"
+}
