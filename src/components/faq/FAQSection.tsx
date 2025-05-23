@@ -149,18 +149,18 @@ export default function FAQSection({ category, questions, icon, collapsible = fa
                     className={`relative bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md p-1 ${collapsible ? 'cursor-pointer' : ''}`}
                     onClick={toggleSection}
                   >
-                    <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-4 relative">
+                    <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 md:p-4 relative">
                       <div className="screw-corner screw-top-left z-10"></div>
                       
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2 md:gap-3">
                           {icon && <div className="flex-shrink-0">{icon}</div>}
-                          <h2 className="text-xl font-bold text-primary">{category}</h2>
+                          <h2 className="text-lg md:text-xl font-bold text-primary break-words">{category}</h2>
                         </div>
                         
                         {collapsible && (
-                          <div className="text-primary">
-                            <ChevronUp className="h-6 w-6" />
+                          <div className="text-primary flex-shrink-0 ml-2">
+                            <ChevronUp className="h-5 w-5" />
                           </div>
                         )}
                       </div>
@@ -218,19 +218,20 @@ export default function FAQSection({ category, questions, icon, collapsible = fa
               )}
               
               {/* Content when expanded */}
-              <motion.div
-                className="flex-1"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-              >
-                <div className="space-y-5 pt-1">
-                  {filteredQuestions.map((question) => (
-                    <FAQItem key={question.id} question={question} />
+              <div className={`${isMobile ? 'w-full' : 'flex-1'}`}>
+                <div className="space-y-3 md:space-y-6">
+                  {filteredQuestions.map(q => (
+                    <div key={q.id} 
+                      className={`${searchQuery && 
+                        (q.question.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                         q.answer.toLowerCase().includes(searchQuery.toLowerCase())) 
+                        ? 'ring-2 ring-primary/50 rounded-lg' : ''}`}
+                    >
+                      <FAQItem question={q} />
+                    </div>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             </div>
           )}
         </AnimatePresence>

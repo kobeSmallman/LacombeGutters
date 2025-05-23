@@ -67,12 +67,12 @@ export default function FAQItem({ question }: FAQItemProps) {
     <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md overflow-hidden">
       <Button
         onClick={toggleAccordion}
-        className="w-full flex justify-between items-center p-5 text-left text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white"
+        className="w-full flex justify-between items-center p-4 sm:p-5 text-left text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white"
         aria-expanded={isOpen}
         variant="ghost"
       >
-        <h3 className="text-lg font-medium">{question.question}</h3>
-        <span className="text-primary ml-2">
+        <h3 className="text-base sm:text-lg font-medium pr-2">{question.question}</h3>
+        <span className="text-primary ml-2 flex-shrink-0">
           {isOpen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
         </span>
       </Button>
@@ -86,9 +86,9 @@ export default function FAQItem({ question }: FAQItemProps) {
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <div className="p-5 pt-0 border-t border-gray-200 dark:border-gray-700">
+            <div className="p-4 sm:p-5 pt-0 border-t border-gray-200 dark:border-gray-700">
               <div 
-                className="prose dark:prose-invert max-w-none"
+                className="prose dark:prose-invert max-w-none text-sm md:text-base"
                 dangerouslySetInnerHTML={{ __html: question.answer.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }}
               />
               
@@ -109,8 +109,8 @@ export default function FAQItem({ question }: FAQItemProps) {
                       Prepare Email
                     </Button>
                   ) : (
-                    <div className="mt-2 p-4 border border-gray-200 dark:border-gray-700 rounded-md relative">
-                      <div className="absolute right-2 top-2">
+                    <div className="mt-2 p-2 sm:p-4 border border-gray-200 dark:border-gray-700 rounded-md relative">
+                      <div className="absolute right-1 sm:right-2 top-1 sm:top-2">
                         <Button 
                           size="sm" 
                           variant="ghost" 
@@ -121,56 +121,56 @@ export default function FAQItem({ question }: FAQItemProps) {
                         </Button>
                       </div>
                       
-                      <h4 className="text-md font-medium mb-3 text-gray-800 dark:text-gray-100">
+                      <h4 className="text-md font-medium mb-2 sm:mb-3 text-gray-800 dark:text-gray-100 pr-8">
                         Prepare Your Email
                       </h4>
                       
-                      <div className="space-y-3">
+                      <div className="space-y-2 sm:space-y-3">
                         <div>
-                          <div className="text-sm mb-1 text-gray-700 dark:text-gray-300">Recipient:</div>
+                          <div className="text-xs sm:text-sm mb-1 text-gray-700 dark:text-gray-300">Recipient:</div>
                           <input 
                             type="text" 
                             name="recipient"
                             value={emailData.recipient} 
                             onChange={handleInputChange}
-                            className="w-full text-sm p-2 border border-gray-300 dark:border-gray-600 rounded text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800"
+                            className="w-full text-xs sm:text-sm p-1.5 sm:p-2 border border-gray-300 dark:border-gray-600 rounded text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800"
                           />
                         </div>
                         <div>
-                          <div className="text-sm mb-1 text-gray-700 dark:text-gray-300">Subject:</div>
+                          <div className="text-xs sm:text-sm mb-1 text-gray-700 dark:text-gray-300">Subject:</div>
                           <input
                             type="text"
                             name="subject"
                             value={emailData.subject} 
                             onChange={handleInputChange}
-                            className="w-full text-sm p-2 border border-gray-300 dark:border-gray-600 rounded text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800"
+                            className="w-full text-xs sm:text-sm p-1.5 sm:p-2 border border-gray-300 dark:border-gray-600 rounded text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800"
                           />
                         </div>
                         <div>
-                          <div className="text-sm mb-1 text-gray-700 dark:text-gray-300">Message:</div>
+                          <div className="text-xs sm:text-sm mb-1 text-gray-700 dark:text-gray-300">Message:</div>
                           <textarea 
                             name="body"
                             value={emailData.body} 
                             onChange={handleInputChange}
-                            rows={5}
-                            className="w-full text-sm p-2 border border-gray-300 dark:border-gray-600 rounded text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800"
+                            rows={4}
+                            className="w-full text-xs sm:text-sm p-1.5 sm:p-2 border border-gray-300 dark:border-gray-600 rounded text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800"
                           />
                         </div>
                         
-                        <div className="flex flex-col sm:flex-row gap-3 mt-2">
+                        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-2">
                           <Button 
-                            className="gap-2" 
+                            className="gap-1 text-xs sm:text-sm px-2 sm:px-3 py-1 sm:py-2 h-auto" 
                             onClick={handleSendEmail}
                           >
-                            <Mail className="h-4 w-4" />
+                            <Mail className="h-3 w-3 sm:h-4 sm:w-4" />
                             Open in Email App
                           </Button>
                           
                           {showCopyOptions && (
-                            <div className="flex flex-col sm:flex-row gap-2">
+                            <div className="flex flex-wrap gap-2 mt-2 sm:mt-0">
                               <Button 
                                 variant="outline" 
-                                className="text-sm" 
+                                className="text-xs sm:text-sm px-2 py-1 h-auto flex-grow sm:flex-grow-0" 
                                 onClick={() => {
                                   copyToClipboard(emailData.recipient);
                                 }}
@@ -179,7 +179,7 @@ export default function FAQItem({ question }: FAQItemProps) {
                               </Button>
                               <Button 
                                 variant="outline" 
-                                className="text-sm" 
+                                className="text-xs sm:text-sm px-2 py-1 h-auto flex-grow sm:flex-grow-0" 
                                 onClick={() => {
                                   copyToClipboard(emailData.subject);
                                 }}
@@ -188,7 +188,7 @@ export default function FAQItem({ question }: FAQItemProps) {
                               </Button>
                               <Button 
                                 variant="outline" 
-                                className="text-sm" 
+                                className="text-xs sm:text-sm px-2 py-1 h-auto flex-grow sm:flex-grow-0" 
                                 onClick={() => {
                                   copyToClipboard(emailData.body);
                                 }}
