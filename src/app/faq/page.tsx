@@ -1,7 +1,6 @@
 import { Metadata } from "next";
-import dynamic from 'next/dynamic';
-import { FAQConfig, getFAQCategories } from "@/content/faq";
-import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
+import { FAQConfig, getFAQCategories } from "../../content/faq";
+import AnimateOnScroll from "../../components/ui/AnimateOnScroll";
 import { 
   MessageCircleQuestion, 
   Wrench, 
@@ -11,16 +10,9 @@ import {
   Building,
   HelpCircle
 } from "lucide-react";
-import FAQSection from "@/components/faq/FAQSection";
-import FAQJsonLd from "@/components/faq/FAQJsonLd";
-
-// Dynamically import the search component with suspense
-const FAQSearch = dynamic(() => import('@/components/faq/FAQSearch'), {
-  ssr: false,
-  loading: () => (
-    <div className="h-[120px] bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse"></div>
-  )
-});
+import FAQSection from "../../components/faq/FAQSection";
+import FAQJsonLd from "../../components/faq/FAQJsonLd";
+import ClientFAQSearch from "../../components/faq/ClientFAQSearch";
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions | Lacombe Gutters",
@@ -73,7 +65,7 @@ export default function FAQPage() {
         {/* Search Box with Construction Theme */}
         <AnimateOnScroll type="fadeIn" duration={0.7} delay={0.3}>
           <div className="relative mb-16">
-            <FAQSearch />
+            <ClientFAQSearch />
           </div>
         </AnimateOnScroll>
         
