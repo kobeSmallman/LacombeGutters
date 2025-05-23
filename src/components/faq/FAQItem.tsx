@@ -67,7 +67,7 @@ export default function FAQItem({ question }: FAQItemProps) {
     <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md overflow-hidden">
       <Button
         onClick={toggleAccordion}
-        className="w-full flex justify-between items-start p-4 sm:p-5 text-left text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white min-h-[150px]"
+        className="w-full flex justify-between items-start p-4 sm:p-5 text-left text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white min-h-[max-content]"
         aria-expanded={isOpen}
         variant="ghost"
       >
@@ -79,14 +79,18 @@ export default function FAQItem({ question }: FAQItemProps) {
         </span>
       </Button>
 
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            initial={{ height: 0 }}
+            animate={{ height: 'auto' }}
+            exit={{ height: 0 }}
+            transition={{ 
+              duration: 0.25,
+              ease: "easeOut"
+            }}
             className="overflow-hidden"
+            style={{ transformOrigin: 'top' }}
           >
             <div className="p-4 sm:p-5 pt-0 border-t border-gray-200 dark:border-gray-700">
               <div 
