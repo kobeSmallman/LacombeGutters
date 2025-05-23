@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { ScrewCorner } from '@/components/ui/decorative/ScrewCorner';
 
 // List of testimonials to cycle through
 const testimonials = [
@@ -83,13 +84,16 @@ export default function TypingTestimonials() {
   return (
     <div className="text-center">
       <div className="min-h-[200px] flex flex-col items-center justify-center">
-        <div className="relative flex items-center justify-center mb-8">
-          <div className="absolute left-0 w-4 h-12 bg-primary/10"></div>
-          <p className="text-xl italic text-gray-700 px-8 leading-relaxed min-h-[6rem]">
+        <div className="relative flex items-center justify-center mb-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+          <ScrewCorner position="top-left" />
+          <ScrewCorner position="top-right" />
+          <ScrewCorner position="bottom-left" />
+          <ScrewCorner position="bottom-right" />
+          
+          <p className="text-xl italic text-gray-700 dark:text-gray-300 px-8 leading-relaxed min-h-[6rem]">
             &ldquo;{displayText}
-            <span className="inline-block h-5 w-0.5 bg-gray-700 ml-1 animate-blink"></span>&rdquo;
+            <span className="inline-block h-5 w-0.5 bg-primary ml-1 animate-blink"></span>&rdquo;
           </p>
-          <div className="absolute right-0 w-4 h-12 bg-primary/10"></div>
         </div>
         <div className="font-bold text-primary">
           {currentAuthor}
