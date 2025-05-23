@@ -15,6 +15,9 @@ import FAQSection from "../../components/faq/FAQSection";
 import FAQJsonLd from "../../components/faq/FAQJsonLd";
 import ClientFAQSearch from "../../components/faq/ClientFAQSearch";
 
+// Disable static generation for this page
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Frequently Asked Questions | Lacombe Gutters",
   description: "Find answers to common questions about gutters, services, installation, and maintenance. Lacombe Gutters provides expert eavestrough solutions across Central Alberta.",
