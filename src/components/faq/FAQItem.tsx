@@ -67,14 +67,14 @@ export default function FAQItem({ question }: FAQItemProps) {
     <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md overflow-hidden">
       <Button
         onClick={toggleAccordion}
-        className="w-full flex justify-between items-start p-6 text-left text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white min-h-[max-content]"
+        className="w-full flex justify-between items-start py-8 px-6 text-left text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white min-h-[max-content]"
         aria-expanded={isOpen}
         variant="ghost"
       >
         <div className="flex-1 mr-5">
-          <h3 className="text-base md:text-lg font-medium break-words whitespace-normal overflow-wrap-normal px-1.5 py-1.5">{question.question}</h3>
+          <h3 className="text-base md:text-lg font-medium break-words whitespace-normal overflow-wrap-normal px-2 py-4 leading-relaxed">{question.question}</h3>
         </div>
-        <span className="text-primary flex-shrink-0 mt-1 pl-2">
+        <span className="text-primary flex-shrink-0 mt-4 pl-2">
           {isOpen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
         </span>
       </Button>
