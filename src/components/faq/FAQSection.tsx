@@ -95,7 +95,7 @@ export default function FAQSection({ category, questions, icon, collapsible = fa
           className={`relative bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md p-1 mb-4 transition-opacity duration-300 ${collapsible ? 'cursor-pointer' : ''} ${isExpanded ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'}`}
           onClick={toggleSection}
         >
-          <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-6 relative overflow-visible">
+          <div className="bg-primary/10 dark:bg-primary/20 rounded-lg py-16 px-8 relative overflow-visible">
             {/* Left screw - always visible */}
             <div className="screw-corner screw-top-left z-10"></div>
             
@@ -114,13 +114,13 @@ export default function FAQSection({ category, questions, icon, collapsible = fa
             
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                {icon && <div className="flex-shrink-0">{icon}</div>}
-                <h2 className="text-2xl font-bold text-primary">{category}</h2>
+                {icon && <div className="flex-shrink-0 text-3xl">{icon}</div>}
+                <h2 className="text-3xl font-bold text-primary">{category}</h2>
               </div>
               
               {collapsible && (
                 <div className="text-primary">
-                  <ChevronDown className="h-6 w-6" />
+                  <ChevronDown className="h-8 w-8" />
                 </div>
               )}
             </div>
@@ -145,11 +145,11 @@ export default function FAQSection({ category, questions, icon, collapsible = fa
                       className={`relative bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md p-1 ${collapsible ? 'cursor-pointer' : ''}`}
                       onClick={toggleSection}
                     >
-                      <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 md:p-4 relative">
+                      <div className="bg-primary/10 dark:bg-primary/20 rounded-lg py-6 px-4 md:py-8 md:px-6 relative">
                         <div className="screw-corner screw-top-left z-10"></div>
                         
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2 md:gap-3">
+                          <div className="flex items-center gap-3 md:gap-4">
                             {icon && <div className="flex-shrink-0">{icon}</div>}
                             <h2 className="text-lg md:text-xl font-bold text-primary break-words">{category}</h2>
                           </div>
@@ -166,7 +166,7 @@ export default function FAQSection({ category, questions, icon, collapsible = fa
                 ) : (
                   // Desktop view - sideways header with swing animation and fixed container
                   <div className="flex-shrink-0 mr-6" style={{ width: '95px' }}>
-                    <div className="h-[70px] relative">
+                    <div className="h-[200px] relative">
                       <motion.div
                         className="absolute top-0 left-0 origin-top-left"
                         initial={{ rotateZ: 0 }}
@@ -183,19 +183,19 @@ export default function FAQSection({ category, questions, icon, collapsible = fa
                           className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md p-1 cursor-pointer"
                           onClick={toggleSection}
                         >
-                          <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-6 relative" style={{ width: '500px' }}>
+                          <div className="bg-primary/10 dark:bg-primary/20 rounded-lg py-16 px-8 relative" style={{ width: '500px' }}>
                             <div className="screw-corner screw-top-left z-10"></div>
                             <div className="absolute top-0 left-0 w-full h-1 bg-primary/10"></div>
                             
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-4">
-                                {icon && <div className="flex-shrink-0">{icon}</div>}
-                                <h2 className="text-2xl font-bold text-primary">{category}</h2>
+                                {icon && <div className="flex-shrink-0 text-3xl">{icon}</div>}
+                                <h2 className="text-3xl font-bold text-primary">{category}</h2>
                               </div>
                               
                               {collapsible && (
                                 <div className="text-primary">
-                                  <ChevronUp className="h-6 w-6" />
+                                  <ChevronUp className="h-8 w-8" />
                                 </div>
                               )}
                             </div>
