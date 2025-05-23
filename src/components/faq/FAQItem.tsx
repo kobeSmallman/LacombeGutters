@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronDown, ChevronUp, Mail, X } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
@@ -16,9 +16,10 @@ type FAQItemProps = {
     needsEmail?: boolean;
     contactPage?: boolean;
   };
+  isSearchResult?: boolean;
 };
 
-export default function FAQItem({ question }: FAQItemProps) {
+export default function FAQItem({ question, isSearchResult = false }: FAQItemProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [showEmailForm, setShowEmailForm] = useState(false);
   const [showCopyOptions, setShowCopyOptions] = useState(false);
@@ -27,6 +28,12 @@ export default function FAQItem({ question }: FAQItemProps) {
     subject: `Question regarding: ${question.question}`,
     body: `Hello Lacombe Gutters,\n\nI'm inquiring about the following question from your FAQ:\n\n"${question.question}"\n\nThank you for your assistance.`
   });
+
+  useEffect(() => {
+    if (isSearchResult) {
+      setIsOpen(false);
+    }
+  }, [isSearchResult]);
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
@@ -64,18 +71,24 @@ export default function FAQItem({ question }: FAQItemProps) {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md overflow-hidden">
+    <div className={`bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md overflow-hidden mb-4`}>
       <Button
         onClick={toggleAccordion}
-        className="w-full flex justify-between items-start py-10 px-6 md:py-12 md:px-8 text-left text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white min-h-[max-content]"
+        className={`w-full flex justify-between items-center text-left text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white min-h-[max-content] py-10 px-6 md:py-12 md:px-8`}
         aria-expanded={isOpen}
         variant="ghost"
       >
-        <div className="flex-1 mr-5 py-2">
-          <h3 className="text-base md:text-xl lg:text-2xl font-medium break-words whitespace-normal overflow-wrap-normal px-2 py-4 leading-loose">{question.question}</h3>
+        <div className="flex-1 pr-4">
+          <h3 className="text-base md:text-xl lg:text-2xl font-medium break-words whitespace-normal overflow-wrap-normal leading-relaxed">
+            {question.question}
+          </h3>
         </div>
-        <span className="text-primary flex-shrink-0 mt-6 md:mt-8 pl-2">
-          {isOpen ? <ChevronUp className="h-5 w-5 md:h-6 md:w-6" /> : <ChevronDown className="h-5 w-5 md:h-6 md:w-6" />}
+        <span className="text-primary flex-shrink-0 ml-2">
+          {isOpen ? (
+            <ChevronUp className="h-6 w-6" />
+          ) : (
+            <ChevronDown className="h-6 w-6" />
+          )}
         </span>
       </Button>
 
