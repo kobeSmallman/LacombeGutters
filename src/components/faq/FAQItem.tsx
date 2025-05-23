@@ -72,7 +72,7 @@ export default function FAQItem({ question }: FAQItemProps) {
         variant="ghost"
       >
         <div className="flex-1 mr-4">
-          <h3 className="text-base sm:text-lg font-medium break-all whitespace-normal line-clamp-3">{question.question}</h3>
+          <h3 className="text-base sm:text-lg font-medium break-words whitespace-normal overflow-wrap-normal">{question.question}</h3>
         </div>
         <span className="text-primary flex-shrink-0 mt-1">
           {isOpen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
