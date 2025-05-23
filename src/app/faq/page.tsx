@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { Suspense } from "react";
 import { FAQConfig, getFAQCategories } from "@/content/faq";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
 import { 
@@ -65,7 +66,11 @@ export default function FAQPage() {
         {/* Search Box with Construction Theme */}
         <AnimateOnScroll type="fadeIn" duration={0.7} delay={0.3}>
           <div className="relative mb-16">
-            <FAQSearch />
+            <Suspense fallback={
+              <div className="h-[120px] bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse"></div>
+            }>
+              <FAQSearch />
+            </Suspense>
           </div>
         </AnimateOnScroll>
         
