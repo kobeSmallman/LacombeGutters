@@ -6,6 +6,7 @@ import Footer from '@/components/layout/Footer'
 import { SITE_NAME, SITE_DESCRIPTION } from '@/lib/constants'
 import ThemeToggle from '@/components/ThemeToggle'
 import LocalBusinessSchema from '@/components/LocalBusinessSchema'
+import { Analytics } from '@vercel/analytics/react'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -26,6 +27,7 @@ export const metadata: Metadata = {
     default: `${SITE_NAME} | Professional Eavestrough Services`,
   },
   description: SITE_DESCRIPTION,
+  metadataBase: new URL('https://lacombeguttersltd.com'),
 }
 
 export default function RootLayout({
@@ -45,6 +47,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <ThemeToggle />
+        <Analytics />
       </body>
     </html>
   )
