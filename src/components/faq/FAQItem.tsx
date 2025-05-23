@@ -67,14 +67,14 @@ export default function FAQItem({ question }: FAQItemProps) {
     <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md overflow-hidden">
       <Button
         onClick={toggleAccordion}
-        className="w-full flex justify-between items-start py-8 px-6 text-left text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white min-h-[max-content]"
+        className="w-full flex justify-between items-start py-10 px-6 text-left text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white min-h-[max-content]"
         aria-expanded={isOpen}
         variant="ghost"
       >
-        <div className="flex-1 mr-5">
-          <h3 className="text-base md:text-lg font-medium break-words whitespace-normal overflow-wrap-normal px-2 py-4 leading-relaxed">{question.question}</h3>
+        <div className="flex-1 mr-5 py-2">
+          <h3 className="text-base md:text-lg font-medium break-words whitespace-normal overflow-wrap-normal px-2 py-4 leading-loose">{question.question}</h3>
         </div>
-        <span className="text-primary flex-shrink-0 mt-4 pl-2">
+        <span className="text-primary flex-shrink-0 mt-6 pl-2">
           {isOpen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
         </span>
       </Button>
@@ -92,7 +92,7 @@ export default function FAQItem({ question }: FAQItemProps) {
             className="overflow-hidden"
             style={{ transformOrigin: 'top' }}
           >
-            <div className="p-6 pt-0 border-t border-gray-200 dark:border-gray-700">
+            <div className="p-8 pt-0 border-t border-gray-200 dark:border-gray-700">
               <div 
                 className="prose dark:prose-invert max-w-none text-sm md:text-base"
                 dangerouslySetInnerHTML={{ __html: question.answer.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }}
