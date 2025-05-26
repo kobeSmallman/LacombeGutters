@@ -21,6 +21,13 @@ const poppins = Poppins({
   display: 'swap'
 })
 
+export const viewport = {
+  themeColor: '#215e7d',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+}
+
 export const metadata: Metadata = {
   title: {
     template: `%s | ${SITE_NAME}`,
@@ -28,6 +35,30 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   metadataBase: new URL('https://lacombeguttersltd.com'),
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180' },
+    ],
+  },
+  manifest: '/site.webmanifest',
+  openGraph: {
+    title: `${SITE_NAME} | Professional Eavestrough Services`,
+    description: SITE_DESCRIPTION,
+    url: 'https://lacombeguttersltd.com',
+    siteName: SITE_NAME,
+    locale: 'en_CA',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${SITE_NAME} | Professional Eavestrough Services`,
+    description: SITE_DESCRIPTION,
+  },
 }
 
 export default function RootLayout({
@@ -37,6 +68,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+      </head>
       <body className="font-body bg-neutral-light text-neutral-dark min-h-screen flex flex-col transition-colors duration-300">
         {/* SEO Schema Data - invisible to users */}
         <LocalBusinessSchema />
