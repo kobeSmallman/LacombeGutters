@@ -1,0 +1,31 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://lacombeguttersltd.com/sitemap.xml
+
+# Disallow admin and API routes
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+
+# Allow all user agents to access the rest of the site
+User-agent: *
+Allow: /
+
+# Crawl-delay: 10
+
+# Additional directives for specific search engines
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# Image indexing
+User-agent: Googlebot-Image
+Allow: /images/
+
+# Media partners
+User-agent: Mediapartners-Google
+Allow: /

@@ -9,8 +9,43 @@ import ContactForm from "@/components/ContactForm";
 import JobApplicationForm from "@/components/JobApplicationForm";
 
 export const metadata = {
-  title: "Contact Us",
-  description: "Get in touch with Lacombe Gutters for a free estimate or to discuss your project needs.",
+  title: "Contact Lacombe Gutters | Free Estimate & Inquiries",
+  description: "Get in touch with Lacombe Gutters for a free, no-obligation estimate on eavestrough services. Call, email, or visit our Lacombe location for professional gutter solutions in Central Alberta.",
+  keywords: [
+    'contact Lacombe Gutters',
+    'free gutter estimate',
+    'eavestrough service near me',
+    'gutter repair contact',
+    'Central Alberta gutter services',
+    'emergency gutter repair',
+    'gutter installation quote',
+    'Lacombe gutter specialists',
+    'gutter maintenance contact',
+    'roofing services contact'
+  ],
+  openGraph: {
+    title: 'Contact Lacombe Gutters | Free Estimate & Inquiries',
+    description: "Contact Lacombe Gutters today for professional eavestrough services. Get a free quote, schedule service, or ask about our gutter solutions in Central Alberta.",
+    url: 'https://lacombeguttersltd.com/contact',
+    type: 'website',
+    images: [
+      {
+        url: '/images/og-contact.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Contact Lacombe Gutters - Professional Eavestrough Services',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Contact Lacombe Gutters | Free Estimate & Inquiries',
+    description: "Get in touch for professional eavestrough services in Central Alberta. Free estimates available for all gutter and roofing needs.",
+    images: ['/images/og-contact.jpg'],
+  },
+  alternates: {
+    canonical: '/contact',
+  },
 };
 
 export default function ContactPage() {

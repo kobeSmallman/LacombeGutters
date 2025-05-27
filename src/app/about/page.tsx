@@ -5,8 +5,43 @@ import { TEAM_MEMBERS } from "@/lib/constants";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
 
 export const metadata = {
-  title: "About Us",
-  description: "Learn about Lacombe Gutters' history and meet our experienced team.",
+  title: "About Lacombe Gutters | Our Story & Team",
+  description: "Learn about Lacombe Gutters' 40+ years of combined experience in professional eavestrough services in Central Alberta. Meet our skilled team dedicated to quality workmanship.",
+  keywords: [
+    'Lacombe gutters about',
+    'our story',
+    'gutter specialists',
+    'eavestrough experts',
+    'Central Alberta',
+    'gutter installation team',
+    'gutter repair professionals',
+    'residential commercial gutters',
+    'Lacombe gutter contractors',
+    'gutter service company'
+  ],
+  openGraph: {
+    title: 'About Lacombe Gutters | Our Story & Team',
+    description: "With over 40 years of combined experience, Lacombe Gutters provides professional eavestrough services across Central Alberta. Learn about our team and commitment to quality.",
+    url: 'https://lacombeguttersltd.com/about',
+    type: 'website',
+    images: [
+      {
+        url: '/images/og-about.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Lacombe Gutters Team - Professional Eavestrough Specialists',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About Lacombe Gutters | Our Story & Team',
+    description: "40+ years of combined experience in professional eavestrough services across Central Alberta. Meet our skilled team.",
+    images: ['/images/og-about.jpg'],
+  },
+  alternates: {
+    canonical: '/about',
+  },
 };
 
 export default function AboutPage() {

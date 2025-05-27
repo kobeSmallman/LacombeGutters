@@ -31,10 +31,59 @@ export const viewport = {
 export const metadata: Metadata = {
   title: {
     template: `%s | ${SITE_NAME}`,
-    default: `${SITE_NAME} | Professional Eavestrough Services`,
+    default: `${SITE_NAME} | Professional Eavestrough Services in Lacombe, AB`,
   },
   description: SITE_DESCRIPTION,
+  keywords: [
+    'Lacombe gutters',
+    'eavestrough installation',
+    'gutter repair',
+    'soffit and fascia',
+    'gutter cleaning',
+    'rainwater management',
+    'Central Alberta gutters',
+    'residential gutters',
+    'commercial gutters',
+    'gutter guards',
+    'gutter maintenance'
+  ],
   metadataBase: new URL('https://lacombeguttersltd.com'),
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: `${SITE_NAME} | Professional Eavestrough Services in Lacombe, AB`,
+    description: SITE_DESCRIPTION,
+    url: 'https://lacombeguttersltd.com',
+    siteName: SITE_NAME,
+    locale: 'en_CA',
+    type: 'website',
+    images: [
+      {
+        url: '/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Lacombe Gutters - Professional Eavestrough Services',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${SITE_NAME} | Professional Eavestrough Services`,
+    description: SITE_DESCRIPTION,
+    images: ['/images/og-image.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
@@ -46,20 +95,7 @@ export const metadata: Metadata = {
     ],
   },
   manifest: '/site.webmanifest',
-  openGraph: {
-    title: `${SITE_NAME} | Professional Eavestrough Services`,
-    description: SITE_DESCRIPTION,
-    url: 'https://lacombeguttersltd.com',
-    siteName: SITE_NAME,
-    locale: 'en_CA',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: `${SITE_NAME} | Professional Eavestrough Services`,
-    description: SITE_DESCRIPTION,
-  },
-}
+};
 
 export default function RootLayout({
   children,
