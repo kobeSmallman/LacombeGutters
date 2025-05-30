@@ -1,6 +1,11 @@
-import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import CityPageTemplate from '@/components/CityPageTemplate';
+import dynamic from 'next/dynamic';
+
+// Import the client component with no SSR to avoid hydration issues
+const CityPageClient = dynamic(
+  () => import('./CityPageClient'),
+  { ssr: false }
+);
 
 // City data with unique details for each location
 const cityData = [
@@ -405,28 +410,6 @@ export function generateStaticParams() {
   }));
 }
 
-// Using a simpler approach to avoid type conflicts with Next.js 15.3.2
 export default function CityPage({ params }: { params: { slug: string } }) {
-  const city = getCityData(params.slug);
-  
-  if (!city) {
-    notFound();
-  }
-  
-  return (
-    <CityPageTemplate
-      city={city.name}
-      province={city.province}
-      metaDescription={city.metaDescription}
-      introParagraph={<div dangerouslySetInnerHTML={{ __html: city.intro }} />}
-      commitmentParagraph={<div dangerouslySetInnerHTML={{ __html: city.commitment }} />}
-      servingParagraph={<div dangerouslySetInnerHTML={{ __html: city.serving }} />}
-      nearbyCities={city.nearbyCities}
-      features={{
-        majorRoads: city.features.majorRoads,
-        distanceFromLacombe: city.features.distanceFromLacombe,
-        localLandmarks: city.features.localLandmarks
-      }}
-    />
-  );
+  return <CityPageClient slug={params.slug} />;
 }
