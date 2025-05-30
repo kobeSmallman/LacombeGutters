@@ -173,11 +173,17 @@ ${name}
     }
   };
 
+  const copyToClipboard = (field: 'to' | 'subject' | 'body') => {
+    if (!emailContent) return;
+    navigator.clipboard.writeText(emailContent[field]);
+    alert(`${field.charAt(0).toUpperCase() + field.slice(1)} copied!`);
+  };
+
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
             Name <span className="text-red-500">*</span>
           </label>
           <input
@@ -189,12 +195,12 @@ ${name}
             data-error={!!validationErrors['name']}
           />
           {validationErrors['name'] && (
-            <p className="mt-1 text-sm text-red-600">{validationErrors['name']}</p>
+            <p className="mt-1 text-sm text-red-600 dark:text-red-400">{validationErrors['name']}</p>
           )}
         </div>
         
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
             Phone <span className="text-red-500">*</span>
           </label>
           <input
@@ -210,13 +216,13 @@ ${name}
             data-error={!!validationErrors['phone']}
           />
           {validationErrors['phone'] && (
-            <p className="mt-1 text-sm text-red-600">{validationErrors['phone']}</p>
+            <p className="mt-1 text-sm text-red-600 dark:text-red-400">{validationErrors['phone']}</p>
           )}
         </div>
       </div>
       
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
           Email <span className="text-red-500">*</span>
         </label>
         <input
@@ -228,12 +234,12 @@ ${name}
           data-error={!!validationErrors['email']}
         />
         {validationErrors['email'] && (
-          <p className="mt-1 text-sm text-red-600">{validationErrors['email']}</p>
+          <p className="mt-1 text-sm text-red-600 dark:text-red-400">{validationErrors['email']}</p>
         )}
       </div>
       
       <div>
-        <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="address" className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
           Address <span className="text-red-500">*</span>
         </label>
         <input
@@ -246,53 +252,53 @@ ${name}
           data-error={!!validationErrors['address']}
         />
         {validationErrors['address'] && (
-          <p className="mt-1 text-sm text-red-600">{validationErrors['address']}</p>
+          <p className="mt-1 text-sm text-red-600 dark:text-red-400">{validationErrors['address']}</p>
         )}
       </div>
       
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-gray-700 dark:text-white mb-2">
           Services Needed <span className="text-red-500">*</span>
         </label>
         
         <div className={`grid grid-cols-1 sm:grid-cols-2 gap-2 ${validationErrors['services'] ? 'border border-red-500 bg-red-50 p-2 rounded-md' : ''}`} data-error={!!validationErrors['services']}>
-          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-50">
+          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
             <input type="checkbox" name="services" value="5-inch-gutters" className="h-4 w-4 text-primary" />
-            <span>5-Inch Gutters</span>
+            <span className="text-black dark:text-white">5-Inch Gutters</span>
           </label>
           
-          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-50">
+          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
             <input type="checkbox" name="services" value="6-inch-gutters" className="h-4 w-4 text-primary" />
-            <span>6-Inch Gutters</span>
+            <span className="text-black dark:text-white">6-Inch Gutters</span>
           </label>
           
-          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-50">
+          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
             <input type="checkbox" name="services" value="soffit-fascia" className="h-4 w-4 text-primary" />
-            <span>Soffit & Fascia</span>
+            <span className="text-black dark:text-white">Soffit & Fascia</span>
           </label>
           
-          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-50">
+          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
             <input type="checkbox" name="services" value="downspouts" className="h-4 w-4 text-primary" />
-            <span>Downspouts</span>
+            <span className="text-black dark:text-white">Downspouts</span>
           </label>
           
-          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-50">
+          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
             <input type="checkbox" name="services" value="gutter-cleaning" className="h-4 w-4 text-primary" />
-            <span>Gutter Cleaning</span>
+            <span className="text-black dark:text-white">Gutter Cleaning</span>
           </label>
           
-          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-50">
+          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
             <input type="checkbox" name="services" value="other" className="h-4 w-4 text-primary" />
-            <span>Other</span>
+            <span className="text-black dark:text-white">Other</span>
           </label>
         </div>
         {validationErrors['services'] && (
-          <p className="mt-1 text-sm text-red-600">{validationErrors['services']}</p>
+          <p className="mt-1 text-sm text-red-600 dark:text-red-400">{validationErrors['services']}</p>
         )}
       </div>
       
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
           Project Details <span className="text-red-500">*</span>
         </label>
         <textarea
@@ -305,9 +311,9 @@ ${name}
           data-error={!!validationErrors['message']}
         ></textarea>
         {validationErrors['message'] && (
-          <p className="mt-1 text-sm text-red-600">{validationErrors['message']}</p>
+          <p className="mt-1 text-sm text-red-600 dark:text-red-400">{validationErrors['message']}</p>
         )}
-        <p className="mt-1 text-xs text-gray-500">Approximate measurements (if available) help us provide a more accurate estimate.</p>
+        <p className="mt-1 text-xs text-gray-500 dark:text-gray-300">Approximate measurements (if available) help us provide a more accurate estimate.</p>
       </div>
       
       <div className="bg-gray-50 border-l-4 border-primary p-4 mb-4">
@@ -318,11 +324,11 @@ ${name}
             </svg>
           </div>
           <div className="ml-3">
-            <p className="text-sm !text-black" style={{color: 'black !important'}}>
-              <strong>Photos Help Us Provide Accurate Estimates</strong> - When your default email app opens, you&apos;ll be able to attach photos of your existing gutters or project area.
+            <p className="text-sm text-black dark:text-black">
+              <strong className="text-black dark:text-black">Photos Help Us Provide Accurate Estimates</strong> - <span className="text-black dark:text-black">When your default email app opens, you&apos;ll be able to attach photos of your existing gutters or project area.</span>
             </p>
-            <p className="text-xs !text-black mt-1" style={{color: 'black !important'}}>
-              Note: This form will open your device&apos;s default email application. We will respond to the email address you provided above.
+            <p className="text-xs mt-1 text-black dark:text-black">
+              <span className="text-black dark:text-black">Note: This form will open your device&apos;s default email application. We will respond to the email address you provided above.</span>
             </p>
           </div>
         </div>
@@ -333,7 +339,7 @@ ${name}
           type="submit" 
           variant="primary" 
           size="lg"
-          className={`w-full sm:w-auto transition-colors ${isSubmitting ? 'bg-green-600 hover:bg-green-700' : ''}`}
+          className={`w-full sm:w-auto transition-colors ${isSubmitting ? 'bg-green-600 hover:bg-green-700' : 'hover:bg-opacity-90'}`}
           disabled={isSubmitting}
         >
           {isSubmitting ? 'Form Info Ready...' : 'Prepare Email'}
@@ -378,11 +384,9 @@ ${name}
                   className="flex-1 p-2 border border-gray-300 rounded-md text-sm bg-white"
                 />
                 <button
-                  className="ml-2 px-3 py-1 bg-primary text-white text-sm rounded-md"
-                  onClick={() => {
-                    navigator.clipboard.writeText(emailContent.to);
-                    alert('Email address copied!');
-                  }}
+                  type="button"
+                  onClick={() => copyToClipboard('to')}
+                  className="px-3 py-1 bg-primary hover:bg-opacity-90 text-white rounded-md ml-2 transition-colors"
                 >
                   Copy
                 </button>
@@ -399,11 +403,9 @@ ${name}
                   className="flex-1 p-2 border border-gray-300 rounded-md text-sm bg-white"
                 />
                 <button
-                  className="ml-2 px-3 py-1 bg-primary text-white text-sm rounded-md"
-                  onClick={() => {
-                    navigator.clipboard.writeText(emailContent.subject);
-                    alert('Subject copied!');
-                  }}
+                  type="button"
+                  onClick={() => copyToClipboard('subject')}
+                  className="px-3 py-1 bg-primary hover:bg-opacity-90 text-white rounded-md ml-2 transition-colors"
                 >
                   Copy
                 </button>
@@ -419,11 +421,9 @@ ${name}
                   className="p-2 border border-gray-300 rounded-md text-sm bg-white h-32"
                 />
                 <button
-                  className="mt-2 px-3 py-1 bg-primary text-white text-sm rounded-md self-end"
-                  onClick={() => {
-                    navigator.clipboard.writeText(emailContent.body);
-                    alert('Email body copied!');
-                  }}
+                  type="button"
+                  onClick={() => copyToClipboard('body')}
+                  className="mt-2 px-3 py-1 bg-primary hover:bg-opacity-90 text-white rounded-md self-end transition-colors"
                 >
                   Copy Email Body
                 </button>

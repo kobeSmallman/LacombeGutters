@@ -3,13 +3,26 @@
 const path = require('path');
 
 const nextConfig = {
+  reactStrictMode: true,
+  
+  env: {
+    NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+  },
+
   images: {
     unoptimized: true,
+    domains: ['maps.googleapis.com'],
   },
+
   webpack: (config) => {
-    config.resolve.alias['@'] = path.resolve(__dirname, 'src');
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': path.resolve(__dirname, 'src'),
+    };
+
     return config;
   },
+
   async headers() {
     return [
       {
@@ -23,6 +36,7 @@ const nextConfig = {
       },
     ];
   },
+
   async redirects() {
     return [
       {
