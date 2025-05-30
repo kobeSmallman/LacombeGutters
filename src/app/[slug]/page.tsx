@@ -3,6 +3,12 @@ import { Metadata } from 'next';
 import CityPageTemplate from '@/components/CityPageTemplate';
 import { cityData, getCityData } from '@/data/cityData';
 
+// Define the page props type
+type PageProps = {
+  params: { slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
 // Generate metadata for each city page
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const city = getCityData(params.slug);
@@ -32,7 +38,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function CityPage({ params }: { params: { slug: string } }) {
+export default function CityPage({ params }: PageProps) {
   const city = getCityData(params.slug);
   
   // If city not found, show 404
