@@ -33,7 +33,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function CityPage({ params }: { params: { city: string } }) {
+export default function CityPage({ params }: { params: { city: string } }) {
   const citySlug = `${params.city}-gutters`;
   const city = cityData.find(c => c.slug === citySlug);
   
