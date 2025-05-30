@@ -2,6 +2,16 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import CityPageTemplate from '@/components/CityPageTemplate';
 
+type GenerateMetadataProps = {
+  params: { slug: string };
+  searchParams: Record<string, string | string[]>;
+};
+
+type PageProps = {
+  params: { slug: string };
+  searchParams: Record<string, string | string[]>;
+};
+
 // City data with unique details for each location
 const cityData = [
   {
@@ -378,7 +388,7 @@ function getCityData(slug: string) {
   return cityData.find(city => city.slug === slug);
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: GenerateMetadataProps): Promise<Metadata> {
   const city = getCityData(params.slug);
   
   if (!city) {
@@ -405,7 +415,7 @@ export function generateStaticParams() {
   }));
 }
 
-export default function CityPage({ params }: { params: { slug: string } }) {
+export default async function CityPage({ params }: PageProps) {
   const city = getCityData(params.slug);
   
   if (!city) {
