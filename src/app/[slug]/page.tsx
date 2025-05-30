@@ -1,16 +1,10 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import dynamic from 'next/dynamic';
-
-// Use dynamic import for the template to avoid SSR issues
-const CityPageTemplate = dynamic(
-  () => import('@/components/CityPageTemplate'),
-  { ssr: false }
-);
+import CityPageTemplate from '@/components/CityPageTemplate';
+import { cityData, getCityData } from '@/data/cityData';
 
 // Generate metadata for each city page
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const { getCityData } = await import('@/data/cityData');
   const city = getCityData(params.slug);
   
   if (!city) {
@@ -33,14 +27,12 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 // Pre-render all city pages at build time
 export async function generateStaticParams() {
-  const { cityData } = await import('@/data/cityData');
   return cityData.map(city => ({
     slug: city.slug
   }));
 }
 
-export default async function CityPage({ params }: { params: { slug: string } }) {
-  const { getCityData } = await import('@/data/cityData');
+export default function Page({ params }: { params: { slug: string } }) {
   const city = getCityData(params.slug);
   
   // If city not found, show 404
