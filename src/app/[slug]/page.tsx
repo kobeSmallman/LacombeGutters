@@ -2,16 +2,6 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import CityPageTemplate from '@/components/CityPageTemplate';
 
-type GenerateMetadataProps = {
-  params: { slug: string };
-  searchParams: Record<string, string | string[]>;
-};
-
-type PageProps = {
-  params: { slug: string };
-  searchParams: Record<string, string | string[]>;
-};
-
 // City data with unique details for each location
 const cityData = [
   {
@@ -388,7 +378,7 @@ function getCityData(slug: string) {
   return cityData.find(city => city.slug === slug);
 }
 
-export async function generateMetadata({ params }: GenerateMetadataProps): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const city = getCityData(params.slug);
   
   if (!city) {
@@ -415,7 +405,8 @@ export function generateStaticParams() {
   }));
 }
 
-export default async function CityPage({ params }: PageProps) {
+// Using a simpler approach to avoid type conflicts with Next.js 15.3.2
+export default function CityPage({ params }: { params: { slug: string } }) {
   const city = getCityData(params.slug);
   
   if (!city) {
