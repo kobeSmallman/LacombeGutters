@@ -33,14 +33,11 @@ export async function generateStaticParams() {
   }));
 }
 
-type CityPageProps = {
-  params: {
-    city: string;
-  };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
-export default function CityPage({ params }: CityPageProps) {
+export default function CityPage({
+  params,
+}: {
+  params: { city: string };
+}) {
   const citySlug = `${params.city}-gutters`;
   const city = cityData.find(c => c.slug === citySlug);
   
