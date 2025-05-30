@@ -418,7 +418,12 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default function CityPage({ params }: { params: { slug: string } }) {
+interface PageProps {
+  params: { slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+
+export default async function CityPage({ params }: PageProps) {
   const city = getCityData(params.slug);
   
   if (!city) {
