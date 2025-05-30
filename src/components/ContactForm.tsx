@@ -316,7 +316,7 @@ ${name}
         <p className="mt-1 text-xs text-gray-500 dark:text-gray-300">Approximate measurements (if available) help us provide a more accurate estimate.</p>
       </div>
       
-      <div className="bg-gray-50 border-l-4 border-primary p-4 mb-4">
+      <div className="bg-gray-100 dark:bg-gray-800 border-l-4 border-primary p-4 mb-4">
         <div className="flex">
           <div className="flex-shrink-0 text-primary">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -324,11 +324,11 @@ ${name}
             </svg>
           </div>
           <div className="ml-3">
-            <p className="text-sm text-black dark:text-black">
-              <strong className="text-black dark:text-black">Photos Help Us Provide Accurate Estimates</strong> - <span className="text-black dark:text-black">When your default email app opens, you&apos;ll be able to attach photos of your existing gutters or project area.</span>
+            <p className="text-sm text-gray-900 dark:text-gray-100">
+              <strong className="font-semibold">Photos Help Us Provide Accurate Estimates</strong> - When your default email app opens, you&apos;ll be able to attach photos of your existing gutters or project area.
             </p>
-            <p className="text-xs mt-1 text-black dark:text-black">
-              <span className="text-black dark:text-black">Note: This form will open your device&apos;s default email application. We will respond to the email address you provided above.</span>
+            <p className="text-xs mt-1 text-gray-800 dark:text-gray-300">
+              Note: This form will open your device&apos;s default email application. We will respond to the email address you provided above.
             </p>
           </div>
         </div>
