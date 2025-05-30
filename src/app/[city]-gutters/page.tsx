@@ -37,6 +37,7 @@ type CityPageProps = {
   params: {
     city: string;
   };
+  searchParams: { [key: string]: string | string[] | undefined };
 };
 
 export default function CityPage({ params }: CityPageProps) {
