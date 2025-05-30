@@ -32,7 +32,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function CityPage({ params }: { params: { slug: string } }) {
+export default async function CityPage({ params }: { params: { slug: string } }) {
   const city = getCityData(params.slug);
   
   // If city not found, show 404
