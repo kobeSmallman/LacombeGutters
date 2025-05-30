@@ -1,8 +1,23 @@
 import { Metadata } from 'next';
-import dynamic from 'next/dynamic';
+import { notFound } from 'next/navigation';
+import CityPageTemplate from '@/components/CityPageTemplate';
 
-// Import the client component
-const CityPageClient = dynamic(() => import('./CityPageClient'));
+interface CityData {
+  slug: string;
+  name: string;
+  metaDescription: string;
+  intro: string;
+  commitment: string;
+  serving: string;
+  nearbyCities: string[];
+  features: {
+    majorRoads: string[];
+    distanceFromLacombe: string;
+    localLandmarks: string[];
+  };
+  province: string;
+  specialNote: string;
+}
 
 // City data with unique details for each location
 const cityData = [
@@ -362,7 +377,7 @@ const cityData = [
     slug: 'airdrie',
     name: 'Airdrie',
     metaDescription: 'Airdrie gutter specialists - Calgary\'s northern neighbor since 2014',
-    intro: 'As one of Canada\'s fastest-growing cities, Airdrie requires gutter solutions that keep pace with rapid development. Our team is experienced in both new construction and established neighborhood gutter needs.',
+    intro: 'As one of Canada\'s fastest-growing cities, Airdrie requires gutter solutions that keep pace with rapid development.',
     commitment: 'We offer free estimates and flexible scheduling, with special attention to preventing water damage in newer subdivisions.',
     serving: 'From the historic downtown to new communities, we serve all of Airdrie with reliable gutter solutions.',
     nearbyCities: ['Calgary (20 min)', 'Cochrane (30 min)', 'CrossIron Mills (15 min)'],
@@ -376,8 +391,8 @@ const cityData = [
   }
 ];
 
-function getCityData(slug: string) {
-  return cityData.find(city => city.slug === slug);
+function getCityData(slug: string): CityData | undefined {
+  return cityData.find((city: CityData) => city.slug === slug);
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
@@ -386,27 +401,44 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   if (!city) {
     return {
       title: 'Page Not Found',
-      description: 'The requested city page does not exist.'
+      description: 'The requested city page could not be found.'
     };
   }
-  
+
   return {
-    title: `Gutter Installation in ${city.name}, AB | Lacombe Gutters`,
+    title: `Gutter Installation in ${city.name} | Lacombe Gutters`,
     description: city.metaDescription,
     openGraph: {
-      title: `Gutter Installation in ${city.name}, AB`,
+      title: `Gutter Services in ${city.name}, ${city.province} | Lacombe Gutters`,
       description: city.metaDescription,
       type: 'website',
+      locale: 'en_CA',
+      siteName: 'Lacombe Gutters'
     }
   };
 }
 
-export function generateStaticParams() {
-  return cityData.map(city => ({
-    slug: city.slug
-  }));
-}
-
 export default function CityPage({ params }: { params: { slug: string } }) {
-  return <CityPageClient slug={params.slug} />;
+  const city = getCityData(params.slug);
+  
+  if (!city) {
+    notFound();
+  }
+
+  return (
+    <CityPageTemplate
+      city={city.name}
+      province={city.province}
+      metaDescription={city.metaDescription}
+      introParagraph={city.intro}
+      commitmentParagraph={city.commitment}
+      servingParagraph={city.serving}
+      nearbyCities={city.nearbyCities}
+      features={{
+        majorRoads: city.features.majorRoads,
+        distanceFromLacombe: city.features.distanceFromLacombe,
+        localLandmarks: city.features.localLandmarks
+      }}
+    />
+  );
 }
