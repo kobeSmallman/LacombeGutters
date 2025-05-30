@@ -1,11 +1,8 @@
 import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 
-// Import the client component with no SSR to avoid hydration issues
-const CityPageClient = dynamic(
-  () => import('./CityPageClient'),
-  { ssr: false }
-);
+// Import the client component
+const CityPageClient = dynamic(() => import('./CityPageClient'));
 
 // City data with unique details for each location
 const cityData = [
