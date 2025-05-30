@@ -378,7 +378,7 @@ function getCityData(slug: string) {
   return cityData.find(city => city.slug === slug);
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const city = getCityData(params.slug);
   
   if (!city) {
@@ -405,12 +405,7 @@ export function generateStaticParams() {
   }));
 }
 
-interface PageProps {
-  params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-}
-
-export default function CityPage({ params }: PageProps) {
+export default function CityPage({ params }: { params: { slug: string } }) {
   const city = getCityData(params.slug);
   
   if (!city) {
