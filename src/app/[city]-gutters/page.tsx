@@ -1,9 +1,3 @@
-import { notFound } from 'next/navigation';
-
-export default function CityGuttersPage() {
-  notFound();
-}
-
-export function generateStaticParams() {
-  return [];
+export default function Page() {
+  return null;
 }
