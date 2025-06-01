@@ -7,7 +7,7 @@ import { CheckCircle, Phone, ArrowRight } from "lucide-react";
 
 export const metadata = {
   title: "Our Services | Lacombe Gutters",
-  description: "Professional gutter, eavestrough, soffit & fascia services in Central Alberta. 40+ years experience. Free estimates. Call today!",
+  description: "Professional gutter, eavestrough, soffit & fascia services in Central Alberta. 40+ years of combined experience. Free estimates. Call today!",
 };
 
 const services = [
@@ -89,38 +89,41 @@ export default function ServicesPage() {
   return (
     <main className="min-h-screen bg-white dark:bg-gray-900">
       {/* Hero Section */}
-      <section className="relative bg-gray-900 text-white">
-        <div className="absolute inset-0">
-          <Image
-            src="/images/hero/gutters-hero.jpg"
-            alt="Professional gutter installation"
-            fill
-            className="object-cover opacity-30"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/70" />
-        </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              Expert Gutter & Eavestrough Services
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-100 max-w-4xl mx-auto mb-8">
-              Serving Central Alberta with 40+ years of combined experience in quality gutter installation and maintenance.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link href="/contact" className="inline-flex">
-                <Button variant="secondary" size="lg" className="text-lg px-8 py-6 rounded-lg">
-                  Get Free Estimate
-                </Button>
-              </Link>
-              <Link href="tel:4035989137" className="inline-flex">
-                <Button variant="outline" size="lg" className="text-lg px-8 py-6 rounded-lg border-2 border-white/20 hover:bg-white/10 text-white">
-                  <Phone className="w-5 h-5 mr-2" />
-                  (403) 598-9137
-                </Button>
-              </Link>
-            </div>
+      <section className="relative isolate overflow-hidden text-white bg-gradient-to-br from-slate-800 to-slate-900">
+        {/* Dotted-node overlay (yellow construction pin-holes) */}
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: 'radial-gradient(#fbbe24 1.5px, transparent 1.6px)',
+            backgroundSize: '28px 28px',
+          }}
+        />
+
+        {/* Subtle angled plate for depth */}
+        <div
+          className="absolute -top-32 -right-44 w-[150%] h-[180%] bg-slate-700/30"
+          style={{ clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0 100%)' }}
+        />
+
+        <div className="relative z-10 py-24 md:py-32 px-6 md:px-16 text-center space-y-5 md:space-y-6">
+          <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight drop-shadow-lg">
+            Expert Gutter & Eavestrough Services
+          </h1>
+          <p className="max-w-2xl mx-auto text-lg sm:text-xl md:text-2xl text-white/90 font-medium drop-shadow-sm">
+            Serving Central Alberta with 40+ years of combined experience in quality gutter installation and maintenance.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
+            <Link href="/contact" className="inline-flex">
+              <Button variant="secondary" size="lg" className="text-lg px-8 py-6 rounded-lg shadow-lg hover:scale-105 transition-transform">
+                Get Free Estimate
+              </Button>
+            </Link>
+            <Link href="tel:4035989137" className="inline-flex">
+              <Button variant="outline" size="lg" className="text-lg px-8 py-6 rounded-lg border-2 border-white/20 hover:bg-white/10 text-white hover:scale-105 transition-transform">
+                <Phone className="w-5 h-5 mr-2" />
+                (403) 598-9137
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -141,8 +144,8 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                title: "40+ Years Experience",
-                description: "Decades of expertise in gutter installation and maintenance across Central Alberta.",
+                title: "40+ Years Combined Experience",
+                description: "Our team brings decades of combined expertise in gutter installation and maintenance across Central Alberta.",
                 icon: "👷"
               },
               {

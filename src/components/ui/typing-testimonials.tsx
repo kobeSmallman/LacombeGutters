@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ScrewCorner } from '@/components/ui/decorative/ScrewCorner';
+import { ScrewCorner } from '@/components/ui/screw-corner'; // Updated to use kebab-case
 
 // List of testimonials to cycle through
 const testimonials = [

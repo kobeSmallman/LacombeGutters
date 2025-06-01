@@ -83,7 +83,7 @@ export const generateCityData = (): CityData[] => {
     name: city,
     province: 'Alberta',
     coordinates: CITY_COORDINATES[city] || [0, 0], // Fallback coordinates
-    metaDescription: `Professional gutter installation, repair, and maintenance in ${city}, Alberta. Local experts with 40+ years experience. Free estimates. Call today!`,
+    metaDescription: `Professional gutter installation, repair, and maintenance in ${city}, Alberta. Local experts with 40+ years of combined experience. Free estimates. Call today!`,
     intro: CITY_INTROS[city] || `Professional gutter services in ${city}, Alberta. Local experts with 40+ years of combined experience serving Central Alberta.`,
     commitment: CITY_COMMITMENTS[city] || `We're committed to providing the highest quality gutter services in ${city}, using materials and techniques specifically chosen for Alberta's climate.`,
     serving: CITY_SERVING[city] || `Serving ${city} and the surrounding Central Alberta region with pride. Our local team understands the unique challenges of your area.`,

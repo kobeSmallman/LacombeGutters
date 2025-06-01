@@ -21,7 +21,7 @@ export const metadata = {
   ],
   openGraph: {
     title: 'About Lacombe Gutters | Our Story & Team',
-    description: "With over 40 years of combined experience, Lacombe Gutters provides professional eavestrough services across Central Alberta. Learn about our team and commitment to quality.",
+    description: "With over 40+ years of combined experience, Lacombe Gutters provides professional eavestrough services across Central Alberta. Learn about our team and commitment to quality.",
     url: 'https://lacombeguttersltd.com/about',
     type: 'website',
     images: [

@@ -1,10 +1,10 @@
 'use client';
 
 import dynamic from "next/dynamic";
-import AnimateOnScroll from "./AnimateOnScroll";
+import AnimateOnScroll from "./animate-on-scroll";
 
 // Move the dynamic import to this client component
-const TypingTestimonials = dynamic(() => import("./TypingTestimonials"), {
+const TypingTestimonials = dynamic(() => import("./typing-testimonials"), {
   ssr: false, // Now it's safe in a client component
 });
 

@@ -149,7 +149,7 @@ export default function LocalBusinessSchema({
           '@type': 'WebPage',
           '@id': `https://www.lacombeguttersltd.com/locations/${location.slug}`,
           'name': `Eavestrough & Gutter Services in ${location.name}, Alberta`,
-          'description': `Professional eavestrough, gutter, soffit, and fascia services in ${location.name}. 40+ years of experience serving ${location.name} and surrounding areas.`
+          'description': `Professional eavestrough, gutter, soffit, and fascia services in ${location.name}. 40+ years of combined experience serving ${location.name} and surrounding areas.`
         };
       }
     }

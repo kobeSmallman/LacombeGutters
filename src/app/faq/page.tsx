@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { Suspense } from "react";
 import { FAQConfig, getFAQCategories } from "../../content/faq";
-import AnimateOnScroll from "../../components/ui/AnimateOnScroll";
+import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 import { 
   MessageCircle, 
   Wrench, 
