@@ -1,8 +1,8 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Button } from "@/components/ui/Button"
-import AnimateOnScroll from "@/components/ui/AnimateOnScroll"
-import TestimonialsSection from "@/components/ui/TestimonialsSection"
+import { Button } from "@/components/ui/button"
+import AnimateOnScroll from "@/components/ui/animate-on-scroll";
+import TestimonialsSection from "@/components/ui/testimonials-section"
 
 export default function Home() {
   return (

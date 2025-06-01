@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { TEAM_MEMBERS } from "@/lib/constants";
-import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
+import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 
 export const metadata = {
   title: "About Lacombe Gutters | Our Story & Team",

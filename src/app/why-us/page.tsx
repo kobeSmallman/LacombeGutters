@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
-import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
+import { Button } from "@/components/ui/button";
+import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 
 export const metadata = {
   title: "Why Choose Us",

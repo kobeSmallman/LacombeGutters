@@ -6,7 +6,7 @@ import Link     from "next/link";
 import { MapPin, Search, Check, Hammer, Ruler } from "lucide-react";
 
 import { SERVICE_POLYGON } from "@/components/ServiceAreaMap";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { Input  } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardContent }
   from "@/components/ui/card";

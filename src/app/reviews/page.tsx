@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { ScrewCorner } from "@/components/ui/decorative/ScrewCorner";
 
 export const metadata = {

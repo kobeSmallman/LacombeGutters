@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { SERVICE_AREA_BOUNDS } from "@/lib/constants";
 import { CheckCircle, Phone, ArrowRight } from "lucide-react";
 

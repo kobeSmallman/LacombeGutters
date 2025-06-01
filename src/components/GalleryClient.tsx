@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { useState, useEffect } from 'react';
-import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
+import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 
 // Gallery data with real images
 const galleryItems = [
