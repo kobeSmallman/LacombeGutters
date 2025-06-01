@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { FAQConfig, getFAQCategories } from "../../content/faq";
 import AnimateOnScroll from "../../components/ui/AnimateOnScroll";
 import { 
-  MessageCircleQuestion, 
+  MessageCircle, 
   Wrench, 
   HardHat, 
   DollarSign, 
@@ -39,7 +39,7 @@ const getCategoryIcon = (category: string) => {
     case "General":
       return <HelpCircle className="h-7 w-7 text-primary" />;
     default:
-      return <MessageCircleQuestion className="h-7 w-7 text-primary" />;
+      return <MessageCircle className="h-7 w-7 text-primary" />;
   }
 };
 
@@ -55,7 +55,7 @@ export default function FAQPage() {
       <AnimateOnScroll type="fadeIn" duration={0.9}>
         <div className="container mx-auto px-4 text-center mb-12">
           <div className="flex justify-center mb-6">
-            <MessageCircleQuestion className="h-16 w-16 text-primary" />
+            <MessageCircle className="h-16 w-16 text-primary" />
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4 text-primary">Frequently Asked Questions</h1>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">

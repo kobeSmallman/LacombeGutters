@@ -1,0 +1,48 @@
+'use client';
+
+import { useEffect, useRef } from 'react';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+
+interface Props {
+  bounds: [number, number][];
+  zoom?: number;
+  className?: string;
+}
+
+export default function MapComponent({
+  bounds,
+  zoom = 8,
+  className = 'h-[500px] w-full',
+}: Props) {
+  const mapRef = useRef<L.Map | null>(null);
+  const polyRef = useRef<L.Polygon | null>(null);
+  const divRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!divRef.current || mapRef.current) return;
+
+    // base map
+    const map = L.map(divRef.current, { zoomControl: false });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors',
+    }).addTo(map);
+    L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+    // service polygon (Leaflet closes the loop automatically)
+    const polygon = L.polygon(bounds, {
+      color: '#215e7d',
+      fillColor: '#93c5fd',
+      fillOpacity: 0.35,
+      weight: 2,
+    }).addTo(map);
+
+    map.fitBounds(polygon.getBounds(), { padding: [30, 30], maxZoom: zoom });
+    polyRef.current = polygon;
+    mapRef.current = map;
+
+    return () => map.remove();
+  }, [bounds, zoom]);
+
+  return <div ref={divRef} className={className} />;
+}

@@ -1,36 +1,56 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { CityData } from '@/data/cities';
 import CityPageTemplate from '@/components/CityPageTemplate';
 
-// City data with unique details for each location
-const cityData = [
-  {
-    slug: 'lacombe',
-    name: 'Lacombe',
-    metaDescription: 'Professional gutter installation and repair services in Lacombe, AB',
-    intro: 'Serving the Lacombe community since 2013, we specialize in high-quality gutter solutions for both residential and commercial properties.',
-    commitment: 'Our team is committed to providing exceptional service and workmanship to protect your home from water damage.',
-    serving: 'We serve all of Lacombe and surrounding areas, including Blackfalds and Bentley.',
-    nearbyCities: ['Blackfalds (15 min)', 'Bentley (30 min)', 'Red Deer (25 min)'],
-    features: {
-      majorRoads: ['Hwy 2A', 'Hwy 12', 'Hwy 20'],
-      distanceFromLacombe: '0 km',
-      localLandmarks: ['Lacombe Memorial Centre', 'Lacombe Golf & Country Club', 'Lacombe Lake']
-    },
-    province: 'AB',
-    specialNote: 'Free estimates available for all Lacombe residents.'
-  },
-  // ... other city data remains the same ...
-];
-
 export default function CityPageContent() {
-  const params = useParams();
-  const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
-  const city = cityData.find(c => c.slug === slug);
+  const searchParams = useSearchParams();
+  const [city, setCity] = useState<CityData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Get the slug from the URL
+    const slug = window.location.pathname.split('/').pop() || '';
+    
+    // Fetch city data
+    const fetchCityData = async () => {
+      try {
+        const response = await fetch(`/api/cities/${slug}`);
+        if (response.ok) {
+          const data = await response.json();
+          setCity(data);
+        } else {
+          console.error('City not found');
+        }
+      } catch (error) {
+        console.error('Error fetching city data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCityData();
+  }, [searchParams]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
   if (!city) {
-    return <div>City not found</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">City Not Found</h1>
+          <p className="text-gray-600">The requested city could not be found.</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -42,11 +62,7 @@ export default function CityPageContent() {
       commitmentParagraph={city.commitment}
       servingParagraph={city.serving}
       nearbyCities={city.nearbyCities}
-      features={{
-        majorRoads: city.features.majorRoads,
-        distanceFromLacombe: city.features.distanceFromLacombe,
-        localLandmarks: city.features.localLandmarks
-      }}
+      features={city.features}
     />
   );
 }

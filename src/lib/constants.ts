@@ -11,6 +11,7 @@ export const NAVIGATION_ITEMS = [
   { label: "Home", path: "/" },
   { label: "About", path: "/about" },
   { label: "Services", path: "/services" },
+  { label: "Service Areas", path: "/service-areas" },
   { label: "Gallery", path: "/gallery" },
   { label: "FAQ", path: "/faq" },
   { label: "Why Choose Us", path: "/why-us" },

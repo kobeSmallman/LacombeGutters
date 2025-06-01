@@ -14,11 +14,19 @@ const nextConfig = {
     domains: ['maps.googleapis.com'],
   },
 
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
     config.resolve.alias = {
       ...config.resolve.alias,
       '@': path.resolve(__dirname, 'src'),
     };
+
+    // Fix for Lucide icons
+    if (!isServer) {
+      config.resolve.alias['lucide-react'] = path.resolve(
+        __dirname,
+        'node_modules/lucide-react/dist/esm/lucide-react.js'
+      );
+    }
 
     return config;
   },
