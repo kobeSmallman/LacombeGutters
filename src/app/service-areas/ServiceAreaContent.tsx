@@ -194,13 +194,13 @@ export default function ServiceAreaContent() {
                 )}
 
                 {status === 'done' && (
-                  <Card className="mt-6 overflow-hidden border border-gray-200 shadow-sm">
-                    <CardHeader className={`pb-3 ${inside ? 'bg-green-50' : 'bg-blue-50'} border-b`}>
+                  <Card className="mt-6 overflow-hidden border border-gray-200 dark:border-gray-300 shadow-sm">
+                    <CardHeader className={`pb-3 ${inside ? 'bg-green-50 dark:bg-green-100' : 'bg-blue-50 dark:bg-blue-100'} border-b dark:border-gray-300`}>
                       <div className="flex items-center">
-                        <div className={`p-2 rounded-full ${inside ? 'bg-green-100' : 'bg-blue-100'} mr-3`}>
-                          <Check className={`h-5 w-5 ${inside ? 'text-green-600' : 'text-blue-600'}`} />
+                        <div className={`p-2 rounded-full ${inside ? 'bg-green-100 dark:bg-green-200' : 'bg-blue-100 dark:bg-blue-200'} mr-3`}>
+                          <Check className={`h-5 w-5 ${inside ? 'text-emerald-600' : 'text-blue-600'}`} />
                         </div>
-                        <CardTitle className={`text-lg ${inside ? 'text-green-800' : 'text-blue-800'}`}>
+                        <CardTitle className={`text-lg ${inside ? 'text-green-800' : 'text-blue-800'}`} style={{ color: 'black' }}>
                           {inside ? 'We Service Your Area!' : 'Service Not Available'}
                         </CardTitle>
                       </div>
@@ -208,9 +208,9 @@ export default function ServiceAreaContent() {
                     <CardContent className="p-6">
                       <p className={`mb-4 ${inside ? 'text-green-700' : 'text-blue-700'}`}>
                         {inside ? (
-                          'Great news! We provide gutter services in your area.'
+                          <span className="dark:text-white">Great news! We provide gutter services in your area.</span>
                         ) : (
-                          'We currently do not service this area, but we may be able to make exceptions. Contact us to discuss your needs.'
+                          <span className="dark:text-white">We currently do not service this area, but we may be able to make exceptions. Contact us to discuss your needs.</span>
                         )}
                       </p>
                       <div className="flex flex-col sm:flex-row gap-3">
@@ -297,9 +297,9 @@ export default function ServiceAreaContent() {
             </div>
             
             <div className="grid md:grid-cols-2 gap-8 mt-12">
-              <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Don&apos;t see your city?</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
+              <div className="bg-gray-50 dark:bg-white p-6 rounded-xl border border-gray-200 dark:border-gray-300">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3" style={{ color: 'black' }}>Don&apos;t see your city?</h3>
+                <p className="text-gray-600 mb-4" style={{ color: 'black' }}>
                   We don&apos;t service your area yet? We&apos;re expanding our coverage and would love to hear from you! Send us a message and let us know where you&apos;re located.
                 </p>
                 <Button asChild variant="outline" className="w-full">
@@ -309,9 +309,9 @@ export default function ServiceAreaContent() {
                 </Button>
               </div>
               
-              <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-100 dark:border-blue-800/50">
-                <h3 className="text-xl font-semibold text-blue-900 dark:text-blue-100 mb-3">Special Request?</h3>
-                <p className="text-blue-800 dark:text-blue-200 mb-4">
+              <div className="bg-blue-50 dark:bg-blue-100 p-6 rounded-xl border border-blue-100 dark:border-blue-200">
+                <h3 className="text-xl font-semibold text-blue-900 mb-3" style={{ color: 'black' }}>Special Request?</h3>
+                <p className="text-blue-800 mb-4" style={{ color: 'black' }}>
                   Need service outside our regular coverage area? Contact us for special arrangements.
                 </p>
                 <Button asChild variant="primary" className="w-full">
@@ -322,7 +322,7 @@ export default function ServiceAreaContent() {
               </div>
             </div>
             
-            <div className="mt-8 p-6 bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 dark:border-yellow-500 rounded-r-lg">
+            <div className="mt-8 p-6 bg-yellow-50 dark:bg-yellow-100 border-l-4 border-yellow-400 rounded-r-lg">
               <div className="flex">
                 <div className="flex-shrink-0">
                   <svg className="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
@@ -330,12 +330,12 @@ export default function ServiceAreaContent() {
                   </svg>
                 </div>
                 <div className="ml-3">
-                  <h3 className="text-sm font-medium text-yellow-800 dark:text-yellow-200">
+                  <h3 className="text-sm font-medium text-yellow-800" style={{ color: 'black' }}>
                     Don&apos;t see your city listed?
                   </h3>
-                  <div className="mt-2 text-sm text-yellow-700 dark:text-yellow-300">
-                    <p>
-                      We&apos;re constantly expanding our service area! If you don&apos;t see your location in our coverage map, please send us a message through our <Link href="/contact" className="font-medium underline text-yellow-800 dark:text-yellow-200 hover:text-yellow-600 dark:hover:text-yellow-400">contact page</Link> with your address. We&apos;ll let you know if we can accommodate your area or add it to our expansion plans.
+                  <div className="mt-2 text-sm text-yellow-700">
+                    <p style={{ color: 'black' }}>
+                      We&apos;re constantly expanding our service area! If you don&apos;t see your location in our coverage map, please send us a message through our <Link href="/contact" className="font-medium underline text-yellow-800 hover:text-yellow-600" style={{ color: 'black' }}>contact page</Link> with your address. We&apos;ll let you know if we can accommodate your area or add it to our expansion plans.
                     </p>
                   </div>
                 </div>
