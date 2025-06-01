@@ -39,7 +39,7 @@ export const FAQConfig = {
     },
     { "id": 6,
       "question": "What areas do you serve?",
-      "answer": "We cover Lacombe, Red Deer, Blackfalds, Ponoka, Sylvan Lake, Stettler, Wetaskiwin, Innisfail, and more than 80 other Alberta communities.",
+      "answer": "We cover Lacombe, Red Deer, Blackfalds, Ponoka, Sylvan Lake, Stettler, Wetaskiwin, Innisfail, and more than 80 other Alberta communities. <a href='/service-areas' class='text-primary hover:underline font-medium'>Check our service area map</a> or contact us to confirm service availability in your specific area.",
       "category": "General"
     },
     { "id": 7,
@@ -112,7 +112,7 @@ export const FAQConfig = {
     },
     { "id": 20,
       "question": "Do you charge mileage for out‑of‑town work?",
-      "answer": "Mileage is calculated from our Red Deer shop. Travel within roughly **50 km** is included; beyond that a modest per‑kilometre fee is shown on your quote.",
+      "answer": "Mileage is calculated from our shop at 112 Queensgate Cres #170, Blackfalds, AB. Travel within roughly **50 km** is included; beyond that a modest per‑kilometre fee is shown on your quote.",
       "category": "Estimates & Payment"
     },
 
