@@ -322,20 +322,18 @@ export default function ServiceAreaContent() {
               </div>
             </div>
             
-            <div className="mt-8 p-6 bg-yellow-50 dark:bg-yellow-100 border-l-4 border-yellow-400 rounded-r-lg">
-              <div className="flex">
-                <div className="flex-shrink-0">
-                  <svg className="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                  </svg>
+            <div className="mt-8 p-6 bg-blue-50 dark:bg-blue-100 border-l-4 border-primary rounded-r-lg">
+              <div className="flex items-start">
+                <div className="flex-shrink-0 mt-0.5">
+                  <MapPin className="h-5 w-5 text-primary" />
                 </div>
                 <div className="ml-3">
-                  <h3 className="text-sm font-medium text-yellow-800" style={{ color: 'black' }}>
-                    Don&apos;t see your city listed?
+                  <h3 className="text-sm font-medium text-blue-900" style={{ color: 'black' }}>
+                    Full Coverage Across Central Alberta
                   </h3>
-                  <div className="mt-2 text-sm text-yellow-700">
+                  <div className="mt-2 text-sm">
                     <p style={{ color: 'black' }}>
-                      We&apos;re constantly expanding our service area! If you don&apos;t see your location in our coverage map, please send us a message through our <Link href="/contact" className="font-medium underline text-yellow-800 hover:text-yellow-600" style={{ color: 'black' }}>contact page</Link> with your address. We&apos;ll let you know if we can accommodate your area or add it to our expansion plans.
+                      Our service area spans from Edmonton to Airdrie (north-south) and Stettler to Nordegg (east-west). If you&apos;re located within this region, we&apos;re ready to serve you with our expert gutter services. Need service just outside our main area? <Link href="/contact" className="font-semibold text-primary hover:underline" style={{ color: 'black' }}>Contact us</Link> to discuss your specific needs.
                     </p>
                   </div>
                 </div>
