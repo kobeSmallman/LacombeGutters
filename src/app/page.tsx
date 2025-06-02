@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
       {/* Hero Section */}
-      <section className="relative bg-primary text-white py-24 md:py-36 lg:py-44 overflow-hidden">
+      <section className="relative bg-primary text-white py-32 md:py-44 lg:py-52 overflow-hidden">
         {/* Construction texture overlay */}
         <div className="absolute inset-0 bg-[url('/images/textures/concrete-seamless.png')] opacity-5"></div>
         
@@ -393,7 +393,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section with Rain */}
-      <section className="py-24 md:py-32 relative overflow-hidden bg-gradient-to-b from-gray-900 to-blue-900">
+      <section className="py-24 md:py-32 relative overflow-hidden bg-gradient-to-b from-gray-900 to-blue-900 text-white min-h-[90vh] flex items-center justify-center">
         {/* Rain Effect - Full viewport */}
         <div className="absolute inset-0 z-0">
           <RainEffect />
