@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
       {/* Hero Section */}
-      <section className="relative bg-primary text-white py-20 md:py-32 lg:py-40 overflow-hidden">
+      <section className="relative bg-primary text-white py-24 md:py-36 lg:py-44 overflow-hidden">
         {/* Construction texture overlay */}
         <div className="absolute inset-0 bg-[url('/images/textures/concrete-seamless.png')] opacity-5"></div>
         

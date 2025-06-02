@@ -30,7 +30,7 @@ export default function TestimonialsSection() {
       </AnimateOnScroll>
       
       <AnimateOnScroll type="slideRight" delay={0.2}>
-        <div className="max-w-4xl mx-auto bg-white/90 p-10 rounded-lg shadow-2xl border border-yellow-400/20 relative backdrop-blur-sm">
+        <div className="max-w-4xl mx-auto bg-white/90 p-6 md:p-10 rounded-lg shadow-2xl border border-yellow-400/20 relative backdrop-blur-sm h-[320px] md:h-auto overflow-y-auto">
           {/* Metal frame */}
           <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600"></div>
           <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600"></div>
@@ -43,7 +43,7 @@ export default function TestimonialsSection() {
           <div className="screw-corner screw-bottom-left"></div>
           <div className="screw-corner screw-bottom-right"></div>
           
-          <div className="text-lg md:text-xl leading-relaxed text-gray-800">
+          <div className="text-lg md:text-xl leading-relaxed text-gray-800 flex items-center justify-center h-full">
             <TypingTestimonials />
           </div>
         </div>
