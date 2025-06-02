@@ -6,6 +6,10 @@
 /* stylelint-disable-next-line */
 @tailwind utilities;
 
+/* Custom section backgrounds */
+@import "../styles/testimonials-bg.css";
+@import "../styles/cta-bg.css";
+
 :root {
   --foreground-rgb: 28, 28, 28;
   --background-start-rgb: 26, 26, 26;
@@ -24,6 +28,93 @@ a, button {
 
 a:hover, button:hover {
   transform: translateY(-1px);
+}
+
+/* Section Divider */
+.section-divider {
+  position: relative;
+  height: 80px;
+  width: 100%;
+  background: linear-gradient(to bottom right, transparent 49.5%, #0a0a0a 50%);
+  z-index: 1;
+}
+
+/* Blueprint background utility */
+@layer utilities {
+  .bg-blueprint {
+    --tw-bg-opacity: 1;
+    background-color: #0f1113;
+    background-image: 
+      linear-gradient(rgba(10, 10, 10, 0.8) 0%, rgba(10, 10, 10, 0.8) 100%),
+      radial-gradient(rgba(251, 190, 36, 0.1) 1px, transparent 1px);
+    background-size: 100% 100%, 40px 40px;
+    background-position: 0 0, 0 0;
+  }
+  
+  .bg-plate {
+    --tw-bg-opacity: 1;
+    background-color: #f5b529;
+    background-image: 
+      linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.1) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.1) 75%,
+        transparent 75%,
+        transparent
+      );
+    background-size: 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .bg-plate::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.02) 0%,
+      transparent 15%,
+      transparent 85%,
+      rgba(0, 0, 0, 0.1) 100%
+    );
+    pointer-events: none;
+  }
+}
+
+/* Custom background utilities */
+@layer utilities {
+  /* 1️⃣  Black "carbon‑nodes" backdrop for the Testimonials wrapper  */
+  .bg-carbon-nodes {
+    /* deep charcoal base so light & dark themes both pop */
+    background-color: #0b0b0b;
+    /* two staggered radial grids give the interlaced‑node effect */
+    background-image:
+      radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 20px;
+  }
+
+  /* 2️⃣  Brushed‑metal hex overlay for the yellow CTA wrapper */
+  .bg-brushed-hex {
+    /* keep your existing yellow vibe underneath */
+    background-color: #f5b529; /* fallback */
+    /* subtle brushed‑steel texture blended with faint hex pattern */
+    background-image:
+      /* brushed grain */
+      linear-gradient(0deg, rgba(255,255,255,0.05), rgba(0,0,0,0.05)),
+      /* hex "wire‑frame" – two 60° sets create the honeycomb */
+      repeating-linear-gradient(60deg, rgba(255,255,255,0.12) 0 1px, transparent 1px 60px),
+      repeating-linear-gradient(120deg, rgba(255,255,255,0.12) 0 1px, transparent 1px 60px);
+    background-blend-mode: overlay;
+  }
 }
 
 /* Construction theme elements */

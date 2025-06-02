@@ -1,0 +1,196 @@
+/* Testimonials Background */
+.testimonials-bg {
+  background: linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 100%);
+  position: relative;
+  overflow: hidden;
+  --wave-count: 6;
+}
+
+@keyframes waveOutward {
+  0% {
+    transform: scaleX(0) scaleY(var(--wave-scale-start));
+    opacity: 0.1;
+  }
+  15% {
+    opacity: 0.7;
+  }
+  40% {
+    opacity: 0.7;
+  }
+  50% {
+    transform: scaleX(2.5) scaleY(var(--wave-scale-end));
+    opacity: 0.1;
+  }
+  100% {
+    transform: scaleX(2.5) scaleY(var(--wave-scale-end));
+    opacity: 0.1;
+  }
+}
+
+@keyframes waveInward {
+  0% {
+    transform: scaleX(2.5) scaleY(var(--wave-scale-end));
+    opacity: 0.1;
+  }
+  15% {
+    opacity: 0.7;
+  }
+  40% {
+    opacity: 0.7;
+  }
+  50% {
+    transform: scaleX(0) scaleY(var(--wave-scale-start));
+    opacity: 0.1;
+  }
+  100% {
+    transform: scaleX(0) scaleY(var(--wave-scale-start));
+    opacity: 0.1;
+  }
+}
+
+/* Create multiple wave layers */
+.testimonials-bg::before,
+.testimonials-bg::after,
+.testimonials-bg .wave-layer-1,
+.testimonials-bg .wave-layer-2,
+.testimonials-bg .wave-layer-3,
+.testimonials-bg .wave-layer-4 {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform-origin: center;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  opacity: 0.8;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 200% 100%;
+}
+
+.testimonials-bg::before { /* Base background gradient */
+  background: linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 100%);
+  z-index: 1;
+}
+
+.testimonials-bg::after { /* Noise texture */
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(255,255,255,0.05) 0%, transparent 10%),
+    radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 0%, transparent 10%);
+  background-size: 200px 200px;
+  z-index: 2;
+  opacity: 0.5;
+  animation: noise 10s steps(10) infinite;
+}
+
+@keyframes noise {
+  0% { background-position: 0 0; }
+  100% { background-position: 1000px 1000px; }
+}
+
+/* Wave layers */
+.testimonials-bg .wave-layer-1 {
+  --wave-scale-start: 1;
+  --wave-scale-end: 1.2;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(99, 102, 241, 0.4) 20%, 
+    rgba(168, 85, 247, 0.5) 50%, 
+    rgba(99, 102, 241, 0.4) 80%, 
+    transparent 100%
+  );
+  animation: 
+    waveOutward 18s ease-in-out -12s infinite,
+    waveInward 18s ease-in-out 0s infinite;
+  z-index: 3;
+}
+
+.testimonials-bg .wave-layer-2 {
+  --wave-scale-start: 1.1;
+  --wave-scale-end: 0.9;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(236, 72, 153, 0.35) 20%, 
+    rgba(99, 102, 241, 0.45) 50%, 
+    rgba(236, 72, 153, 0.35) 80%, 
+    transparent 100%
+  );
+  animation: 
+    waveOutward 22s ease-in-out -15s infinite,
+    waveInward 22s ease-in-out -5s infinite;
+  z-index: 4;
+}
+
+.testimonials-bg .wave-layer-3 {
+  --wave-scale-start: 0.9;
+  --wave-scale-end: 1.1;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(59, 130, 246, 0.3) 20%, 
+    rgba(139, 92, 246, 0.4) 50%, 
+    rgba(59, 130, 246, 0.3) 80%, 
+    transparent 100%
+  );
+  animation: 
+    waveOutward 25s ease-in-out -18s infinite,
+    waveInward 25s ease-in-out -10s infinite;
+  z-index: 5;
+}
+
+.testimonials-bg .wave-layer-4 {
+  --wave-scale-start: 1.05;
+  --wave-scale-end: 0.95;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(244, 114, 182, 0.25) 20%, 
+    rgba(192, 132, 252, 0.35) 50%, 
+    rgba(244, 114, 182, 0.25) 80%, 
+    transparent 100%
+  );
+  animation: 
+    waveOutward 20s ease-in-out -25s infinite,
+    waveInward 20s ease-in-out -15s infinite;
+  z-index: 6;
+}
+
+.testimonials-bg .node-grid { /* Node grid */
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: 
+    radial-gradient(circle, rgba(255,255,255,0.8) 1.5px, transparent 2px),
+    radial-gradient(circle, rgba(255,255,255,0.4) 1px, transparent 1.5px);
+  background-size: 40px 40px, 80px 80px;
+  background-position: 0 0, 20px 20px;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 3;
+  animation: float 25s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(0, 0) scale(1.02);
+  }
+}
+
+/* Dark mode adjustments */
+.dark .testimonials-bg {
+  background: linear-gradient(135deg, #0f0a1a 0%, #1e1338 100%);
+}
+
+.dark .testimonials-bg::before {
+  opacity: 0.8;
+}
+
+.dark .testimonials-bg::after {
+  opacity: 0.2;
+}

@@ -1,0 +1,232 @@
+import Link from "next/link"
+import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import AnimateOnScroll from "@/components/ui/animate-on-scroll";
+import TestimonialsSection from "@/components/ui/testimonials-section"
+
+export default function Home() {
+  return (
+    <div className="flex flex-col min-h-screen">
+      {/* Hero Section */}
+      <section className="relative bg-primary text-white py-28 md:py-40 overflow-hidden">
+        {/* Background image without any wrapper div that might cause a visible box */}
+        <Image 
+          src="/images/banners/truck.png" 
+          alt="Lacombe Gutters Truck" 
+          fill
+          className="object-cover opacity-20"
+          priority
+        />
+        <div className="absolute inset-0 bg-black/30"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <AnimateOnScroll type="zoomIn" className="max-w-5xl lg:max-w-6xl relative">
+            {/* subtle angled steel overlay */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  "linear-gradient(140deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0) 60%)",
+                mixBlendMode: "overlay"
+              }}
+            />
+            
+            <div className="mb-8">
+              <Image 
+                src="/images/logos/logo.png" 
+                alt="Lacombe Gutters Logo" 
+                width={200} 
+                height={200}
+                className="mb-6"
+              />
+              <h1 className="font-heading text-[clamp(2.5rem,4vw+1rem,4.5rem)] font-bold mb-6 leading-tight">
+                Professional Eavestrough Services
+              </h1>
+            </div>
+            
+            <AnimateOnScroll type="fadeIn" delay={0.3}>
+              <p className="text-[clamp(1rem,0.8vw+0.8rem,1.4rem)] mb-8 max-w-3xl">
+                Serving central Alberta since 2009 with 40+ years of combined experience.
+              </p>
+            </AnimateOnScroll>
+            
+            <AnimateOnScroll type="slideUp" delay={0.4} className="flex flex-col sm:flex-row gap-4">
+              <Link href="/contact">
+                <Button variant="secondary" size="lg">
+                  Get Free Estimate
+                </Button>
+              </Link>
+              <Link href="/services">
+                <Button variant="ghost" size="lg" className="border-2 border-white">
+                  Our Services
+                </Button>
+              </Link>
+            </AnimateOnScroll>
+          </AnimateOnScroll>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section className="py-16 bg-[rgba(96,125,139,0.03)] dark:bg-transparent">
+        <div className="container mx-auto px-4">
+          <AnimateOnScroll type="fadeIn" className="text-center mb-12 relative">
+            {/* Tool icon instead of screws - maintaining industrial theme */}
+            <div className="absolute top-0 right-1/2 translate-x-32 md:translate-x-48">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3a2 2 0 012-2h10a2 2 0 012 2v14a2 2 0 01-2 2H7a2 2 0 01-2-2V3z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11h.01" />
+              </svg>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">Our Services</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              We provide a complete range of professional eavestrough and gutter services
+            </p>
+          </AnimateOnScroll>
+          
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-[repeat(auto-fit,minmax(320px,1fr))]">
+            {/* 5" Eavestrough - Slide Up */}
+            <AnimateOnScroll type="slideUp" delay={0.1}>
+              <div className="group bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                <span className="block h-1 bg-secondary group-hover:scale-x-110 transition-transform origin-left duration-300"/>
+                <div className="relative aspect-[16/9]">
+                  <Image 
+                    src="/images/gallery/09_gutter_install_two_workers.png" 
+                    alt="5-inch Conventional Gutters" 
+                    fill
+                    style={{ objectFit: "cover" }}
+                    className="group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div className="p-8 lg:p-10 transition-all duration-300">
+                  <h3 className="text-xl font-bold mb-3">5&quot; Conventional Gutters</h3>
+                  <p className="text-gray-600 mb-4">
+                    Our standard 5&quot; gutters are perfect for most residential applications, offering excellent water flow capacity.
+                  </p>
+                  <Link href="/services">
+                    <Button variant="primary" size="sm">Learn More</Button>
+                  </Link>
+                </div>
+              </div>
+            </AnimateOnScroll>
+            
+            {/* 6" Gutters - Slide Left */}
+            <AnimateOnScroll type="slideLeft" delay={0.2}>
+              <div className="group bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                <span className="block h-1 bg-secondary group-hover:scale-x-110 transition-transform origin-left duration-300"/>
+                <div className="relative aspect-[16/9]">
+                  <Image 
+                    src="/images/gallery/04_long_gutter_summer.png" 
+                    alt="6-inch Oversized Gutters" 
+                    fill
+                    style={{ objectFit: "cover" }}
+                    className="group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div className="p-8 lg:p-10 transition-all duration-300">
+                  <h3 className="text-xl font-bold mb-3">6&quot; Oversized Gutters</h3>
+                  <p className="text-gray-600 mb-4">
+                    Ideal for homes with large roof areas or heavy rainfall, our 6&quot; gutters provide superior water handling.
+                  </p>
+                  <Link href="/services">
+                    <Button variant="primary" size="sm">Learn More</Button>
+                  </Link>
+                </div>
+              </div>
+            </AnimateOnScroll>
+            
+            {/* Soffit & Fascia - Slide Right */}
+            <AnimateOnScroll type="slideRight" delay={0.3}>
+              <div className="group bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                <span className="block h-1 bg-secondary group-hover:scale-x-110 transition-transform origin-left duration-300"/>
+                <div className="relative aspect-[16/9]">
+                  <Image 
+                    src="/images/gallery/LadderWorker.png" 
+                    alt="Soffit & Fascia Installation" 
+                    fill
+                    style={{ objectFit: "cover" }}
+                    className="group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div className="p-8 lg:p-10 transition-all duration-300">
+                  <h3 className="text-xl font-bold mb-3">Soffit &amp; Fascia</h3>
+                  <p className="text-gray-600 mb-4">
+                    Complete soffit and fascia solutions to protect and enhance your roofline with durable, low-maintenance materials.
+                  </p>
+                  <Link href="/services/soffit-fascia">
+                    <Button variant="primary" size="sm">Learn More</Button>
+                  </Link>
+                </div>
+              </div>
+            </AnimateOnScroll>
+          </div>
+        </div>
+      </section>
+      
+      {/* Section Divider - Top of Testimonials */}
+      <div className="section-divider -mt-20" />
+      
+      {/* Testimonials Section */}
+      <section className="py-20 bg-blueprint dark:bg-blueprint/80 relative">
+        <div className="absolute inset-0 opacity-10" style={{
+          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(251,190,36,0.2) 1px, transparent 0)',
+          backgroundSize: '40px 40px'
+        }}></div>
+        <div className="relative z-10">
+          <TestimonialsSection />
+        </div>
+      </section>
+      
+      {/* Section Divider - Bottom of Testimonials */}
+      <div className="section-divider rotate-180 -mb-20" style={{
+        background: 'linear-gradient(to bottom right, transparent 50%, #f5b529 50%)'
+      }} />
+      
+      {/* Yellow CTA Section - Full Width */}
+      <section className="relative py-16 bg-plate">
+        <div className="absolute inset-0 bg-black/5" style={{
+          maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, transparent 100%)'
+        }}></div>
+        
+        <div className="relative z-10">
+          <AnimateOnScroll
+            type="slideUp"
+            delay={0.3}
+            className="container mx-auto px-4 text-center"
+          >
+            <div className="relative inline-block">
+              {/* Screws in corners - construction theme */}
+              <div className="screw-corner screw-top-left"></div>
+              <div className="screw-corner screw-top-right"></div>
+              <div className="screw-corner screw-bottom-left"></div>
+              <div className="screw-corner screw-bottom-right"></div>
+              
+              <div className="p-10 lg:p-14 bg-yellow-500/95 rounded-xl shadow-xl relative overflow-hidden">
+                {/* Subtle inner shadow */}
+                <div className="absolute inset-0 shadow-[inset_0_8px_8px_-8px_rgba(0,0,0,0.25)] rounded-xl pointer-events-none"></div>
+                
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-heading mb-4 text-gray-900">
+                  Ready to transform your property?
+                </h2>
+                <p className="text-lg lg:text-xl mb-8 max-w-3xl mx-auto text-gray-800">
+                  Contact us today to discuss your project and get a free estimate.
+                </p>
+                
+                <div className="flex justify-center">
+                  <Link href="/contact">
+                    <Button 
+                      variant="primary" 
+                      size="lg" 
+                      className="text-lg px-8 py-6 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300"
+                    >
+                      GET A FREE ESTIMATE
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </AnimateOnScroll>
+        </div>
+      </section>
+    </div>
+  )
+}

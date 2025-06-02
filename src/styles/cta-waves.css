@@ -1,0 +1,78 @@
+/* CTA Section Wave Animation */
+.cta-waves {
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.cta-waves::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #4c1d95 0%, #5b21b6 100%);
+  z-index: -1;
+}
+
+/* High Amplitude Wave (Light Purple) */
+.wave-high {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512,64,583,67.3c66.2,3.8,130.2-10.7,194.9-29.1,23.2-6.6,48.8-10.6,75.1-12.1,37.8-2.1,147.9-7.4,158.6,0,10.7,7.4,10.7,27.5,0,35-10.7,7.4-120.8,2.1-158.6,0-23.2-1.5-51.9,5.5-75.1,12.1-64.7,18.4-128.7,32.9-194.9,29.1-71-3.3-144.4-34.9-224.2-37.9-68.2-2.5-136.2,14.8-204.5,37.9-11.7,4-23.8,8.3-36,12.5V120H0Z' fill='%238b5cf6' fill-opacity='0.3'/%3E%3C/svg%3E") repeat-x;
+  background-size: 50% 100%;
+  animation: waveMove 25s linear infinite;
+  z-index: 1;
+}
+
+/* Low Amplitude Wave (Dark Purple) */
+.wave-low {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512,64,583,67.3c66.2,3.8,130.2-10.7,194.9-29.1,23.2-6.6,48.8-10.6,75.1-12.1,37.8-2.1,147.9-7.4,158.6,0,10.7,7.4,10.7,27.5,0,35-10.7,7.4-120.8,2.1-158.6,0-23.2-1.5-51.9,5.5-75.1,12.1-64.7,18.4-128.7,32.9-194.9,29.1-71-3.3-144.4-34.9-224.2-37.9-68.2-2.5-136.2,14.8-204.5,37.9-11.7,4-23.8,8.3-36,12.5V120H0Z' fill='%234f46e5' fill-opacity='0.2'/%3E%3C/svg%3E") repeat-x;
+  background-size: 50% 80%;
+  animation: waveMove 30s linear infinite reverse;
+  z-index: 2;
+  margin-top: 20%;
+}
+
+@keyframes waveMove {
+  0% {
+    transform: translateX(0) translateZ(0) scaleY(1);
+  }
+  50% {
+    transform: translateX(-25%) translateZ(0) scaleY(1.1);
+  }
+  100% {
+    transform: translateX(-50%) translateZ(0) scaleY(1);
+  }
+}
+
+/* Content container */
+.cta-content {
+  position: relative;
+  z-index: 3;
+}
+
+/* Screw decoration */
+.screw-corner {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(135deg, #d1d5db 0%, #9ca3af 100%);
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.2);
+  box-shadow: inset -1px -1px 2px rgba(255,255,255,0.5);
+}
+
+.screw-top-left { top: 8px; left: 8px; }
+.screw-top-right { top: 8px; right: 8px; }
+.screw-bottom-left { bottom: 8px; left: 8px; }
+.screw-bottom-right { bottom: 8px; right: 8px; }
