@@ -1,0 +1,7 @@
+<svg width="280" height="160" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg">
+  <pattern id="hexagons" width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="scale(1) rotate(0)">
+    <rect width="100%" height="100%" fill="#0a0a0a"/>
+    <path d="M20 0L0 10v20l20 10 20-10V10L20 0zM0 30l20 10v20l-20 10V30zm20 30L0 50v20l20 10v-20zm0 0l20-10v20l-20 10v-20z" fill="none" stroke="rgba(251,190,36,0.15)" stroke-width="0.5"/>
+  </pattern>
+  <rect width="100%" height="100%" fill="url(#hexagons)" opacity="0.6"/>
+</svg>
