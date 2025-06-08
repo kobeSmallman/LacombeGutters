@@ -277,11 +277,11 @@ ${name}
             </svg>
           </div>
           <div>
-            <p className="text-sm text-gray-900 dark:text-gray-900">
+            <p className="text-sm text-gray-900 dark:text-white">
               <strong>Resume & Qualifications</strong><br/>
               When your default email app opens, please attach your resume and any relevant qualification documents to help us assess your application.
             </p>
-            <p className="mt-2 text-xs text-gray-700 dark:text-gray-900">
+            <p className="mt-2 text-xs text-gray-700 dark:text-gray-300">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
