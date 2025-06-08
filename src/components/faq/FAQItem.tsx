@@ -79,7 +79,7 @@ export default function FAQItem({ question, isSearchResult = false }: FAQItemPro
       <div className="relative">
         <Button
           onClick={toggleAccordion}
-          className="w-full flex flex-col sm:flex-row flex-wrap justify-between items-start sm:items-center text-left text-gray-800 dark:text-gray-100 hover:bg-gray-50/50 dark:hover:bg-gray-700/30 min-h-[max-content] py-4 px-5 transition-all duration-300 group"
+          className="w-full h-auto min-h-0 flex flex-col sm:flex-row flex-wrap justify-between items-start sm:items-center text-left text-gray-800 dark:text-gray-100 hover:bg-gray-50/50 dark:hover:bg-gray-700/30 py-4 px-5 transition-all duration-300 group"
           aria-expanded={isOpen}
           variant="ghost"
         >
