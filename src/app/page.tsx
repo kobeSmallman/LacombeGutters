@@ -171,7 +171,7 @@ export default function Home() {
                 <div className="relative overflow-hidden">
                   <div className="relative aspect-video overflow-hidden">
                     <Image 
-                      src="/images/gallery/09_gutter_install_two_workers.png" 
+                      src="/images/gallery/residential_backyard_view.png" 
                       alt="5-inch Conventional Gutters" 
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -247,7 +247,7 @@ export default function Home() {
                 <div className="relative overflow-hidden">
                   <div className="relative aspect-video overflow-hidden">
                     <Image 
-                      src="/images/gallery/04_long_gutter_summer.png" 
+                      src="/images/gallery/06_ladders_on_building.png" 
                       alt="6-inch Oversized Gutters" 
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -323,7 +323,7 @@ export default function Home() {
                 <div className="relative overflow-hidden">
                   <div className="relative aspect-video overflow-hidden">
                     <Image 
-                      src="/images/gallery/LadderWorker.png" 
+                      src="/images/gallery/08_log_frame_tyvek.png" 
                       alt="Soffit & Fascia Installation" 
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
