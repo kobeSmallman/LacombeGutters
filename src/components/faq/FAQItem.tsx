@@ -83,8 +83,8 @@ export default function FAQItem({ question, isSearchResult = false }: FAQItemPro
           aria-expanded={isOpen}
           variant="ghost"
         >
-          <div className="flex-1 pr-4 break-words overflow-visible">
-            <h3 className="text-lg md:text-xl lg:text-xl font-medium break-words whitespace-normal overflow-visible text-pretty leading-relaxed text-gray-800 dark:text-gray-100 group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors duration-300">
+          <div className="flex-1 pr-4 w-full">
+            <h3 className="text-lg md:text-xl lg:text-xl font-medium break-words whitespace-normal text-pretty leading-relaxed text-gray-800 dark:text-gray-100 group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors duration-300 w-full">
               {question.question}
             </h3>
           </div>
