@@ -71,54 +71,65 @@ export default function FAQItem({ question, isSearchResult = false }: FAQItemPro
   };
 
   return (
-    <div className={`bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md overflow-hidden mb-4`}>
-      <Button
-        onClick={toggleAccordion}
-        className={`w-full flex justify-between items-center text-left text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white min-h-[max-content] py-10 px-6 md:py-12 md:px-8`}
-        aria-expanded={isOpen}
-        variant="ghost"
-      >
-        <div className="flex-1 pr-4">
-          <h3 className="text-base md:text-xl lg:text-2xl font-medium break-words whitespace-normal overflow-wrap-normal leading-relaxed">
-            {question.question}
-          </h3>
-        </div>
-        <span className="text-primary flex-shrink-0 ml-2">
-          {isOpen ? (
-            <ChevronUp className="h-6 w-6" />
-          ) : (
-            <ChevronDown className="h-6 w-6" />
-          )}
-        </span>
-      </Button>
+    <div className="relative overflow-hidden mb-4 transition-all duration-300 hover:shadow-lg rounded-xl border border-gray-200/80 dark:border-gray-700/50 bg-white/80 dark:bg-transparent backdrop-blur-sm hover:border-amber-400/50 dark:hover:border-amber-500/30">
+      {/* Subtle gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 to-amber-100/10 dark:from-amber-900/20 dark:to-amber-950/30"></div>
+      
+      {/* Inner container for better border radius handling */}
+      <div className="relative overflow-hidden">
+        <Button
+          onClick={toggleAccordion}
+          className="w-full flex justify-between items-center text-left text-gray-800 dark:text-gray-100 hover:bg-gray-50/50 dark:hover:bg-gray-700/30 min-h-[max-content] py-4 px-5 transition-all duration-300 group"
+          aria-expanded={isOpen}
+          variant="ghost"
+        >
+          <div className="flex-1 pr-4">
+            <h3 className="text-lg md:text-xl lg:text-xl font-medium break-words whitespace-normal overflow-wrap-normal leading-relaxed text-gray-800 dark:text-gray-100 group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors duration-300">
+              {question.question}
+            </h3>
+          </div>
+          <span className="flex-shrink-0 ml-3 text-amber-600 dark:text-amber-400 group-hover:text-amber-700 dark:group-hover:text-amber-300 transition-colors duration-300">
+            {isOpen ? (
+              <ChevronUp className="h-5 w-5" />
+            ) : (
+              <ChevronDown className="h-5 w-5" />
+            )}
+          </span>
+        </Button>
+      </div>
 
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
-            initial={{ height: 0 }}
-            animate={{ height: 'auto' }}
-            exit={{ height: 0 }}
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
             transition={{ 
               duration: 0.25,
               ease: "easeOut"
             }}
-            className="overflow-hidden"
-            style={{ transformOrigin: 'top' }}
+            className="relative overflow-hidden"
           >
-            <div className="p-8 md:p-10 pt-0 border-t border-gray-200 dark:border-gray-700 relative">
-              {/* Metal strip at bottom - construction theme element */}
-              <div className="absolute bottom-0 left-0 w-full h-1 bg-primary/10"></div>
+            {/* Subtle gradient overlay for the answer section */}
+            <div className="absolute inset-0 bg-gradient-to-br from-amber-50/40 to-amber-100/20 dark:from-gray-800/90 dark:to-gray-900/90"></div>
+            
+            {/* Decorative accent line */}
+            <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-amber-400/50 via-amber-500/50 to-amber-400/50"></div>
+            
+            <div className="p-5 md:p-6 relative text-gray-700 dark:text-gray-300">
+              {/* Subtle decorative element at bottom */}
+              <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-amber-200/50 via-amber-300/30 to-transparent dark:from-amber-900/30 dark:via-amber-800/20"></div>
               
               <div 
-                className="prose dark:prose-invert max-w-none text-sm md:text-lg lg:text-xl pb-4"
-                dangerouslySetInnerHTML={{ __html: question.answer.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }}
+                className="prose dark:prose-invert max-w-none text-base md:text-lg pb-3 leading-relaxed text-gray-700 dark:text-gray-300"
+                dangerouslySetInnerHTML={{ __html: question.answer.replace(/\*\*(.*?)\*\*/g, '<strong class="text-amber-700 dark:text-amber-400">$1</strong>') }}
               />
               
               {question.contactPage ? (
-                <div className="mt-4">
-                  <Link href="/contact" className="inline-flex items-center">
-                    <Button className="gap-2">
-                      <Mail className="h-4 w-4" />
+                <div className="mt-5 pt-4 border-t border-amber-100 dark:border-amber-900/50">
+                  <Link href="/contact" className="inline-flex items-center group">
+                    <Button className="gap-2 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white border border-amber-700 dark:border-amber-800 dark:from-amber-700 dark:to-amber-800 dark:hover:from-amber-600 dark:hover:to-amber-700 shadow-sm hover:shadow-md transition-all duration-300">
+                      <Mail className="h-4 w-4 transition-transform group-hover:scale-110" />
                       Request Custom Quote
                     </Button>
                   </Link>

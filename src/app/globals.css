@@ -1,10 +1,74 @@
-/* tailwind directives */
+/* tailwind directives - these are valid Tailwind CSS directives */
 /* stylelint-disable-next-line */
 @tailwind base;
 /* stylelint-disable-next-line */
 @tailwind components;
 /* stylelint-disable-next-line */
 @tailwind utilities;
+
+/* Weather Animations */
+@keyframes rain {
+  from {
+    transform: translateY(-100px);
+  }
+  to {
+    transform: translateY(100vh);
+  }
+}
+
+.animate-rain {
+  animation: rain 1s linear infinite;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(-10px) translateX(5px);
+  }
+  50% {
+    transform: translateY(0) translateX(10px);
+  }
+  75% {
+    transform: translateY(-5px) translateX(5px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Wave Animations */
+@keyframes waveMove {
+  0% { transform: translateX(0) translateY(0); }
+  100% { transform: translateX(-50%) translateY(0); }
+}
+
+.wave-animation-slow {
+  animation: waveMove 120s linear infinite;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: left center;
+}
+
+.wave-animation-medium {
+  animation: waveMove 80s linear infinite reverse;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: left center;
+}
+
+.wave-animation-fast {
+  animation: waveMove 40s linear infinite;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: left center;
+}
 
 /* Texture animations */
 @keyframes node-drift {
@@ -128,7 +192,39 @@ a:hover, button:hover {
   }
 }
 
-/* Industrial texture helpers (used on /about) */
+/* Industrial texture helpers */
+
+/* Services page - Dark riveted metal texture */
+.bg-riveted-metal {
+  background-color: #1a1e23;
+  background-image: 
+    linear-gradient(to bottom, rgba(0,0,0,0.2) 1px, transparent 1px),
+    linear-gradient(to right, rgba(0,0,0,0.2) 1px, transparent 1px),
+    radial-gradient(circle at 10px 10px, rgba(255,255,255,0.05) 2px, transparent 1px);
+  background-size: 40px 40px, 40px 40px, 20px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Services page - Diagonal hatch pattern */
+.bg-diagonal-hatch {
+  background-color: #1e2228;
+  background-image: 
+    linear-gradient(45deg, rgba(255,255,255,0.025) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255,255,255,0.025) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.025) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.025) 75%);
+  background-size: 40px 40px;
+  background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+}
+
+/* Services page - Subtle carbon fiber */
+.bg-carbon-fiber {
+  background-color: #1a1d21;
+  background-image: 
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,0.03) 1px, transparent 0);
+  background-size: 40px 40px;
+}
 
 /* Static brushed plate with subtle radial light */
 .bg-plate {

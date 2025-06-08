@@ -50,11 +50,46 @@ export const metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="py-12">
-      <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold font-heading mb-8 text-center">Contact Us</h1>
+    <main className="min-h-screen bg-white dark:bg-gray-900 relative">
+      {/* Hero Section */}
+      <section className="relative isolate overflow-hidden text-white bg-gradient-to-br from-slate-800 to-slate-900">
+        {/* Dotted-node overlay (yellow construction pin-holes) */}
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: 'radial-gradient(#fbbe24 1.5px, transparent 1.6px)',
+            backgroundSize: '28px 28px',
+          }}
+        />
+
+        {/* Subtle angled plate for depth */}
+        <div
+          className="absolute -top-32 -right-44 w-[150%] h-[180%] bg-slate-700/30"
+          style={{ clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0 100%)' }}
+        />
+
+        <div className="relative z-10 py-16 md:py-24 px-6 md:px-16 text-center space-y-5 md:space-y-6">
+          <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight drop-shadow-lg">
+            Contact Us
+          </h1>
+          <p className="max-w-2xl mx-auto text-lg sm:text-xl md:text-xl text-white/90 font-medium drop-shadow-sm">
+            Get in touch with our team for expert advice and free estimates on all your gutter needs.
+          </p>
+        </div>
+      </section>
+      
+      {/* Main Content with Services Background */}
+      <div className="py-16 md:py-24 bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/30 dark:to-amber-950/50">
+        <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+        <h1 className="text-4xl font-bold font-heading mb-4">Contact Us</h1>
+        <div className="w-20 h-1 bg-amber-400 mx-auto mb-6"></div>
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          Get in touch with our team for expert advice and free estimates on all your gutter needs.
+        </p>
+      </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-16 bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl">
           {/* Contact Info - 2 columns */}
           <div className="lg:col-span-2 bg-white p-8 rounded-lg shadow-md relative">
             {/* Construction screws in corners */}
@@ -155,7 +190,8 @@ export default function ContactPage() {
             <JobApplicationForm />
           </div>
         </div>
+        </div>
       </div>
-    </div>
+    </main>
   );
 }

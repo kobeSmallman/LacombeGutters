@@ -11,7 +11,7 @@ const nextConfig = {
 
   images: {
     unoptimized: true,
-    domains: ['maps.googleapis.com'],
+    domains: ['maps.googleapis.com', 'picsum.photos'],
   },
 
   webpack: (config, { isServer }) => {

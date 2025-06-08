@@ -73,46 +73,33 @@ const animationVariants: Record<AnimationType, Variants> = {
   }
 };
 
-function AnimateOnScroll({
+export default function AnimateOnScroll({
   children,
   type = 'fadeIn',
   delay = 0,
-  duration = 0.9,
-  className = '',
-  threshold = 0.1,
-  once = true
+  duration = 0.6,
+  className = ''
 }: AnimateOnScrollProps) {
-  const controls = useRef<HTMLDivElement>(null);
-  const isInView = useInView(controls, { 
-    amount: threshold,
-    once: once
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { 
+    margin: '0px 0px -10% 0px', 
+    once: true 
   });
-
-  const baseVariants = animationVariants[type];
-  
-  const customVariants: Variants = {
-    ...baseVariants,
-    visible: {
-      ...baseVariants.visible,
-      transition: {
-        ...(baseVariants.visible as { transition?: Record<string, unknown> }).transition,
-        delay,
-        duration
-      }
-    }
-  };
 
   return (
     <motion.div
-      ref={controls}
-      initial="hidden"
-      animate={isInView ? 'visible' : 'hidden'}
-      variants={customVariants}
+      ref={ref}
       className={className}
+      variants={animationVariants[type]}
+      initial="hidden"
+      animate={inView ? 'visible' : 'hidden'}
+      transition={{ 
+        duration, 
+        delay, 
+        ease: 'easeOut' 
+      }}
     >
       {children}
     </motion.div>
   );
 }
-
-export default AnimateOnScroll;

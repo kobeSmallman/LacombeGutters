@@ -1,92 +1,100 @@
-import Link from "next/link";
+'use client';
+
+import Link from 'next/link';
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { CheckCircle, Phone, ArrowRight } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { Phone, ArrowRight } from 'lucide-react';
+import styles from './wood-texture.module.css';
+
+// Define the Service interface
+interface Service {
+  slug: string;
+  name: string;
+  excerpt: string;
+  features: string[];
+  hero: string;
+}
 
 
-export const metadata = {
-  title: "Our Services | Lacombe Gutters",
-  description: "Professional gutter, eavestrough, soffit & fascia services in Central Alberta. 40+ years of combined experience. Free estimates. Call today!",
-};
-
-const services = [
+// Services data
+const servicesData: Service[] = [
   {
-    slug: "5-inch-gutters",
-    name: "5\" Gutters",
-    excerpt: "Standard residential gutters for most homes with excellent water flow capacity.",
+    slug: '5-inch-gutters',
+    name: '5\" Gutters',
+    excerpt: 'Standard residential gutters for most homes with excellent water flow capacity.',
     features: [
-      "Available in aluminum and steel",
-      "Ideal for typical residential applications",
-      "5-inch K-style profile",
-      "Seamless installation"
+      'Available in aluminum and steel',
+      'Ideal for typical residential applications',
+      '5-inch K-style profile',
+      'Seamless installation'
     ],
-    hero: "/images/gallery/ModernHouse.png"
+    hero: '/images/gallery/ModernHouse.png'
   },
   {
-    slug: "6-inch-gutters",
-    name: "6\" Gutters",
-    excerpt: "Heavy-duty gutters for properties with large roof areas or heavy rainfall.",
+    slug: '6-inch-gutters',
+    name: '6\" Gutters',
+    excerpt: 'Heavy-duty gutters for properties with large roof areas or heavy rainfall.',
     features: [
-      "Handles 40% more water than 5\" gutters",
-      "Ideal for steep roofs",
-      "Commercial-grade durability",
-      "Reduced cleaning frequency"
+      'Handles 40% more water than 5" gutters',
+      'Ideal for steep roofs',
+      'Commercial-grade durability',
+      'Reduced cleaning frequency'
     ],
-    hero: "/images/gallery/snowyField.png"
+    hero: '/images/gallery/snowyField.png'
   },
   {
-    slug: "soffit-fascia",
-    name: "Soffit & Fascia",
-    excerpt: "Complete roofline solutions that protect and enhance your home's exterior.",
+    slug: 'soffit-fascia',
+    name: 'Soffit & Fascia',
+    excerpt: 'Complete roofline solutions that protect and enhance your home\'s exterior.',
     features: [
-      "Improved ventilation",
-      "Pest protection",
-      "Enhanced curb appeal",
-      "Moisture resistance"
+      'Improved ventilation',
+      'Pest protection',
+      'Enhanced curb appeal',
+      'Moisture resistance'
     ],
-    hero: "/images/gallery/LadderWorker.png"
+    hero: '/images/gallery/LadderWorker.png'
   },
   {
-    slug: "gutter-cleaning",
-    name: "Gutter Cleaning",
-    excerpt: "Professional cleaning to prevent water damage and extend gutter life.",
+    slug: 'gutter-cleaning',
+    name: 'Gutter Cleaning',
+    excerpt: 'Professional cleaning to prevent water damage and extend gutter life.',
     features: [
-      "Debris removal",
-      "Downspout flushing",
-      "Leak inspection",
-      "Full system check"
+      'Debris removal',
+      'Downspout flushing',
+      'Leak inspection',
+      'Full system check'
     ],
-    hero: "/images/gallery/filledGutter.png"
+    hero: '/images/gallery/filledGutter.png'
   },
   {
-    slug: "downspouts",
-    name: "Downspouts",
-    excerpt: "Proper water drainage solutions to protect your foundation.",
+    slug: 'downspouts',
+    name: 'Downspouts',
+    excerpt: 'Proper water drainage solutions to protect your foundation.',
     features: [
-      "Custom sizing",
-      "Multiple material options",
-      "Foundation protection",
-      "Custom extensions available"
+      'Custom sizing',
+      'Multiple material options',
+      'Foundation protection',
+      'Custom extensions available'
     ],
-    hero: "/images/gallery/Downspout.png"
+    hero: '/images/gallery/Downspout.png'
   },
   {
-    slug: "industrial-eavestrough",
-    name: "Commercial Eavestrough",
-    excerpt: "Heavy-duty solutions for commercial and industrial properties.",
+    slug: 'industrial-eavestrough',
+    name: 'Commercial Eavestrough',
+    excerpt: 'Heavy-duty solutions for commercial and industrial properties.',
     features: [
-      "High-capacity systems",
-      "Commercial-grade materials",
-      "Custom designs",
-      "Minimal maintenance"
+      'High-capacity systems',
+      'Commercial-grade materials',
+      'Custom designs',
+      'Minimal maintenance'
     ],
-    hero: "/images/gallery/LacombeGuttersTrailerTruck.png"
+    hero: '/images/gallery/LacombeGuttersTrailerTruck.png'
   }
 ];
 
 export default function ServicesPage() {
   return (
-    <main className="min-h-screen bg-white dark:bg-gray-900">
+    <main className="min-h-screen bg-white dark:bg-gray-900 relative">
       {/* Hero Section */}
       <section className="relative isolate overflow-hidden text-white bg-gradient-to-br from-slate-800 to-slate-900">
         {/* Dotted-node overlay (yellow construction pin-holes) */}
@@ -112,9 +120,9 @@ export default function ServicesPage() {
             Serving Central Alberta with 40+ years of combined experience in quality gutter installation and maintenance.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-6">
-            <Link href="/contact" className="group">
+            <Link href="/contact">
               <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105">
-                Get Free Estimate
+                Get a Free Estimate
               </Button>
             </Link>
             <Link href="tel:4035989137" className="group">
@@ -127,99 +135,173 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Why Choose Us */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <span className="inline-block px-4 py-1 text-sm font-semibold text-primary bg-primary/10 rounded-full mb-4">
-              Why Choose Us
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
-              Quality Service You Can Trust
-            </h2>
-            <div className="w-24 h-1 bg-primary mx-auto mb-8"></div>
+      <style jsx global>{`
+        /* Construction Icons Animation */
+        @keyframes float-slow {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(2deg); }
+        }
+        @keyframes float-medium {
+          0%, 100% { transform: translate(0, 0) rotate(0deg); }
+          33% { transform: translate(10px, -15px) rotate(1deg); }
+          66% { transform: translate(-10px, 10px) rotate(-1deg); }
+        }
+        @keyframes float-slower {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-10px) rotate(-1deg); }
+        }
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .animate-float-slow { animation: float-slow 15s ease-in-out infinite; }
+        .animate-float-medium { animation: float-medium 20s ease-in-out infinite; }
+        .animate-float-slower { animation: float-slower 25s ease-in-out infinite; }
+        .animate-spin-slow { animation: spin-slow 30s linear infinite; }
+        
+        /* Service Area Grid Animation */
+        @keyframes moveGrid {
+          0% { transform: translate(0, 0); }
+          100% { transform: translate(40px, 40px); }
+        }
+        @keyframes moveLines {
+          0% { background-position: 0 0; }
+          100% { background-position: 100% 100%; }
+        }
+        @keyframes moveLine {
+          0% { transform: translateX(-100%) rotate(45deg); }
+          100% { transform: translateX(100vw) rotate(45deg); }
+        }
+        @keyframes gradientShift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+      `}</style>
+      {/* Services Grid with enhanced construction-themed background */}
+      <section className="services-section py-16 md:py-24 relative overflow-hidden bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/30 dark:to-amber-950/50">
+        {/* Enhanced Background with Construction Elements */}
+        <div className="absolute inset-0">
+          {/* Base Wood Grain */}
+          <div className={styles.woodGrain}></div>
+          
+          {/* Animated Construction Symbols */}
+          <div className="absolute inset-0 opacity-5 dark:opacity-[0.03] overflow-hidden">
+            {/* Gutter Symbol */}
+            <div className="absolute top-1/4 left-1/4 w-32 h-32 opacity-30 animate-float-slow">
+              <svg viewBox="0 0 24 24" className="w-full h-full">
+                <path d="M3 4h18v3h-1v8h1v3h-6v-2h-2v2H8v-2H6v2H3v-3h1V7H3V4z" fill="currentColor" stroke="currentColor" strokeWidth="0.5"/>
+              </svg>
+            </div>
+            {/* Roof Symbol */}
+            <div className="absolute top-1/3 right-1/4 w-40 h-40 opacity-20 animate-float-medium">
+              <svg viewBox="0 0 24 24" className="w-full h-full">
+                <path d="M12 3l-10 9h20l-10-9z" fill="none" stroke="currentColor" strokeWidth="0.5"/>
+              </svg>
+            </div>
+            {/* Screw Symbol */}
+            <div className="absolute bottom-1/4 left-1/3 w-16 h-16 opacity-25 animate-spin-slow">
+              <svg viewBox="0 0 24 24" className="w-full h-full">
+                <path d="M12 2c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2s2-.9 2-2V4c0-1.1-.9-2-2-2zm0 18c-1.1 0-2-.9-2-2v-1c0-1.1.9-2 2-2s2 .9 2 2v1c0 1.1-.9 2-2 2z" fill="currentColor"/>
+              </svg>
+            </div>
+            {/* Ladder Symbol */}
+            <div className="absolute top-1/2 right-1/3 w-20 h-32 opacity-20 animate-float-slower">
+              <svg viewBox="0 0 24 24" className="w-full h-full">
+                <path d="M14 1v2h4v2h-4v2h-4V5H6V3h4V1h4zM6 7h12v2h-2v12h-2V9H8v12H6V7z" fill="currentColor"/>
+              </svg>
+            </div>
+            {/* Toolbox Symbol */}
+            <div className="absolute bottom-1/3 left-1/4 w-36 h-24 opacity-25 animate-float-medium">
+              <svg viewBox="0 0 24 24" className="w-full h-full">
+                <path d="M19 5h-4V3H9v2H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zM9 12H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z" fill="currentColor"/>
+              </svg>
+            </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "40+ Years Combined Experience",
-                description: "Our team brings decades of combined expertise in gutter installation and maintenance across Central Alberta.",
-                icon: "👷"
-              },
-              {
-                title: "Quality Materials",
-                description: "We use only the highest quality materials from trusted manufacturers.",
-                icon: "🏆"
-              },
-              {
-                title: "Free Estimates",
-                description: "Get a detailed, no-obligation quote for your gutter needs.",
-                icon: "📝"
-              }
-            ].map((item, index) => (
-              <div key={index} className="bg-white dark:bg-gray-700 p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300">
-                <div className="text-4xl mb-4">{item.icon}</div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">{item.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300">{item.description}</p>
-              </div>
-            ))}
-          </div>
+          {/* Metal Strip Decoration - Top and Bottom with Rivets */}
+          <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-transparent via-amber-700/30 to-transparent border-t border-amber-800/20"></div>
+          <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-transparent via-amber-700/30 to-transparent border-b border-amber-800/20"></div>
+          
+          {/* Decorative Rivets */}
+          {[...Array(6)].map((_, i) => (
+            <div key={`top-${i}`} className={`absolute top-1 w-1.5 h-1.5 rounded-full bg-amber-700/30 border border-amber-800/30`} style={{left: `${(i + 1) * (100/7)}%`}}></div>
+          ))}
+          {[...Array(6)].map((_, i) => (
+            <div key={`bottom-${i}`} className={`absolute bottom-1 w-1.5 h-1.5 rounded-full bg-amber-700/30 border border-amber-800/30`} style={{left: `${(i + 1) * (100/7)}%`}}></div>
+          ))}
         </div>
-      </section>
-
-      {/* Services Grid */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto">
+        
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <span className="inline-block px-4 py-1 text-sm font-semibold text-primary bg-primary/10 rounded-full mb-4">
-              Our Services
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
-              Comprehensive Gutter Solutions
-            </h2>
-            <div className="w-24 h-1 bg-primary mx-auto mb-8"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Our Expert Services</h2>
+            <div className="w-24 h-1 bg-amber-500 mx-auto mb-6"></div>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              From installation to maintenance, we provide complete gutter solutions for residential and commercial properties.
+              Professional gutter solutions tailored to protect your property from water damage and enhance its curb appeal.
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service) => (
+            {servicesData.map((service: Service) => (
               <div 
                 key={service.slug}
-                className="group bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden border border-gray-100 dark:border-gray-700 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col h-full"
+                className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-amber-100 dark:border-amber-900/50"
               >
-                <div className="relative h-56 overflow-hidden">
+                <div className="relative h-64 overflow-hidden">
                   <Image 
                     src={service.hero} 
                     alt={service.name}
                     fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    priority
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-6">
-                    <h3 className="text-2xl font-bold text-white drop-shadow-lg">{service.name}</h3>
-                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  <h3 className="absolute bottom-0 left-0 right-0 p-6 text-2xl font-bold text-white">
+                    {service.name}
+                  </h3>
                 </div>
-                <div className="p-6 flex-grow flex flex-col">
-                  <p className="text-gray-600 dark:text-gray-300 mb-6 flex-grow">{service.excerpt}</p>
-                  <ul className="space-y-3 mb-6">
-                    {service.features.map((feature, index) => (
-                      <li key={index} className="flex items-start">
-                        <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-700 dark:text-gray-300">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Link 
-                    href={`/services/${service.slug}`} 
-                    className="mt-auto inline-flex items-center text-primary dark:text-primary-300 font-medium hover:text-primary/80 transition-colors"
-                  >
-                    Learn more
-                    <ArrowRight className="ml-1 w-4 h-4" />
-                  </Link>
+                
+                <div className="p-6">
+                  <p className="text-gray-700 dark:text-white/90 mb-4">
+                    {service.excerpt}
+                  </p>
+                  
+                  <div className="space-y-3 mb-6">
+                    <h4 className="font-semibold text-gray-800 dark:text-white">Features:</h4>
+                    <ul className="space-y-2">
+                      {service.features.map((feature: string, i: number) => (
+                        <li key={i} className="flex items-start">
+                          <svg className="h-5 w-5 text-amber-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                          <span className="text-gray-700 dark:text-white/90">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  <div className="pt-4 mt-auto">
+                    <div className="relative group w-full">
+                      <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-400 to-amber-600 rounded-full blur opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                      <button 
+                        onClick={(e) => {
+                          e.preventDefault();
+                          sessionStorage.setItem('selectedService', service.name);
+                          // Trigger the leaf animation
+                          const leafContainer = document.querySelector('.leaf-pile-container') as HTMLElement & { blowAwayLeaves?: () => void };
+                          if (leafContainer?.blowAwayLeaves) {
+                            leafContainer.blowAwayLeaves();
+                          } else {
+                            // Fallback in case the animation doesn't trigger
+                            window.location.href = '/contact';
+                          }
+                        }}
+                        className="relative w-full flex items-center justify-center px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-amber-600 to-amber-700 rounded-full border border-amber-700 hover:shadow-lg hover:shadow-amber-500/30 transition-all duration-300 transform hover:-translate-y-0.5"
+                      >
+                        Get a Free Estimate
+                        <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
@@ -227,88 +309,141 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Service Area Section */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-800">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Service Area Section - Modern Theme */}
+      <section className="relative py-24 overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 text-white min-h-screen flex items-center">
+        {/* Background pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div 
+            className="absolute inset-0"
+            style={{
+              backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(251, 190, 36, 0.3) 1px, transparent 0)',
+              backgroundSize: '30px 30px',
+            }}
+          ></div>
+        </div>
+        
+        {/* Subtle gradient overlay */}
+        <div 
+          className="absolute inset-0 bg-gradient-to-br from-amber-900/10 via-transparent to-blue-900/10"
+          style={{
+            animation: 'gradientShift 15s ease infinite',
+            backgroundSize: '200% 200%'
+          }}
+        ></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Our Service Area</h2>
-            <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
-            <p className="text-lg text-gray-600 dark:text-gray-300">
+            <span className="inline-block px-4 py-1 text-sm font-semibold text-yellow-400 bg-yellow-400/10 rounded-full mb-4">
+              Service Coverage
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Our Service Area
+            </h2>
+            <div className="w-16 h-1 bg-yellow-400 mx-auto mb-6"></div>
+            <p className="text-gray-300 max-w-2xl mx-auto">
               With over 40 years of experience, we&apos;ve been proudly serving Central Alberta with top-quality gutter solutions.
             </p>
           </div>
-          
-          <div className="bg-white dark:bg-gray-700 rounded-xl shadow-md p-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-              {[
-                { region: 'North', description: 'Leduc' },
-                { region: 'South', description: 'Airdrie' },
-                { region: 'East', description: 'Stettler' },
-                { region: 'West', description: 'Nordegg' },
-              ].map((area, index) => (
-                <div key={index} className="flex items-start">
-                  <div className="bg-primary/10 p-2 rounded-full mr-4">
-                    <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white">{area.region}</h3>
-                    <p className="text-gray-600 dark:text-gray-300">{area.description}</p>
-                  </div>
-                </div>
-              ))}
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            {/* North Card */}
+            <div className="group relative bg-gray-800/90 p-8 rounded-xl border border-gray-700/50 hover:border-yellow-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-400/10 hover:-translate-y-1">
+              <div className="absolute -top-4 -right-4 w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center text-gray-900 font-bold text-lg shadow-lg transform group-hover:scale-110 transition-transform duration-300">N</div>
+              <h3 className="text-xl font-semibold text-yellow-400 mb-4 pb-3 border-b border-gray-700/50">North</h3>
+              <ul className="space-y-2">
+                {['Leduc', 'Beaumont', 'Devon', 'Stony Plain'].map((city, i) => (
+                  <li key={i} className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                    <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2.5"></span>
+                    {city}
+                  </li>
+                ))}
+              </ul>
             </div>
-            
-            <div className="text-center pt-4 border-t border-gray-200 dark:border-gray-600">
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
-                Not sure if we service your area?
-              </p>
-              <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-                <Link 
-                  href="/service-areas" 
-                  className="inline-flex items-center text-primary-600 dark:text-primary-400 font-medium hover:underline"
-                >
-                  View our detailed service area map
-                  <ArrowRight className="ml-1 w-4 h-4" />
-                </Link>
-                <span className="text-gray-400 dark:text-gray-500 hidden sm:block">or</span>
-                <a 
-                  href="tel:4035989137" 
-                  className="text-white font-medium hover:text-blue-300 transition-colors flex items-center"
-                >
-                  <Phone className="w-4 h-4 mr-1" />
-                  (403) 598-9137
-                </a>
+
+            {/* South Card */}
+            <div className="group relative bg-gray-800/80 p-6 rounded-lg border border-gray-700/50 hover:border-yellow-400/50 transition-colors">
+              <div className="absolute -top-3 -right-3 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-gray-900 font-bold text-sm shadow-lg">S</div>
+              <h3 className="text-xl font-semibold text-yellow-400 mb-4 pb-3 border-b border-gray-700/50">South</h3>
+              <ul className="space-y-2">
+                {['Airdrie', 'Cochrane', 'Okotoks', 'High River'].map((city, i) => (
+                  <li key={i} className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                    <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2.5"></span>
+                    {city}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* East Card */}
+            <div className="group relative bg-gray-800/80 p-6 rounded-lg border border-gray-700/50 hover:border-yellow-400/50 transition-colors">
+              <div className="absolute -top-3 -right-3 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-gray-900 font-bold text-sm shadow-lg">E</div>
+              <h3 className="text-xl font-semibold text-yellow-400 mb-4 pb-3 border-b border-gray-700/50">East</h3>
+              <ul className="space-y-2">
+                {['Stettler', 'Three Hills', 'Hanna', 'Coronation'].map((city, i) => (
+                  <li key={i} className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                    <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2.5"></span>
+                    {city}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* West Card */}
+            <div className="group relative bg-gray-800/80 p-6 rounded-lg border border-gray-700/50 hover:border-yellow-400/50 transition-colors">
+              <div className="absolute -top-3 -right-3 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-gray-900 font-bold text-sm shadow-lg">W</div>
+              <h3 className="text-xl font-semibold text-yellow-400 mb-4 pb-3 border-b border-gray-700/50">West</h3>
+              <ul className="space-y-2">
+                {['Nordegg', 'Rocky Mountain House', 'Sundre', 'Carstairs'].map((city, i) => (
+                  <li key={i} className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                    <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2.5"></span>
+                    {city}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="relative max-w-4xl mx-auto mt-16 pt-8 border-t border-gray-800">
+            <div className="relative bg-white/5 backdrop-blur-sm p-8 rounded-xl border border-white/10 shadow-2xl overflow-hidden">
+              {/* Decorative elements */}
+              <div className="absolute -top-20 -right-20 w-40 h-40 bg-amber-500/10 rounded-full filter blur-3xl"></div>
+              <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-blue-500/10 rounded-full filter blur-3xl"></div>
+              
+              {/* Corner accents */}
+              <div className="absolute top-4 left-4 w-2 h-2 bg-amber-400 rounded-full"></div>
+              <div className="absolute top-4 right-4 w-2 h-2 bg-amber-400 rounded-full"></div>
+              <div className="absolute bottom-4 left-4 w-2 h-2 bg-amber-400 rounded-full"></div>
+              <div className="absolute bottom-4 right-4 w-2 h-2 bg-amber-400 rounded-full"></div>
+              
+              <div className="text-center">
+                <p className="text-xl font-medium text-white mb-6">
+                  Not sure if we service your area?
+                </p>
+                
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                  <Link 
+                    href="/service-areas" 
+                    className="px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-gray-900 rounded-lg font-medium flex items-center transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-amber-500/20"
+                  >
+                    View Service Area Map <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                  
+                  <span className="text-gray-300 text-sm">or</span>
+                  
+                  <a 
+                    href="tel:4035989137" 
+                    className="px-6 py-2.5 bg-gray-700/50 hover:bg-gray-600/70 text-white rounded-lg font-medium flex items-center transition-all duration-300 border border-gray-600/50 hover:border-amber-400/30"
+                  >
+                    <Phone className="h-4 w-4 mr-2" /> (403) 598-9137
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="bg-primary text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Protect Your Home?</h2>
-          <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
-            Get a free, no-obligation estimate for your gutter needs. Our team is ready to help you find the perfect solution.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-6">
-            <Link href="/contact" className="group">
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105">
-                Request Free Estimate
-              </Button>
-            </Link>
-            <Link href="tel:4035989137" className="group">
-              <Button variant="outline" className="bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 px-8 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105">
-                <Phone className="w-5 h-5 mr-2" />
-                (403) 598-9137
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
+
 
 
     </main>

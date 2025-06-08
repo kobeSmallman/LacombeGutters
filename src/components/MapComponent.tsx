@@ -77,7 +77,10 @@ export default function MapComponent({
     if (!mapRef.current) return;
 
     // remove previous marker
-    if (markRef.current) mapRef.current.removeLayer(markRef.current);
+    if (markRef.current) {
+      mapRef.current.removeLayer(markRef.current);
+      markRef.current = null;
+    }
 
     if (highlight) {
       const m = L.marker(highlight, {
@@ -89,7 +92,17 @@ export default function MapComponent({
         }),
       }).addTo(mapRef.current);
       markRef.current = m;
-      mapRef.current.setView(highlight, 11, { animate: true });
+      
+      // Set view to show both the service area and the highlighted location
+      const bounds = polyRef.current?.getBounds();
+      if (bounds) {
+        const highlightPoint = L.latLng(highlight[0], highlight[1]);
+        const newBounds = L.latLngBounds(bounds.getSouthWest(), bounds.getNorthEast())
+          .extend(highlightPoint);
+        mapRef.current.fitBounds(newBounds.pad(0.1), { animate: true });
+      } else {
+        mapRef.current.setView(highlight, 11, { animate: true });
+      }
     }
   }, [highlight]);
 

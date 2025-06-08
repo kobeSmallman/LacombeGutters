@@ -1,4 +1,5 @@
 import GalleryClient from "@/components/GalleryClient";
+import { galleryItems } from "@/data/gallery";
 
 export const metadata = {
   title: "Gallery",
@@ -7,6 +8,6 @@ export const metadata = {
 
 export default function GalleryPage() {
   return (
-    <GalleryClient />
+    <GalleryClient galleryItems={galleryItems} />
   );
 }

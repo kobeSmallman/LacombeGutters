@@ -4,32 +4,57 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { NAVIGATION_ITEMS } from "@/lib/constants";
-import { Button } from "@/components/ui/button";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   return (
-    <header className="bg-white shadow-md border-b-4 border-primary">
-      <div className="container mx-auto py-4 px-4">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center relative">
-            {/* Logo and Text */}
-            <Link href="/" className="flex items-center hover:opacity-90 transition-opacity relative">
-              <Image 
-                src="/images/logos/logo.png" 
-                alt="Lacombe Gutters Logo" 
-                width={50} 
-                height={50}
-                className="mr-3"
-              />
-              <span className="text-xl md:text-2xl font-bold text-primary tracking-tight uppercase">Lacombe Gutters</span>
+    <header className="bg-white dark:bg-gray-900 shadow-lg border-b-2 border-amber-500 dark:border-amber-600 transition-colors duration-300">
+      <div className="container mx-auto px-4 py-4">
+
+        {/* Main Navigation */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <Link href="/" className="flex items-center group">
+              <div className="relative">
+                <Image 
+                  src="/images/logos/logo.png" 
+                  alt="Lacombe Gutters Logo" 
+                  width={60} 
+                  height={60}
+                  className="transition-transform group-hover:scale-105"
+                />
+              </div>
+              <div className="ml-3">
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-primary dark:group-hover:text-amber-400 transition-colors">Lacombe Gutters</h1>
+                <p className="text-sm text-gray-600 dark:text-gray-300">Professional Eavestrough Services</p>
+              </div>
             </Link>
           </div>
           
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center space-x-1">
+            {NAVIGATION_ITEMS.map((item) => (
+              <Link 
+                key={item.path}
+                href={item.path}
+                className="px-4 py-2 text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-amber-400 font-medium text-sm uppercase tracking-wider transition-colors relative group"
+              >
+                {item.label}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 dark:bg-amber-400 transition-all group-hover:w-full"></span>
+              </Link>
+            ))}
+            <Link 
+              href="/contact" 
+              className="ml-4 px-6 py-2.5 bg-primary dark:bg-amber-600 text-white font-medium text-sm uppercase tracking-wider rounded-md hover:bg-amber-600 dark:hover:bg-amber-500 transition-colors shadow-md hover:shadow-lg"
+            >
+              Contact Us Now!
+            </Link>
+          </nav>
+          
           {/* Mobile menu button */}
           <button 
-            className="md:hidden border border-gray-300 p-2 rounded-md"
+            className="lg:hidden p-2 rounded-md text-gray-700 hover:text-primary focus:outline-none"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           >
@@ -41,60 +66,30 @@ export default function Header() {
               )}
             </svg>
           </button>
-          
-          {/* Desktop navigation */}
-          <div className="hidden md:flex items-center">
-            <nav className="mr-6">
-              <ul className="flex gap-x-6">
-                {NAVIGATION_ITEMS.map((item) => (
-                  <li key={item.path}>
-                    <Link 
-                      href={item.path} 
-                      className="nav-link text-neutral-dark hover:text-primary transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-            
-            <div className="flex items-center">
-              <Link href="/contact">
-                <Button variant="primary" size="md" className="btn-construction">
-                  Contact Us Now!
-                </Button>
-              </Link>
-            </div>
-          </div>
         </div>
         
-        {/* Mobile menu dropdown */}
+        {/* Mobile menu */}
         {mobileMenuOpen && (
-          <div className="pt-4 pb-3 border-t border-gray-200 md:hidden">
-            <nav className="mb-4">
-              <ul className="flex flex-col gap-y-3">
-                {NAVIGATION_ITEMS.map((item) => (
-                  <li key={item.path}>
-                    <Link 
-                      href={item.path} 
-                      className="block py-2 text-neutral-dark hover:text-primary transition-colors"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-            
-            <div className="mt-3">
-              <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
-                <Button variant="primary" size="md" className="btn-construction w-full">
-                  Contact Us Now!
-                </Button>
+          <div className="lg:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-4 px-4">
+            <nav className="flex flex-col space-y-2">
+              {NAVIGATION_ITEMS.map((item) => (
+                <Link
+                  key={item.path}
+                  href={item.path}
+                  className="px-4 py-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <Link
+                href="/contact"
+                className="mt-2 px-4 py-3 bg-primary dark:bg-amber-600 text-white font-medium text-center rounded-md hover:bg-amber-600 dark:hover:bg-amber-500 transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Contact Us Now!
               </Link>
-            </div>
+            </nav>
           </div>
         )}
       </div>

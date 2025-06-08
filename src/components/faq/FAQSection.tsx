@@ -94,13 +94,17 @@ export default function FAQSection({ category, questions, icon, collapsible = fa
         <div className="relative">
           {/* Normal Header (visible when collapsed) */}
           <div 
-            className={`relative bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md p-1 mb-4 transition-opacity duration-300 ${collapsible ? 'cursor-pointer' : ''} ${isExpanded ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'}`}
+            className={`relative rounded-lg shadow-lg p-1 mb-4 transition-opacity duration-300 ${collapsible ? 'cursor-pointer' : ''} ${isExpanded ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'}`}
             onClick={toggleSection}
           >
-            <div className="bg-primary/10 dark:bg-primary/20 rounded-lg py-16 px-8 relative overflow-visible">
+            <div className="relative bg-amber-200 dark:bg-amber-950 rounded-lg py-16 px-8 border-2 border-amber-400/50 dark:border-amber-800/50 shadow-inner transition-colors duration-300 overflow-visible">
+              {/* Wood texture background */}
+              <div className="absolute inset-0 bg-[url('/images/textures/wood-texture-light.jpg')] dark:bg-[url('/images/textures/wood-texture-dark.jpg')] bg-cover bg-center opacity-80 dark:opacity-90"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-200/40 to-amber-300/30 dark:from-amber-900/60 dark:to-amber-950/70"></div>
+              
               {/* Left screw */}
               <div className="screw-corner screw-top-left"></div>
-              
+                
               {/* Right screw with animation */}
               <motion.div 
                 className="screw-corner screw-top-right"
@@ -110,16 +114,20 @@ export default function FAQSection({ category, questions, icon, collapsible = fa
                   ease: "easeInOut"
                 }}
               ></motion.div>
-              
+                
               {/* Metal strip at top */}
               <div className="absolute top-0 left-0 w-full h-1 bg-primary/10"></div>
-              
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  {icon && <div className="flex-shrink-0 text-3xl">{icon}</div>}
-                  <h2 className="text-3xl font-bold text-primary">{category}</h2>
-                </div>
                 
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4 relative z-10">
+                  {icon && <div className="flex-shrink-0 text-3xl text-amber-900 dark:text-amber-100 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]">{icon}</div>}
+                  <h2 className="text-3xl font-bold text-amber-900 dark:text-amber-100 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]">
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-800 to-amber-900 dark:from-amber-100 dark:to-amber-300">
+                      {category}
+                    </span>
+                  </h2>
+                </div>
+                  
                 {collapsible && (
                   <div className="text-primary">
                     <ChevronDown className="h-8 w-8" />
@@ -128,7 +136,7 @@ export default function FAQSection({ category, questions, icon, collapsible = fa
               </div>
             </div>
           </div>
-          
+            
           {/* Expanded State with Sideways Header and Content */}
           <AnimatePresence>
             {isExpanded && (
@@ -144,16 +152,20 @@ export default function FAQSection({ category, questions, icon, collapsible = fa
                     // Mobile view - regular header instead of sideways
                     <div className="w-full mb-4">
                       <div 
-                        className={`relative bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md p-1 ${collapsible ? 'cursor-pointer' : ''}`}
+                        className={`relative rounded-lg shadow-lg p-1 ${collapsible ? 'cursor-pointer' : ''}`}
                         onClick={toggleSection}
                       >
-                        <div className="bg-primary/10 dark:bg-primary/20 rounded-lg py-6 px-4 md:py-8 md:px-6 relative">
+                        <div className="bg-amber-200 dark:bg-amber-900 bg-[url('/images/textures/wood-texture-light.png')] dark:bg-[url('/images/textures/wood-texture-dark.png')] bg-cover bg-center rounded-lg py-6 px-4 md:py-8 md:px-6 relative border-2 border-amber-400 dark:border-amber-800 shadow-inner transition-colors duration-300">
                           <div className="screw-corner screw-top-left"></div>
                           
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3 md:gap-4">
-                              {icon && <div className="flex-shrink-0">{icon}</div>}
-                              <h2 className="text-lg md:text-xl font-bold text-primary break-words">{category}</h2>
+                              {icon && <div className="flex-shrink-0 text-amber-900 dark:text-amber-100">{icon}</div>}
+                              <h2 className="text-lg md:text-xl font-bold text-amber-900 dark:text-amber-100 break-words drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]">
+                                <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-800 to-amber-900 dark:from-amber-100 dark:to-amber-300">
+                                  {category}
+                                </span>
+                              </h2>
                             </div>
                             
                             {collapsible && (
@@ -182,17 +194,21 @@ export default function FAQSection({ category, questions, icon, collapsible = fa
                           }}
                         >
                           <div
-                            className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md p-1 cursor-pointer"
+                            className="rounded-lg shadow-lg p-1 cursor-pointer"
                             onClick={toggleSection}
                           >
-                            <div className="bg-primary/10 dark:bg-primary/20 rounded-lg py-16 px-8 relative" style={{ width: '500px' }}>
+                            <div className="bg-amber-200 dark:bg-amber-900 bg-[url('/images/textures/wood-texture-light.png')] dark:bg-[url('/images/textures/wood-texture-dark.png')] bg-cover bg-center rounded-lg py-16 px-8 relative border-2 border-amber-400 dark:border-amber-800 shadow-inner transition-colors duration-300" style={{ width: '500px' }}>
                               <div className="screw-corner screw-top-left"></div>
                               <div className="absolute top-0 left-0 w-full h-1 bg-primary/10"></div>
                               
                               <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-4">
                                   {icon && <div className="flex-shrink-0 text-3xl">{icon}</div>}
-                                  <h2 className="text-3xl font-bold text-primary">{category}</h2>
+                                  <h2 className="text-3xl font-bold text-amber-100 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
+                                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-100 to-amber-300">
+                                    {category}
+                                  </span>
+                                </h2>
                                 </div>
                                 
                                 {collapsible && (
