@@ -79,16 +79,16 @@ export default function FAQItem({ question, isSearchResult = false }: FAQItemPro
       <div className="relative">
         <Button
           onClick={toggleAccordion}
-          className="w-full flex justify-between items-start sm:items-center text-left text-gray-800 dark:text-gray-100 hover:bg-gray-50/50 dark:hover:bg-gray-700/30 min-h-[max-content] py-4 px-5 transition-all duration-300 group"
+          className="w-full flex flex-col sm:flex-row flex-wrap justify-between items-start sm:items-center text-left text-gray-800 dark:text-gray-100 hover:bg-gray-50/50 dark:hover:bg-gray-700/30 min-h-[max-content] py-4 px-5 transition-all duration-300 group"
           aria-expanded={isOpen}
           variant="ghost"
         >
-          <div className="flex-1 pr-4 break-words overflow-hidden">
+          <div className="flex-1 pr-4 break-words overflow-visible">
             <h3 className="text-lg md:text-xl lg:text-xl font-medium break-words whitespace-normal overflow-visible text-pretty leading-relaxed text-gray-800 dark:text-gray-100 group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors duration-300">
               {question.question}
             </h3>
           </div>
-          <span className="flex-shrink-0 ml-3 text-amber-600 dark:text-amber-400 group-hover:text-amber-700 dark:group-hover:text-amber-300 transition-colors duration-300">
+          <span className="flex-shrink-0 mt-2 sm:mt-0 sm:ml-3 text-amber-600 dark:text-amber-400 group-hover:text-amber-700 dark:group-hover:text-amber-300 transition-colors duration-300">
             {isOpen ? (
               <ChevronUp className="h-5 w-5" />
             ) : (
