@@ -71,20 +71,20 @@ export default function FAQItem({ question, isSearchResult = false }: FAQItemPro
   };
 
   return (
-    <div className="relative overflow-hidden mb-4 transition-all duration-300 hover:shadow-lg rounded-xl border border-gray-200/80 dark:border-gray-700/50 bg-white/80 dark:bg-transparent backdrop-blur-sm hover:border-amber-400/50 dark:hover:border-amber-500/30">
+    <div className="relative mb-4 transition-all duration-300 hover:shadow-lg rounded-xl border border-gray-200/80 dark:border-gray-700/50 bg-white/80 dark:bg-transparent backdrop-blur-sm hover:border-amber-400/50 dark:hover:border-amber-500/30">
       {/* Subtle gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 to-amber-100/10 dark:from-amber-900/20 dark:to-amber-950/30"></div>
       
       {/* Inner container for better border radius handling */}
-      <div className="relative overflow-hidden">
+      <div className="relative">
         <Button
           onClick={toggleAccordion}
-          className="w-full flex justify-between items-center text-left text-gray-800 dark:text-gray-100 hover:bg-gray-50/50 dark:hover:bg-gray-700/30 min-h-[max-content] py-4 px-5 transition-all duration-300 group"
+          className="w-full flex justify-between items-start sm:items-center text-left text-gray-800 dark:text-gray-100 hover:bg-gray-50/50 dark:hover:bg-gray-700/30 min-h-[max-content] py-4 px-5 transition-all duration-300 group"
           aria-expanded={isOpen}
           variant="ghost"
         >
-          <div className="flex-1 pr-4">
-            <h3 className="text-lg md:text-xl lg:text-xl font-medium break-words whitespace-normal overflow-wrap-normal leading-relaxed text-gray-800 dark:text-gray-100 group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors duration-300">
+          <div className="flex-1 pr-4 break-words overflow-hidden">
+            <h3 className="text-lg md:text-xl lg:text-xl font-medium break-words whitespace-normal overflow-visible text-pretty leading-relaxed text-gray-800 dark:text-gray-100 group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors duration-300">
               {question.question}
             </h3>
           </div>
@@ -121,7 +121,8 @@ export default function FAQItem({ question, isSearchResult = false }: FAQItemPro
               <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-amber-200/50 via-amber-300/30 to-transparent dark:from-amber-900/30 dark:via-amber-800/20"></div>
               
               <div 
-                className="prose dark:prose-invert max-w-none text-base md:text-lg pb-3 leading-relaxed text-gray-700 dark:text-gray-300"
+                className="prose dark:prose-invert max-w-none text-base md:text-lg pb-3 leading-relaxed text-gray-700 dark:text-gray-300 break-words overflow-visible"
+                style={{ wordWrap: 'break-word', overflowWrap: 'break-word' }}
                 dangerouslySetInnerHTML={{ __html: question.answer.replace(/\*\*(.*?)\*\*/g, '<strong class="text-amber-700 dark:text-amber-400">$1</strong>') }}
               />
               
