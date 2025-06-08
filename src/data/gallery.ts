@@ -177,9 +177,8 @@ export const galleryItems: GalleryItem[] = [
     description: "Professional gutter installation at a commercial loading dock",
     image: "/images/gallery/commercial_loading_dock_work.png",
     category: "Gutters",
-    location: "Red Deer, AB",
     materials: ["Commercial Gutters", "Heavy-Duty Aluminum"],
-    year: "2024"
+    year: "2025"
   },
   {
     id: 19,
@@ -187,9 +186,8 @@ export const galleryItems: GalleryItem[] = [
     description: "Precise gutter installation on the side of a commercial building",
     image: "/images/gallery/commercial_side_installation.png",
     category: "Gutters",
-    location: "Lacombe, AB",
     materials: ["Seamless Gutters", "Professional Installation"],
-    year: "2024"
+    year: "2025"
   },
   {
     id: 20,
@@ -197,9 +195,8 @@ export const galleryItems: GalleryItem[] = [
     description: "Clean gutter installation enhancing a residential backyard",
     image: "/images/gallery/residential_backyard_view.png",
     category: "Gutters",
-    location: "Blackfalds, AB",
     materials: ["Residential Gutters", "6-inch K-Style"],
-    year: "2024"
+    year: "2025"
   },
   {
     id: 21,
@@ -207,8 +204,7 @@ export const galleryItems: GalleryItem[] = [
     description: "Elegant gutter system complementing a home's front patio",
     image: "/images/gallery/residential_front_patio_view.png",
     category: "Gutters",
-    location: "Ponoka, AB",
     materials: ["Seamless Gutters", "Custom Downspouts"],
-    year: "2024"
+    year: "2025"
   }
 ];

@@ -314,8 +314,7 @@ export default function GalleryClient({ galleryItems = [] }: GalleryClientProps)
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                       <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                        <h3 className="text-white text-xl font-bold mb-1">{item.title}</h3>
-                        <p className="text-gray-200">{item.location}</p>
+                        <h3 className="text-white text-xl font-bold">{item.title}</h3>
                       </div>
                     </div>
                     {item.category && (
@@ -326,13 +325,7 @@ export default function GalleryClient({ galleryItems = [] }: GalleryClientProps)
                   </div>
                   <div className="p-4 flex-1 flex flex-col">
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{item.title}</h3>
-                    <div className="flex items-center text-sm text-gray-600 dark:text-gray-300 mb-3">
-                      <svg className="w-4 h-4 mr-1 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                      <span>{item.location}</span>
-                    </div>
+
                     <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2">{item.description}</p>
                     <div className="mt-auto flex justify-between items-center">
                       <span className="text-xs text-gray-500 dark:text-gray-400">{item.year}</span>
