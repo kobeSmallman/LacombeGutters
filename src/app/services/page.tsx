@@ -119,7 +119,7 @@ export default function ServicesPage() {
           <p className="max-w-2xl mx-auto text-lg sm:text-xl md:text-2xl text-white/90 font-medium drop-shadow-sm">
             Serving Central Alberta with 40+ years of combined experience in quality gutter installation and maintenance.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-6">
+          <div className="flex flex-col items-center sm:items-stretch sm:flex-row justify-center gap-4 sm:gap-6 w-full max-w-xs sm:max-w-none mx-auto">
             <Link href="/contact">
               <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105">
                 Get a Free Estimate
