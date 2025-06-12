@@ -421,15 +421,18 @@ export default function Home() {
                 WebkitBackdropFilter: 'blur(4px)'
               }}></div>
               
+              {/* Background fallback for iOS devices */}
+              <div className="absolute inset-0 bg-primary opacity-80"></div>
+              
               {/* Content */}
               <div className="relative z-10 p-8 lg:p-12">
-                <h3 className="text-4xl md:text-5xl font-bold text-white dark:text-white mb-6 leading-tight" style={{color: "#ffffff"}}>
+                <h3 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight" style={{color: "#ffffff !important"}}>
                   Professional Gutter Protection
                 </h3>
-                <p className="text-xl md:text-2xl text-gray-100 dark:text-gray-100 mb-6 max-w-3xl mx-auto leading-relaxed" style={{color: "#f3f4f6"}}>
+                <p className="text-xl md:text-2xl text-gray-100 mb-6 max-w-3xl mx-auto leading-relaxed" style={{color: "#ffffff !important"}}>
                   Keep your home safe from water damage with our expert gutter solutions. Our team&apos;s 40+ years of combined experience means your home gets the best protection against the elements.
                 </p>
-                <p className="text-lg text-white dark:text-white font-medium mb-8" style={{color: "#ffffff"}}>
+                <p className="text-lg text-white font-medium mb-8" style={{color: "#ffffff !important"}}>
                   Free estimates & guaranteed workmanship
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center w-full gap-6">
