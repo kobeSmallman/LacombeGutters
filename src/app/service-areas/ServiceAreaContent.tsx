@@ -120,55 +120,57 @@ export default function ServiceAreaContent() {
             Professional Gutter Installation & Maintenance Since 2009
           </p>
           <form onSubmit={handleSearch} className="max-w-2xl mx-auto w-full">
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search className="h-5 w-5 text-gray-400" />
+            <div className="relative flex items-center">
+              <div className="absolute left-3 text-gray-400">
+                <Search className="h-5 w-5" />
               </div>
               <Input
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="pl-10 pr-28 sm:pr-32 py-4 sm:py-6 text-base sm:text-lg rounded-xl border-2 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+                className="pl-10 pr-24 sm:pr-28 py-4 sm:py-6 text-base sm:text-lg rounded-xl border-2 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
                 placeholder="Enter your address or city"
                 disabled={status === 'loading'}
               />
               <Button
                 type="submit"
                 variant="primary"
-                className="absolute right-0.5 top-1/2 -translate-y-1/2 h-[calc(100%-4px)] px-3 sm:px-6 rounded-r-xl text-sm sm:text-base whitespace-nowrap"
+                className="absolute right-1 h-9 sm:h-12 !min-h-0 px-6 rounded-xl text-xs sm:text-base whitespace-nowrap transition-none"
                 disabled={status === 'loading' || !query.trim()}
               >
-                {status === 'loading' ? 'Checking...' : 'Check'}
+                {status === 'loading' ? '...' : 'Check'}
               </Button>
             </div>
           </form>
           
-          {error && (
-            <p className="mt-4 text-red-400">{error}</p>
-          )}
-          
-          {status === 'done' && searchedLocation && (
-            <div className="mt-8 p-6 bg-white/10 backdrop-blur-sm rounded-2xl shadow-lg max-w-2xl mx-auto">
-              <div className={`flex items-center justify-center space-x-3 text-lg ${inside ? 'text-green-300' : 'text-amber-300'}`}>
-                {inside ? (
-                  <>
-                    <Check className="h-6 w-6" />
-                    <span>Great news! We service your area.</span>
-                  </>
-                ) : (
-                  <>
-                    <MapPin className="h-6 w-6" />
-                    <span>We don&apos;t currently service your area, but we&apos;re expanding!</span>
-                  </>
+          <div className="min-h-[72px] mt-2">
+            {error && (
+              <p className="text-red-400 text-center">{error}</p>
+            )}
+            
+            {status === 'done' && searchedLocation && (
+              <div className="p-4 sm:p-6 bg-white/10 backdrop-blur-sm rounded-2xl shadow-lg max-w-2xl mx-auto">
+                <div className={`flex items-center justify-center space-x-3 text-sm sm:text-base ${inside ? 'text-green-300' : 'text-amber-300'}`}>
+                  {inside ? (
+                    <>
+                      <Check className="h-5 w-5 sm:h-6 sm:w-6 flex-shrink-0" />
+                      <span className="text-center">Great news! We service your area.</span>
+                    </>
+                  ) : (
+                    <>
+                      <MapPin className="h-5 w-5 sm:h-6 sm:w-6 flex-shrink-0" />
+                      <span className="text-center">We don&apos;t currently service your area, but we&apos;re expanding!</span>
+                    </>
+                  )}
+                </div>
+                {!inside && (
+                  <p className="mt-2 text-sm sm:text-base text-blue-100 text-center">
+                    Contact us to be notified when we expand to your area.
+                  </p>
                 )}
               </div>
-              {!inside && (
-                <p className="mt-4 text-blue-100">
-                  Contact us to be notified when we expand to your area.
-                </p>
-              )}
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </section>
 
