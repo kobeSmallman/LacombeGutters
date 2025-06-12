@@ -20,7 +20,8 @@ export default function Home() {
           src="/images/banners/truck.png" 
           alt="Lacombe Gutters Truck" 
           fill
-          className="object-cover opacity-30"
+          className="object-cover md:object-center object-left opacity-30"
+          style={{ objectPosition: '80% center' }}
           priority
         />
         
@@ -47,42 +48,42 @@ export default function Home() {
             delay={0.2}
           >
             
-            <div className="mb-12 relative">
-              <div className="flex flex-col md:flex-row items-start gap-8 mb-10">
-                <div className="relative">
-                  <Image 
-                    src="/images/logos/logo.png" 
-                    alt="Lacombe Gutters Logo" 
-                    width={132}
-                    height={132}
-                    className="rounded-lg shadow-xl border-4 border-white/20"
-                  />
-                </div>
-                <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-left leading-tight">
-                  <AnimateOnScroll type="slideLeft" duration={1.5} delay={0.4} className="block">
-                    <span>Expert Eavestrough</span>
-                  </AnimateOnScroll>
-                  <AnimateOnScroll type="slideLeft" duration={1.5} delay={0.7}>
-                    <span className="text-secondary">Solutions</span>
-                  </AnimateOnScroll>
-                </h1>
+            <div className="mb-12 relative text-center md:text-left">
+              {/* Logo - Hidden on mobile, shown on md and up */}
+              <div className="hidden md:block relative mb-8">
+                <Image 
+                  src="/images/logos/logo.png" 
+                  alt="Lacombe Gutters Logo" 
+                  width={132}
+                  height={132}
+                  className="rounded-lg shadow-xl border-4 border-white/20"
+                />
               </div>
               
+              <h1 className="text-5xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight">
+                <AnimateOnScroll type="fadeIn" duration={1.5} delay={0.4} className="block">
+                  <span>Expert Eavestrough</span>
+                </AnimateOnScroll>
+                <AnimateOnScroll type="fadeIn" duration={1.5} delay={0.7}>
+                  <span className="text-secondary">Solutions</span>
+                </AnimateOnScroll>
+              </h1>
+              
               <AnimateOnScroll type="fadeIn" duration={1.5} delay={1.0}>
-                <p className="text-xl md:text-2xl text-center md:text-left text-gray-200 max-w-3xl mb-10">
+                <p className="text-lg sm:text-xl md:text-2xl text-center text-gray-200 max-w-3xl mx-auto md:mx-0 mb-8 md:mb-10 px-4 sm:px-0">
                   Professional installation, maintenance, and repair services with <span className="font-semibold text-white">40+ years</span> of combined expertise
                 </p>
               </AnimateOnScroll>
               
               <AnimateOnScroll type="fadeIn" duration={1.5} delay={1.3}>
-                <div className="flex flex-col sm:flex-row gap-6 justify-center md:justify-start">
-                  <Link href="/contact" className="group">
-                    <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
+                  <Link href="/contact" className="group w-full sm:w-auto">
+                    <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold transition-all duration-300 transform hover:scale-105">
                       Get a Free Estimate
                     </Button>
                   </Link>
-                  <Link href="/services" className="group">
-                    <Button variant="outline" className="bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 px-8 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                  <Link href="/services" className="group w-full sm:w-auto">
+                    <Button variant="outline" className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold transition-all duration-300 transform hover:scale-105">
                       View Our Services
                     </Button>
                   </Link>
@@ -422,25 +423,25 @@ export default function Home() {
               
               {/* Content */}
               <div className="relative z-10 p-8 lg:p-12">
-                <h3 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                <h3 className="text-4xl md:text-5xl font-bold text-white dark:text-white mb-6 leading-tight" style={{color: "#ffffff"}}>
                   Professional Gutter Protection
                 </h3>
-                <p className="text-xl md:text-2xl text-gray-100 mb-6 max-w-3xl mx-auto leading-relaxed">
+                <p className="text-xl md:text-2xl text-gray-100 dark:text-gray-100 mb-6 max-w-3xl mx-auto leading-relaxed" style={{color: "#f3f4f6"}}>
                   Keep your home safe from water damage with our expert gutter solutions. Our team&apos;s 40+ years of combined experience means your home gets the best protection against the elements.
                 </p>
-                <p className="text-lg text-white font-medium mb-8">
+                <p className="text-lg text-white dark:text-white font-medium mb-8" style={{color: "#ffffff"}}>
                   Free estimates & guaranteed workmanship
                 </p>
-                <div className="flex flex-col sm:flex-row justify-center gap-6">
-                  <Link href="/contact" className="group">
-                    <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105">
-                      Get Your Free Estimate
+                <div className="flex flex-col sm:flex-row items-center justify-center w-full gap-6">
+                  <Link href="/contact" className="group w-full sm:w-auto text-center">
+                    <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                      GET YOUR FREE ESTIMATE
                     </Button>
                   </Link>
-                  <Link href="tel:+14035989137" className="group">
-                    <Button variant="outline" className="bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 px-8 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                  <Link href="tel:+14035989137" className="group w-full sm:w-auto">
+                    <Button variant="outline" className="w-full bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 px-8 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105">
                       <Phone className="w-5 h-5 mr-2" />
-                      Call Now
+                      Call or Text
                     </Button>
                   </Link>
                 </div>
