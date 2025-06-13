@@ -5,6 +5,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { SITE_NAME, SITE_DESCRIPTION } from '@/lib/constants'
 import ThemeToggle from '@/components/ThemeToggle'
+import ScrollToTop from '@/components/ui/scroll-to-top'
 import LocalBusinessSchema from '@/components/LocalBusinessSchema'
 import { Analytics } from '@vercel/analytics/react'
 
@@ -141,6 +142,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <ScrollToTop />
         <ThemeToggle />
         <Analytics />
       </body>

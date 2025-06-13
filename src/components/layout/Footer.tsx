@@ -8,7 +8,8 @@ import {
   CONTACT_ADDRESS,
   FACEBOOK_URL,
   SERVICES,
-  NAVIGATION_ITEMS
+  NAVIGATION_ITEMS,
+  FOOTER_ADDITIONAL_ITEMS
 } from "@/lib/constants";
 
 interface NavigationItem {
@@ -59,7 +60,8 @@ export default function Footer() {
           <div className="md:col-span-2 lg:col-span-2 md:col-start-6">
             <h3 className="text-lg font-semibold text-white mb-6 uppercase tracking-wider">Quick Links</h3>
             <ul className="space-y-3">
-              {NAVIGATION_ITEMS.map((item: NavigationItem) => (
+              {/* Show both main nav items and additional footer links */}
+              {[...NAVIGATION_ITEMS, ...FOOTER_ADDITIONAL_ITEMS].map((item: NavigationItem) => (
                 <li key={item.path}>
                   <Link 
                     href={item.path}

@@ -6,15 +6,19 @@ export const CONTACT_EMAIL = "lacombegutters@gmail.com";
 export const CONTACT_ADDRESS = "170 112 Queensgate crescent Red Deer, AB, Canada, Alberta";
 export const FACEBOOK_URL = "https://www.facebook.com/lacombegutters";
 
-// Updated to include FAQ in navigation
+// Main navigation items (removed About, Gallery, and FAQ as requested)
 export const NAVIGATION_ITEMS = [
   { label: "Home", path: "/" },
-  { label: "About", path: "/about" },
   { label: "Services", path: "/services" },
   { label: "Service Areas", path: "/service-areas" },
+  { label: "Why Choose Us", path: "/why-us" },
+];
+
+// These items are not in main nav but still available in footer
+export const FOOTER_ADDITIONAL_ITEMS = [
+  { label: "About", path: "/about" },
   { label: "Gallery", path: "/gallery" },
   { label: "FAQ", path: "/faq" },
-  { label: "Why Choose Us", path: "/why-us" },
 ];
 
 export const SERVICE_AREA_BOUNDS = {

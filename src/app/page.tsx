@@ -1,17 +1,18 @@
-import Link from "next/link"
-import Image from "next/image"
-import { Phone } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import AnimateOnScroll from '@/components/ui/animate-on-scroll';
-import TestimonialsSection from '@/components/ui/testimonials-section';
-import RainEffect from '@/components/ui/rain-effect';
+import Image from "next/image";
+import Link from "next/link";
+import { Phone } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import AnimateOnScroll from "@/components/ui/animate-on-scroll";
+import TestimonialsSection from "@/components/ui/testimonials-section";
+import RainEffect from "@/components/ui/rain-effect";
 import "@/styles/rain-bg.css";
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
       {/* Hero Section */}
-      <section className="relative bg-primary text-white py-32 md:py-44 lg:py-52 overflow-hidden">
+      <section className="relative bg-primary text-white py-20 md:py-44 lg:py-52 overflow-hidden">
         {/* Construction texture overlay */}
         <div className="absolute inset-0 bg-[url('/images/textures/concrete-seamless.png')] opacity-5"></div>
         
@@ -47,54 +48,69 @@ export default function Home() {
             duration={1.5}
             delay={0.2}
           >
-            
-            <div className="mb-12 relative text-center md:text-left">
-              {/* Logo - Hidden on mobile, shown on md and up */}
-              <div className="hidden md:block relative mb-8">
-                <Image 
-                  src="/images/logos/logo.png" 
-                  alt="Lacombe Gutters Logo" 
-                  width={132}
-                  height={132}
-                  className="rounded-lg shadow-xl border-4 border-white/20"
-                />
+            <div className="relative text-center md:text-left pt-8 md:pt-0 h-[580px] md:h-[600px]">
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+                {/* Logo - Hidden on mobile, shown on md and up */}
+                <div className="hidden md:block relative">
+                  <Image 
+                    src="/images/logos/logo.png" 
+                    alt="Lacombe Gutters Logo" 
+                    width={100}
+                    height={100}
+                    className="rounded-lg shadow-xl border-4 border-white/20 mt  -2"
+                  />
+                </div>
+                
+                {/* Title with description below on desktop */}
+                <div className="relative">
+                  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight mb-2 sm:mb-4">
+                    <AnimateOnScroll type="fadeIn" duration={1.5} delay={0.4} className="block">
+                      <span>Expert Eavestrough</span>
+                    </AnimateOnScroll>
+                    <AnimateOnScroll type="fadeIn" duration={1.5} delay={0.7}>
+                      <span className="text-secondary">Solutions</span>
+                    </AnimateOnScroll>
+                  </h1>
+                  {/* Description - Only visible on desktop */}
+                  <div className="hidden md:block mt-4">
+                    <AnimateOnScroll type="fadeIn" duration={1.5} delay={1.0}>
+                      <p className="text-2xl lg:text-3xl text-gray-200 max-w-3xl leading-relaxed">
+                        Professional installation, maintenance, and repair services with <span className="font-bold text-white">40+ years</span> of combined expertise
+                      </p>
+                    </AnimateOnScroll>
+                  </div>
+                </div>
               </div>
               
-              <h1 className="text-5xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight">
-                <AnimateOnScroll type="fadeIn" duration={1.5} delay={0.4} className="block">
-                  <span>Expert Eavestrough</span>
+              {/* Description text - ONLY visible on mobile devices */}
+              <div className="absolute md:hidden" style={{top: '180px'}}>
+                <AnimateOnScroll type="fadeIn" duration={1.5} delay={1.0}>
+                  <p className="text-xl sm:text-2xl text-center text-gray-200 max-w-3xl mx-auto px-4 sm:px-6 leading-relaxed">
+                    Professional installation, maintenance, and repair services with <span className="font-bold text-white">40+ years</span> of combined expertise
+                  </p>
                 </AnimateOnScroll>
-                <AnimateOnScroll type="fadeIn" duration={1.5} delay={0.7}>
-                  <span className="text-secondary">Solutions</span>
+              </div>
+              
+              {/* Buttons - Position low for mobile, with more space on desktop */}
+              <div className="absolute w-full" style={{bottom: '50px'}}>
+                <AnimateOnScroll type="fadeIn" duration={1.5} delay={1.3}>
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 justify-center md:justify-start md:mt-16 md:ml-[132px]">
+                    <Link href="/contact" className="group w-full sm:w-auto">
+                      <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white !px-4 sm:!px-8 !py-2 sm:!py-4 !text-sm sm:!text-lg font-semibold transition-all duration-300 transform hover:scale-105" style={{fontSize: '0.875rem', padding: '0.4rem 0.75rem'}}>
+                        GET A FREE ESTIMATE
+                      </Button>
+                    </Link>
+                    <Link href="/services" className="group w-full sm:w-auto">
+                      <Button variant="outline" className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 !px-4 sm:!px-8 !py-2 sm:!py-4 !text-sm sm:!text-lg font-semibold transition-all duration-300 transform hover:scale-105" style={{fontSize: '0.875rem', padding: '0.4rem 0.75rem'}}>
+                        VIEW OUR SERVICES
+                      </Button>
+                    </Link>
+                  </div>
                 </AnimateOnScroll>
-              </h1>
-              
-              <AnimateOnScroll type="fadeIn" duration={1.5} delay={1.0}>
-                <p className="text-lg sm:text-xl md:text-2xl text-center text-gray-200 max-w-3xl mx-auto md:mx-0 mb-8 md:mb-10 px-4 sm:px-0">
-                  Professional installation, maintenance, and repair services with <span className="font-semibold text-white">40+ years</span> of combined expertise
-                </p>
-              </AnimateOnScroll>
-              
-              <AnimateOnScroll type="fadeIn" duration={1.5} delay={1.3}>
-                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
-                  <Link href="/contact" className="group w-full sm:w-auto">
-                    <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold transition-all duration-300 transform hover:scale-105">
-                      Get a Free Estimate
-                    </Button>
-                  </Link>
-                  <Link href="/services" className="group w-full sm:w-auto">
-                    <Button variant="outline" className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold transition-all duration-300 transform hover:scale-105">
-                      View Our Services
-                    </Button>
-                  </Link>
-                </div>
-              </AnimateOnScroll>
+              </div>
             </div>
-            
-
           </AnimateOnScroll>
         </div>
-        
       </section>
 
       {/* Testimonials Section - Moved right after hero */}
@@ -156,9 +172,20 @@ export default function Home() {
                 Expert Eavestrough Solutions
               </span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-4">
               Professional installation, maintenance, and repair services with 40+ years of combined expertise
             </p>
+            <div className="flex justify-center items-center mt-2 mb-6">
+              <Link href="/gallery" className="group inline-flex items-center text-primary hover:text-secondary transition-colors bg-primary/5 hover:bg-primary/10 px-5 py-2 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                </svg>
+                Check out our project gallery
+                <svg className="ml-1 h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
           </AnimateOnScroll>
           
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
