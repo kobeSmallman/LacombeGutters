@@ -48,7 +48,7 @@ export default function Home() {
             duration={1.5}
             delay={0.2}
           >
-            <div className="relative text-center md:text-left pt-8 md:pt-0 h-[580px] md:h-[600px]">
+            <div className="relative text-center md:text-left pt-8 md:pt-0 h-[580px] md:h-[525px]">
               <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
                 {/* Logo - Hidden on mobile, shown on md and up */}
                 <div className="hidden md:block relative">
@@ -72,7 +72,7 @@ export default function Home() {
                     </AnimateOnScroll>
                   </h1>
                   {/* Description - Only visible on desktop */}
-                  <div className="hidden md:block mt-4">
+                  <div className="hidden md:block mt-8">
                     <AnimateOnScroll type="fadeIn" duration={1.5} delay={1.0}>
                       <p className="text-2xl lg:text-3xl text-gray-200 max-w-3xl leading-relaxed">
                         Professional installation, maintenance, and repair services with <span className="font-bold text-white">40+ years</span> of combined expertise
