@@ -7,4 +7,10 @@
   .homepage-heading-solutions {
     font-size: 42px !important;
   }
+  
+  /* Adjust hero banner background position */
+  .hero-background-truck {
+    transform: translateX(35px) !important;
+    background-position: right center !important;
+  }
 }

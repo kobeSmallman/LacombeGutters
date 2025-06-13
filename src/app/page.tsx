@@ -22,7 +22,7 @@ export default function Home() {
           src="/images/banners/truck.png" 
           alt="Lacombe Gutters Truck" 
           fill
-          className="object-cover md:object-center object-left opacity-30"
+          className="object-cover md:object-center object-left opacity-30 hero-background-truck"
           style={{ objectPosition: '80% center' }}
           priority
         />
