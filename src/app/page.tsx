@@ -7,6 +7,7 @@ import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 import TestimonialsSection from "@/components/ui/testimonials-section";
 import RainEffect from "@/components/ui/rain-effect";
 import "@/styles/rain-bg.css";
+import "./mobile-styles.css";
 
 export default function Home() {
   return (
@@ -48,7 +49,7 @@ export default function Home() {
             duration={1.5}
             delay={0.2}
           >
-            <div className="relative text-center md:text-left pt-8 md:pt-0 h-[580px] md:h-[525px]">
+            <div className="relative text-center md:text-left pt-12 md:pt-0 h-[650px] md:h-[525px]">
               <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
                 {/* Logo - Hidden on mobile, shown on md and up */}
                 <div className="hidden md:block relative">
@@ -63,12 +64,12 @@ export default function Home() {
                 
                 {/* Title with description below on desktop */}
                 <div className="relative">
-                  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight mb-2 sm:mb-4">
+                  <h1 className="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight mb-2 sm:mb-4">
                     <AnimateOnScroll type="fadeIn" duration={1.5} delay={0.4} className="block">
-                      <span>Expert Eavestrough</span>
+                      <span className="homepage-heading">Expert Eavestrough</span>
                     </AnimateOnScroll>
                     <AnimateOnScroll type="fadeIn" duration={1.5} delay={0.7}>
-                      <span className="text-secondary">Solutions</span>
+                      <span className="text-secondary homepage-heading-solutions">Solutions</span>
                     </AnimateOnScroll>
                   </h1>
                   {/* Description - Only visible on desktop */}

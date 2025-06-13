@@ -1,0 +1,10 @@
+/* Mobile-only styles for the homepage */
+@media (max-width: 768px) {
+  .homepage-heading {
+    font-size: 40px !important;
+  }
+
+  .homepage-heading-solutions {
+    font-size: 42px !important;
+  }
+}
