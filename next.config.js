@@ -47,12 +47,28 @@ const nextConfig = {
 
   async redirects() {
     return [
+      // Domain redirect (existing)
       {
         source: '/:path*',
         has: [{ type: 'host', value: 'lacombe-gutters.vercel.app' }],
         destination: 'https://lacombeguttersltd.com/:path*',
         permanent: true,
       },
+      // Legacy Wix URL redirects - Based on sitemap comparison
+      {
+        source: '/reviews',
+        destination: '/',  // Reviews are now integrated on homepage
+        permanent: true,
+      },
+      // Add more redirects here if URL structures change
+      // These are prepared but commented out since the routes appear to match
+      // Uncomment and modify as needed after testing
+      // {
+      //   source: '/about',
+      //   destination: '/about',
+      //   permanent: true,
+      // },
+      // Add any other redirects if old URLs don't match new structure
     ];
   },
 };
