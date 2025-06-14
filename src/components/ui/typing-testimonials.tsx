@@ -82,11 +82,11 @@ export default function TypingTestimonials() {
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center py-4">
-      <p className="text-xl italic text-gray-900 px-2 md:px-4 leading-relaxed mb-4 text-center" style={{ color: 'black' }}>
+      <p className="text-xl italic text-gray-900 dark:text-gray-900 px-2 md:px-4 leading-relaxed mb-4 text-center" style={{ color: 'black !important' }}>
         &ldquo;{displayText}
         <span className="inline-block h-5 w-0.5 bg-yellow-600 ml-1 animate-blink"></span>&rdquo;
       </p>
-      <div className="font-bold text-yellow-700 mt-2 text-center" style={{ color: 'black' }}>
+      <div className="font-bold text-yellow-700 dark:text-yellow-800 mt-2 text-center" style={{ color: 'black !important' }}>
         {currentAuthor}
       </div>
     </div>
