@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
       {/* Hero Section */}
-      <section className="relative text-white py-20 md:py-44 lg:py-52 overflow-hidden hero-section" style={{ paddingTop: 'max(5rem, calc(5rem + env(safe-area-inset-top)))' }}>
+      <section className="relative text-white py-24 md:py-44 lg:py-52 overflow-hidden hero-section">
         {/* Background image */}
         <Image 
           src="/images/gallery/ModernHouse.png" 
@@ -34,7 +34,7 @@ export default function Home() {
             duration={1.5}
             delay={0.2}
           >
-            <div className="relative text-center md:text-left pt-16 sm:pt-20 md:pt-0 h-[650px] md:h-[525px]">
+            <div className="relative text-center md:text-left pt-8 md:pt-0 h-[650px] md:h-[525px]">
               <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
                 {/* Logo - Hidden on mobile, shown on md and up */}
                 <div className="hidden md:block relative">
