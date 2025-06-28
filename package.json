@@ -11,7 +11,7 @@
     "type-check": "tsc --noEmit",
     "test": "jest",
     "test:watch": "jest --watch",
-    "prepare": "husky install"
+    "postinstall": "husky install || true"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
