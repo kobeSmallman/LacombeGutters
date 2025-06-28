@@ -17,12 +17,27 @@
     max-width: 100vw !important;
   }
   
-  /* Make sure the section is properly filled */
+  /* Make sure the section is properly filled with safe area support */
   section.hero-section {
     overflow: hidden !important;
     width: 100% !important;
     margin: 0 !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
+    /* Add safe area support for iPhone 14 and newer */
+    padding-top: max(5rem, calc(5rem + env(safe-area-inset-top))) !important;
+    padding-bottom: 5rem !important;
+  }
+  
+  /* Additional safe area adjustments for hero content */
+  .hero-section .container {
+    padding-top: max(1rem, env(safe-area-inset-top)) !important;
+  }
+  
+  /* Fix for iPhone 14 and similar models with notch */
+  @supports (padding: max(0px)) {
+    section.hero-section {
+      padding-top: max(6rem, calc(6rem + env(safe-area-inset-top))) !important;
+    }
   }
 }

@@ -28,6 +28,7 @@ export const viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
+  viewportFit: 'cover', // Enable safe area support for iPhone X and newer
 }
 
 export const metadata: Metadata = {
