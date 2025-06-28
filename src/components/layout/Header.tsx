@@ -9,7 +9,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   return (
-    <header className="bg-white dark:bg-gray-900 shadow-lg border-b-2 border-amber-500 dark:border-amber-600 transition-colors duration-300">
+    <header className="bg-white dark:bg-gray-900 shadow-lg border-b border-black dark:border-gray-600 transition-colors duration-300">
       <div className="container mx-auto px-4 py-4">
 
         {/* Main Navigation */}
@@ -46,9 +46,9 @@ export default function Header() {
             ))}
             <Link 
               href="/contact" 
-              className="ml-4 px-6 py-2.5 bg-primary dark:bg-amber-600 text-white font-medium text-sm uppercase tracking-wider rounded-md hover:bg-amber-600 dark:hover:bg-amber-500 transition-colors shadow-md hover:shadow-lg"
+              className="ml-4 px-6 py-2.5 bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 text-white font-medium text-sm uppercase tracking-wider rounded-md transition-colors shadow-md hover:shadow-lg"
             >
-              Contact Us Now!
+              Free Estimate
             </Link>
           </nav>
           
@@ -84,10 +84,10 @@ export default function Header() {
               ))}
               <Link
                 href="/contact"
-                className="mt-2 px-4 py-3 bg-primary dark:bg-amber-600 text-white font-medium text-center rounded-md hover:bg-amber-600 dark:hover:bg-amber-500 transition-colors"
+                className="mt-2 px-4 py-3 bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 text-white font-medium text-center rounded-md transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Contact Us Now!
+                Free Estimate
               </Link>
             </nav>
           </div>

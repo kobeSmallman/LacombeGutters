@@ -1,31 +1,21 @@
 import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import sgMail from '@sendgrid/mail';
 
 export const runtime = 'nodejs'; // Ensure this runs as a Node.js function, not an Edge function
 
-// Create a direct Gmail transporter with hardcoded credentials for testing
-const createTestTransporter = () => {
-  return nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'kobe4smallman@gmail.com',
-      pass: 'cesr dihi bmcw gnxr' // Your existing app password
-    }
-  });
-};
+// Initialize SendGrid with API key
+sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
 export async function GET() {
   console.log('======== EMAIL TEST WITH INDUSTRIAL THEME ========');
   console.log('Time:', new Date().toLocaleString());
   
   try {
-    // Create transporter directly with hardcoded values
-    console.log('Creating Gmail transporter with direct credentials...');
-    const transporter = createTestTransporter();
+    console.log('Using SendGrid for test email...');
     
     console.log('Creating construction-themed test email...');
     const testEmail = {
-      from: '"Lacombe Gutters" <kobe4smallman@gmail.com>',
+      from: process.env.MAIL_FROM!,
       to: 'kobe4smallman@gmail.com',
       subject: 'Construction-Themed Test - ' + new Date().toLocaleString(),
       text: 'If you see this, email sending is working correctly!',
@@ -58,16 +48,16 @@ export async function GET() {
     };
     
     console.log('Sending test email to kobe4smallman@gmail.com...');
-    const info = await transporter.sendMail(testEmail);
+    const [response] = await sgMail.send(testEmail);
     
     console.log('Email sent successfully!');
-    console.log('Message ID:', info.messageId);
+    console.log('Status code:', response?.statusCode);
     
     return NextResponse.json({ 
       ok: true, 
       message: 'Test email sent successfully! Check your inbox at kobe4smallman@gmail.com',
       details: {
-        messageId: info.messageId,
+        statusCode: response?.statusCode,
         time: new Date().toLocaleString()
       }
     });

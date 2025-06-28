@@ -2,14 +2,16 @@
 
 import { useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
+import { CheckCircle2, AlertCircle, Upload, X } from "lucide-react";
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitResult, setSubmitResult] = useState<{success: boolean; message: string} | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
-  const [emailContent, setEmailContent] = useState<{to: string; subject: string; body: string} | null>(null);
-  const [showCopyOptions, setShowCopyOptions] = useState(false);
+  const [contactMethod, setContactMethod] = useState<'email' | 'sms'>('email');
+  const [attachments, setAttachments] = useState<File[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Function to format phone number as user types
   const formatPhoneNumber = (value: string) => {
@@ -27,8 +29,13 @@ export default function ContactForm() {
   };
 
   const handlePhoneInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formattedValue = formatPhoneNumber(e.target.value);
-    e.target.value = formattedValue;
+    const input = e.target;
+    const formattedValue = formatPhoneNumber(input.value);
+    input.value = formattedValue;
+    
+    // Trigger a change event to update any controlled components
+    const event = new Event('input', { bubbles: true });
+    input.dispatchEvent(event);
   };
 
   const validateForm = (formData: FormData): boolean => {
@@ -78,7 +85,40 @@ export default function ContactForm() {
     return Object.keys(errors).length === 0;
   };
 
+  // Handle file attachment
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    const validFiles = files.filter(file => {
+      // Allow common image formats and PDFs
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'application/pdf'];
+      const maxSize = 10 * 1024 * 1024; // 10MB limit
+      
+      if (!allowedTypes.includes(file.type)) {
+        alert(`File ${file.name} is not a supported format. Please use JPG, PNG, GIF, WebP, or PDF.`);
+        return false;
+      }
+      
+      if (file.size > maxSize) {
+        alert(`File ${file.name} is too large. Please use files under 10MB.`);
+        return false;
+      }
+      
+      return true;
+    });
+    
+    setAttachments(prev => [...prev, ...validFiles]);
+  };
+
+  const removeAttachment = (index: number) => {
+    setAttachments(prev => prev.filter((_, i) => i !== index));
+  };
+
+
+
+
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    console.log('ContactForm handleSubmit called');
     e.preventDefault();
     
     if (!formRef.current) return;
@@ -106,81 +146,103 @@ export default function ContactForm() {
     try {
       console.log('Starting form submission...');
       
-      // Extract values for email content
-      const name = formData.get('name') as string;
-      const email = formData.get('email') as string;
-      const phone = formData.get('phone') as string;
-      const address = formData.get('address') as string;
-      const message = formData.get('message') as string;
+      // Create FormData for file upload support
+      const apiFormData = new FormData();
+      
+      // Add form fields
+      apiFormData.append('name', formData.get('name') as string);
+      apiFormData.append('email', formData.get('email') as string);
+      apiFormData.append('phone', formData.get('phone') as string);
+      apiFormData.append('address', formData.get('address') as string);
+      apiFormData.append('message', formData.get('message') as string);
+      apiFormData.append('contactMethod', contactMethod);
+      apiFormData.append('source', 'contact-page');
+      apiFormData.append('formType', 'contact-form');
+      
+      // Add services
       const services = formData.getAll('services') as string[];
-      
-      // Log the services selected for debugging
-      console.log('Selected services:', services);
-      
-      // Format services for email - clean presentation
-      const formattedServices = services.map(service => 
-        service.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
-      ).join(', ');
-      
-      // Build a cleaner email body with PLAIN TEXT formatting (no HTML)
-      const emailBody = `
-Hello Lacombe Gutters,
-
-I would like to request information on the following service(s): 
-${formattedServices}
-
-Details about my project:
-${message}
-
-My contact information:
-- Name: ${name}
-- Phone: ${phone}
-- Email: ${email}${address ? `\n- Address: ${address}` : ''}
-
-Thank you,
-${name}
-      `.trim();
-      
-      // Try to open default email client first
-      const mailtoLink = `mailto:lacombegutters@gmail.com?subject=Gutter Estimate Request - ${encodeURIComponent(name)}&body=${encodeURIComponent(emailBody)}`;
-      
-      // Show success message with copy options
-      setSubmitResult({
-        success: true,
-        message: 'Email prepared! If your email app doesn\'t open, please copy the information below.'
+      services.forEach(service => {
+        apiFormData.append('services', service);
       });
       
-      // Reset submitting state
-      setIsSubmitting(false);
-      
-      // Store email content for copying
-      setEmailContent({
-        to: 'lacombegutters@gmail.com',
-        subject: `Gutter Estimate Request - ${name}`,
-        body: emailBody
+      // Add attachments
+      attachments.forEach(file => {
+        apiFormData.append('attachments', file);
       });
       
-      // Try to open mailto link
-      window.location.href = mailtoLink;
+      console.log('Submitting form with', services.length, 'services and', attachments.length, 'attachments');
       
+      // Send data to API endpoint
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        body: apiFormData, // Use FormData instead of JSON
+      });
+      
+      const result = await response.json();
+      
+      if (response.ok) {
+        console.log('Form submitted successfully:', result);
+        setSubmitResult({
+          success: true,
+          message: 'Your request has been sent successfully! We will contact you via your preferred method within 24 hours.'
+        });
+        
+        // Reset form
+        form.reset();
+        setContactMethod('email');
+        setAttachments([]);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
+      } else {
+        console.error('API error:', result);
+        setSubmitResult({
+          success: false,
+          message: result.message || 'Something went wrong. Please try again or contact us directly.'
+        });
+      }
     } catch (error) {
-      console.error('Error preparing email:', error);
-      setIsSubmitting(false);
+      console.error('Error submitting form:', error);
       setSubmitResult({
         success: false,
-        message: 'There was a problem preparing your email. Please try again or contact us directly.'
+        message: 'Network error. Please try again or contact us directly.'
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  const copyToClipboard = (field: 'to' | 'subject' | 'body') => {
-    if (!emailContent) return;
-    navigator.clipboard.writeText(emailContent[field]);
-    alert(`${field.charAt(0).toUpperCase() + field.slice(1)} copied!`);
-  };
-
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+    <form ref={formRef} onSubmit={handleSubmit} method="POST" className="space-y-6">
+      {/* Preferred Contact Method - Moved to top */}
+      <div className="mb-6">
+        <h3 className="font-bold text-lg mb-3">Preferred Contact Method *</h3>
+        <div className="flex gap-6">
+          <label className="flex items-center text-sm">
+            <input
+              type="radio"
+              name="contactMethod"
+              value="email"
+              checked={contactMethod === 'email'}
+              onChange={() => setContactMethod('email')}
+              className="mr-3 scale-125"
+            />
+            Email
+          </label>
+          <label className="flex items-center text-sm">
+            <input
+              type="radio"
+              name="contactMethod"
+              value="sms"
+              checked={contactMethod === 'sms'}
+              onChange={() => setContactMethod('sms')}
+              className="mr-3 scale-125"
+            />
+            Text Message/SMS
+          </label>
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
@@ -201,7 +263,7 @@ ${name}
         
         <div>
           <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
-            Phone <span className="text-red-500">*</span>
+            Phone {contactMethod === 'sms' ? <span className="text-red-500">*</span> : ''}
           </label>
           <input
             type="tel"
@@ -210,31 +272,37 @@ ${name}
             className={`w-full px-3 py-2 border ${validationErrors['phone'] ? 'border-red-500 bg-red-50' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-1 focus:ring-primary`}
             pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
             placeholder="123-456-7890"
-            onInput={handlePhoneInput}
+            onChange={handlePhoneInput}
             maxLength={12}
-            required
+            required={contactMethod === 'sms'}
             data-error={!!validationErrors['phone']}
           />
           {validationErrors['phone'] && (
             <p className="mt-1 text-sm text-red-600 dark:text-red-400">{validationErrors['phone']}</p>
+          )}
+          {contactMethod !== 'sms' && (
+            <p className="mt-1 text-xs text-gray-500">Optional backup contact</p>
           )}
         </div>
       </div>
       
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
-          Email <span className="text-red-500">*</span>
+          Email {contactMethod === 'email' ? <span className="text-red-500">*</span> : ''}
         </label>
         <input
           type="email"
           id="email"
           name="email"
           className={`w-full px-3 py-2 border ${validationErrors['email'] ? 'border-red-500 bg-red-50' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-1 focus:ring-primary`}
-          required
+          required={contactMethod === 'email'}
           data-error={!!validationErrors['email']}
         />
         {validationErrors['email'] && (
           <p className="mt-1 text-sm text-red-600 dark:text-red-400">{validationErrors['email']}</p>
+        )}
+        {contactMethod !== 'email' && (
+          <p className="mt-1 text-xs text-gray-500">Optional backup contact</p>
         )}
       </div>
       
@@ -316,126 +384,105 @@ ${name}
         <p className="mt-1 text-xs text-gray-500 dark:text-gray-300">Approximate measurements (if available) help us provide a more accurate estimate.</p>
       </div>
       
-      <div className="bg-gray-100 dark:bg-gray-800 border-l-4 border-primary p-4 mb-4">
-        <div className="flex">
-          <div className="flex-shrink-0 text-primary">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <div className="ml-3">
-            <p className="text-sm text-gray-900 dark:text-gray-100">
-              <strong className="font-semibold">Photos Help Us Provide Accurate Estimates</strong> - When your default email app opens, you&apos;ll be able to attach photos of your existing gutters or project area.
+      {/* File Upload Section */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-white mb-2">
+          Photos (Optional)
+        </label>
+        <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+          <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+          <div className="space-y-2">
+            <p className="text-sm text-gray-600" style={{color: "black"}}>
+              <strong>Upload photos to help us provide accurate estimates</strong>
             </p>
-            <p className="text-xs mt-1 text-gray-800 dark:text-gray-300">
-              Note: This form will open your device&apos;s default email application. We will respond to the email address you provided above.
+            <p className="text-xs text-gray-500" style={{color: "black"}}>
+              JPG, PNG, GIF, WebP, or PDF files up to 10MB each
             </p>
+            {contactMethod === 'sms' && (
+              <p className="text-xs text-amber-600 mt-2">
+                ⚠️ Note: Images cannot be sent via SMS. Please choose email as your preferred contact method to receive images.
+              </p>
+            )}
+            <input
+              ref={fileInputRef}
+              type="file"
+              multiple
+              accept="image/*,.pdf"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              Choose Files
+            </Button>
           </div>
         </div>
-      </div>
-      
-      <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
-        <Button 
-          type="submit" 
-          variant="primary" 
-          size="lg"
-          className={`w-full sm:w-auto transition-colors ${isSubmitting ? 'bg-green-600 hover:bg-green-700' : 'hover:bg-opacity-90'}`}
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? 'Form Info Ready...' : 'Prepare Email'}
-        </Button>
         
-        {submitResult && (
-          <div className={`text-sm px-4 py-2 rounded-md ${submitResult.success ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>
-            {submitResult.message}
-            {submitResult.success && !showCopyOptions && (
-              <button 
-                className="ml-2 underline text-primary"
-                onClick={() => setShowCopyOptions(true)}
-              >
-                Show copy options
-              </button>
-            )}
+        {/* Show selected files */}
+        {attachments.length > 0 && (
+          <div className="mt-3 space-y-2">
+            <p className="text-sm font-medium text-gray-700" style={{color: "black"}}>
+              Selected files ({attachments.length}):
+            </p>
+            {attachments.map((file, index) => (
+              <div key={index} className="flex items-center justify-between bg-gray-50 p-2 rounded border">
+                <span className="text-sm text-gray-700 truncate" style={{color: "black"}}>
+                  {file.name} ({(file.size / 1024 / 1024).toFixed(1)}MB)
+                </span>
+                <button
+                  type="button"
+                  onClick={() => removeAttachment(index)}
+                  className="text-red-500 hover:text-red-700 ml-2"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+            ))}
           </div>
         )}
       </div>
       
-      {/* Copy options for web-based email clients */}
-      {showCopyOptions && emailContent && (
-        <div className="mt-6 border border-gray-300 rounded-md p-4 bg-gray-50">
-          <div className="flex justify-between items-center mb-3">
-            <h3 className="font-medium">Email Content (Copy/Paste to Gmail)</h3>
-            <button 
-              className="text-sm text-gray-600"
-              onClick={() => setShowCopyOptions(false)}
-            >
-              Hide
-            </button>
-          </div>
-          
-          <div className="space-y-3">
-            <div>
-              <p className="text-sm font-medium mb-1">To:</p>
-              <div className="flex">
-                <input 
-                  type="text" 
-                  readOnly 
-                  value={emailContent.to} 
-                  className="flex-1 p-2 border border-gray-300 rounded-md text-sm bg-white"
-                />
-                <button
-                  type="button"
-                  onClick={() => copyToClipboard('to')}
-                  className="px-3 py-1 bg-primary hover:bg-opacity-90 text-white rounded-md ml-2 transition-colors"
-                >
-                  Copy
-                </button>
-              </div>
+      <div className="flex items-center justify-between">
+        <Button 
+          type="submit" 
+          size="lg"
+          className={`w-full sm:w-auto bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-600 hover:to-blue-500 text-white font-bold transition-colors ${isSubmitting ? 'bg-gray-400' : ''}`}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? 'Sending...' : 'Submit Request'}
+        </Button>
+      </div>
+      
+      {/* Show success or error message */}
+      {submitResult && (
+        <div className={`p-6 rounded-md mb-6 ${submitResult.success ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
+          {submitResult.success ? (
+            <div className="flex flex-col items-center w-full">
+              <CheckCircle2 className="h-12 w-12 text-green-500 mb-4" />
+              <p className="text-lg font-medium text-center mb-4" style={{color: "black"}}>{submitResult.message}</p>
+              {contactMethod === 'email' && (
+                <p className="text-sm text-center text-gray-600 mb-4" style={{color: "black"}}>
+                  <strong>Note:</strong> Please check your spam/junk folder if you don&apos;t see our confirmation email.
+                </p>
+              )}
+              <Button 
+                className="mt-4"
+                onClick={() => setSubmitResult(null)}
+                variant="outline"
+              >
+                Submit Another Request
+              </Button>
             </div>
-            
-            <div>
-              <p className="text-sm font-medium mb-1">Subject:</p>
-              <div className="flex">
-                <input 
-                  type="text" 
-                  readOnly 
-                  value={emailContent.subject} 
-                  className="flex-1 p-2 border border-gray-300 rounded-md text-sm bg-white"
-                />
-                <button
-                  type="button"
-                  onClick={() => copyToClipboard('subject')}
-                  className="px-3 py-1 bg-primary hover:bg-opacity-90 text-white rounded-md ml-2 transition-colors"
-                >
-                  Copy
-                </button>
-              </div>
+          ) : (
+            <div className="flex items-start">
+              <AlertCircle className="text-red-500 h-6 w-6 mr-3 flex-shrink-0" />
+              <p className="text-gray-700" style={{color: "black"}}>{submitResult.message}</p>
             </div>
-            
-            <div>
-              <p className="text-sm font-medium mb-1">Email Body:</p>
-              <div className="flex flex-col">
-                <textarea 
-                  readOnly 
-                  value={emailContent.body} 
-                  className="p-2 border border-gray-300 rounded-md text-sm bg-white h-32"
-                />
-                <button
-                  type="button"
-                  onClick={() => copyToClipboard('body')}
-                  className="mt-2 px-3 py-1 bg-primary hover:bg-opacity-90 text-white rounded-md self-end transition-colors"
-                >
-                  Copy Email Body
-                </button>
-              </div>
-            </div>
-            
-            <div className="bg-white border-l-4 border-primary p-3 mt-2">
-              <p className="text-sm">
-                <strong>Gmail Instructions:</strong> Open Gmail in a new tab, click &quot;Compose&quot;, and paste the content above into the appropriate fields. Then attach any photos of your project.
-              </p>
-            </div>
-          </div>
+          )}
         </div>
       )}
     </form>

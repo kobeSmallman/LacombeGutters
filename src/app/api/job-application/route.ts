@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import sgMail from '@sendgrid/mail';
 
 export const runtime = 'nodejs'; // Ensure this runs as a Node.js function, not an Edge function
 
@@ -17,17 +17,8 @@ interface AttachmentFile {
   content: Buffer;
 }
 
-// Create a robust Gmail transporter that works regardless of env variables
-const createTransporter = () => {
-  // Direct Gmail configuration with your app password - no env variables needed
-  return nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'kobe4smallman@gmail.com',
-      pass: 'cesr dihi bmcw gnxr' // Your existing app password
-    }
-  });
-};
+// Initialize SendGrid with API key
+sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
 export async function POST(request: Request) {
   try {
@@ -107,22 +98,24 @@ export async function POST(request: Request) {
     console.log(`Subject: New Job Application from ${name} - ${position}`);
     console.log(`Attachments: ${attachments.length} files`);
     
-    // Send the email directly using Gmail service configuration
+    // Send the email using SendGrid
     try {
-      // Create transporter directly with inline credentials
-      const transporter = createTransporter();
-      
-      const info = await transporter.sendMail({
-        from: '"Lacombe Gutters Form" <kobe4smallman@gmail.com>',
-        to: 'kobe4smallman@gmail.com',
+      const [response] = await sgMail.send({
+        from: process.env.MAIL_FROM!,
+        to: process.env.PROD_EMAIL_TO!,
         replyTo: `${name} <${email}>`,
         subject: `New Job Application from ${name} - ${position}`,
         html: emailContent,
-        attachments,
+        attachments: attachments.map(attachment => ({
+          filename: attachment.filename,
+          content: attachment.content.toString('base64'),
+          type: 'application/pdf',
+          disposition: 'attachment'
+        })),
       });
       
       console.log('Job application email sent successfully!');
-      console.log('Message ID:', info.messageId);
+      console.log('Status code:', response?.statusCode);
     } catch (emailError) {
       console.error('Error sending job application email:', emailError);
       // Continue with the request even if email fails

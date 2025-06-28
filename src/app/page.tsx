@@ -13,34 +13,19 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
       {/* Hero Section */}
-      <section className="relative bg-primary text-white py-20 md:py-44 lg:py-52 overflow-hidden hero-section">
-        {/* Construction texture overlay */}
-        <div className="absolute inset-0 bg-[url('/images/textures/concrete-seamless.png')] opacity-5"></div>
-        
+      <section className="relative text-white py-20 md:py-44 lg:py-52 overflow-hidden hero-section">
         {/* Background image */}
         <Image 
-          src="/images/banners/truck.png" 
-          alt="Lacombe Gutters Truck" 
+          src="/images/gallery/ModernHouse.png" 
+          alt="Professional eavestrough installation on modern house" 
           fill
-          className="object-cover md:object-center object-left opacity-30 hero-background-truck"
+          className="object-cover md:object-center object-left hero-background-truck"
           style={{ objectPosition: '80% center' }}
           priority
         />
         
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/60 via-primary/40 to-primary/60"></div>
-        
-        {/* Light gray semi-transparent overlay */}
-        <div className="absolute inset-0 bg-gray-50/8 dark:bg-gray-700/50"></div>
-        
-        {/* Subtle diagonal lines */}
-        <div 
-          className="absolute inset-0 opacity-5"
-          style={{
-            backgroundImage: 'linear-gradient(45deg, #ffffff 10%, transparent 10%, transparent 90%, #ffffff 90%, #ffffff)',
-            backgroundSize: '20px 20px'
-          }}
-        ></div>
+        {/* Simple overlay for text readability */}
+        <div className="absolute inset-0 bg-black/30"></div>
         
         <div className="container mx-auto px-4 relative z-10">
           <AnimateOnScroll 
@@ -97,7 +82,7 @@ export default function Home() {
                 <AnimateOnScroll type="fadeIn" duration={1.5} delay={1.3}>
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 justify-center md:justify-start md:mt-16 md:ml-[132px]">
                     <Link href="/contact" className="group w-full sm:w-auto">
-                      <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white !px-4 sm:!px-8 !py-2 sm:!py-4 !text-sm sm:!text-lg font-semibold transition-all duration-300 transform hover:scale-105" style={{fontSize: '0.875rem', padding: '0.4rem 0.75rem'}}>
+                      <Button className="w-full sm:w-auto bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 text-white !px-4 sm:!px-8 !py-2 sm:!py-4 !text-sm sm:!text-lg font-semibold transition-all duration-300 transform hover:scale-105" style={{fontSize: '0.875rem', padding: '0.4rem 0.75rem'}}>
                         GET A FREE ESTIMATE
                       </Button>
                     </Link>
@@ -465,7 +450,7 @@ export default function Home() {
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center w-full gap-6">
                   <Link href="/contact" className="group w-full sm:w-auto text-center">
-                    <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                    <Button className="w-full sm:w-auto bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105">
                       GET YOUR FREE ESTIMATE
                     </Button>
                   </Link>

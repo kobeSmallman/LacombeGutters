@@ -4,10 +4,11 @@ import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { SITE_NAME, SITE_DESCRIPTION } from '@/lib/constants'
-import ThemeToggle from '@/components/ThemeToggle'
+
 import ScrollToTop from '@/components/ui/scroll-to-top'
 import LocalBusinessSchema from '@/components/LocalBusinessSchema'
 import { Analytics } from '@vercel/analytics/react'
+import ClientWidgets from '@/components/ClientWidgets'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -143,7 +144,8 @@ export default function RootLayout({
         </main>
         <Footer />
         <ScrollToTop />
-        <ThemeToggle />
+
+        <ClientWidgets />
         <Analytics />
       </body>
     </html>

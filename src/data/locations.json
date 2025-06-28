@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Red Deer",
+    "slug": "red-deer",
+    "region": "Central",
+    "priority": 1,
+    "description": "Professional eavestrough and gutter services in Red Deer, Alberta. Serving residential and commercial properties with expert installation, repair, and maintenance.",
+    "coordinates": { "lat": 52.2681, "lng": -113.8112 }
+  },
+  {
+    "name": "Lacombe",
+    "slug": "lacombe", 
+    "region": "Central",
+    "priority": 1,
+    "description": "Expert gutter and eavestrough services in Lacombe, Alberta. Quality installation and repair for homes and businesses throughout the area.",
+    "coordinates": { "lat": 52.4672, "lng": -113.7367 }
+  },
+  {
+    "name": "Blackfalds",
+    "slug": "blackfalds",
+    "region": "Central", 
+    "priority": 1,
+    "description": "Reliable eavestrough services in Blackfalds, Alberta. Professional gutter installation, cleaning, and repair for residential and commercial properties.",
+    "coordinates": { "lat": 52.3833, "lng": -113.7975 }
+  },
+  {
+    "name": "Sylvan Lake",
+    "slug": "sylvan-lake",
+    "region": "Central",
+    "priority": 1,
+    "description": "Professional gutter services in Sylvan Lake, Alberta. Expert eavestrough installation and maintenance for lakeside properties and homes.",
+    "coordinates": { "lat": 52.3089, "lng": -114.0939 }
+  },
+  {
+    "name": "Spruce Grove",
+    "slug": "spruce-grove",
+    "region": "North",
+    "priority": 1,
+    "description": "Quality eavestrough and gutter services in Spruce Grove, Alberta. Professional installation and repair for residential and commercial clients.",
+    "coordinates": { "lat": 53.5450, "lng": -113.9053 }
+  },
+  {
+    "name": "Leduc",
+    "slug": "leduc",
+    "region": "North",
+    "priority": 2,
+    "description": "Expert gutter services in Leduc, Alberta. Professional eavestrough installation, cleaning, and repair for homes and businesses.",
+    "coordinates": { "lat": 53.2668, "lng": -113.5507 }
+  },
+  {
+    "name": "Beaumont",
+    "slug": "beaumont",
+    "region": "North",
+    "priority": 2,
+    "description": "Professional eavestrough services in Beaumont, Alberta. Quality gutter installation and maintenance for residential properties.",
+    "coordinates": { "lat": 53.3572, "lng": -113.4147 }
+  },
+  {
+    "name": "St. Albert",
+    "slug": "st-albert",
+    "region": "North",
+    "priority": 2,
+    "description": "Reliable gutter services in St. Albert, Alberta. Expert eavestrough installation and repair for homes and commercial buildings.",
+    "coordinates": { "lat": 53.6328, "lng": -113.6250 }
+  },
+  {
+    "name": "Sherwood Park",
+    "slug": "sherwood-park",
+    "region": "North",
+    "priority": 2,
+    "description": "Professional eavestrough services in Sherwood Park, Alberta. Quality gutter installation and maintenance for residential communities.",
+    "coordinates": { "lat": 53.5161, "lng": -113.3147 }
+  },
+  {
+    "name": "Fort Saskatchewan",
+    "slug": "fort-saskatchewan",
+    "region": "North",
+    "priority": 2,
+    "description": "Expert gutter services in Fort Saskatchewan, Alberta. Professional eavestrough installation and repair for homes and businesses.",
+    "coordinates": { "lat": 53.7208, "lng": -113.2189 }
+  }
+]

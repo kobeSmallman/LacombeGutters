@@ -2,6 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { MapPin, HardHat, Shield, Wrench, Phone } from 'lucide-react';
+import { QuoteRequestWidget } from '@/components/ui/quote-request-widget';
 
 // Metal strip component for section dividers
 const MetalStrip = ({ className = '' }) => (
@@ -289,6 +290,29 @@ const CityPageTemplate: React.FC<CityPageTemplateProps> = ({
 
         <MetalStrip className="my-12" />
         
+        {/* Quote Request Widget */}
+        <div className="relative bg-gray-100 p-1 rounded-2xl mb-12">
+          {/* Outer grey box with screws */}
+          <div className="screw-corner screw-top-left"></div>
+          <div className="screw-corner screw-top-right"></div>
+          <div className="screw-corner screw-bottom-left"></div>
+          <div className="screw-corner screw-bottom-right"></div>
+          
+          <section className="bg-white dark:bg-gray-800 rounded-xl p-8 md:p-12 relative overflow-hidden">
+            <div className="relative z-10 max-w-3xl mx-auto">
+              <h2 className="text-3xl font-bold mb-6 text-center text-gray-900 dark:text-white">
+                Request a Free Quote in {city}
+              </h2>
+              <div style={{color: "black"}} className="mb-6 text-center text-gray-700">
+                <p style={{color: "black"}}>
+                  Fill out this short form for a no-obligation quote for your {city} property
+                </p>
+              </div>
+              <QuoteRequestWidget />
+            </div>
+          </section>
+        </div>
+        
         {/* CTA Section */}
         <div className="relative bg-gray-100 p-1 rounded-2xl mt-12">
           {/* Outer grey box with screws */}
@@ -333,7 +357,7 @@ const CityPageTemplate: React.FC<CityPageTemplateProps> = ({
                 </Link>
                 <Link 
                   href="tel:+14035989137" 
-                  className="bg-primary hover:bg-primary/90 text-white font-bold py-4 px-8 rounded-lg text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-primary/30 flex items-center justify-center gap-2 group"
+                  className="bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-2 group"
                 >
                   <Phone className="h-5 w-5 transition-transform group-hover:scale-110" />
                   <span>(403) 598-9137</span>

@@ -185,15 +185,15 @@ export default function WhyUsPage() {
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
-                <span className="font-bold text-yellow-900 dark:text-yellow-900">Peace of Mind</span>
+                <span className="font-bold text-yellow-900">Peace of Mind</span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 dark:text-slate-900">Enjoy the Sunshine</h2>
-              <p className="text-xl text-slate-800 dark:text-slate-900 font-medium max-w-3xl mx-auto mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">Enjoy the Sunshine</h2>
+              <p className="text-xl text-slate-800 font-medium max-w-3xl mx-auto mb-12">
                 With Lacombe Gutters, you can relax knowing your home is protected, rain or shine.
               </p>
               
               <div className="bg-white/40 backdrop-blur-sm p-8 rounded-xl border border-white/30 mb-12">
-                <h3 className="text-2xl font-extrabold mb-6 text-slate-900 dark:text-slate-900 text-center">Our Process</h3>
+                <h3 className="text-2xl font-extrabold mb-6 text-slate-900 text-center">Our Process</h3>
                 <div className="relative">
                   {/* Vertical line */}
                   <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-yellow-400 ml-1"></div>
@@ -229,8 +229,8 @@ export default function WhyUsPage() {
                       <div className="absolute left-0 w-12 h-12 rounded-full bg-yellow-400 flex items-center justify-center text-slate-900 font-bold text-lg z-10 group-hover:scale-110 transition-transform">
                         {item.step}
                       </div>
-                      <h4 className="text-xl font-bold text-slate-800 dark:text-slate-900 mb-1">{item.title}</h4>
-                      <p className="text-slate-700 dark:text-slate-800">{item.description}</p>
+                      <h4 className="text-xl font-bold text-slate-800 mb-1">{item.title}</h4>
+                      <p className="text-slate-700">{item.description}</p>
                     </div>
                   ))}
                 </div>

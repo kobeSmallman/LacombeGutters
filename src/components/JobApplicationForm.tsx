@@ -2,14 +2,46 @@
 
 import { useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
+import { CheckCircle2, AlertCircle, Upload, X } from "lucide-react";
+
+type JobFormData = {
+  name: string;
+  email: string;
+  phone: string;
+  position: string;
+  experience: string;
+  contactMethod: 'email' | 'sms';
+};
 
 export default function JobApplicationForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitResult, setSubmitResult] = useState<{success: boolean; message: string} | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
-  const [emailContent, setEmailContent] = useState<{to: string; subject: string; body: string} | null>(null);
-  const [showCopyOptions, setShowCopyOptions] = useState(false);
+  const [attachments, setAttachments] = useState<File[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [formData, setFormData] = useState<JobFormData>({
+    name: '',
+    email: '',
+    phone: '',
+    position: '',
+    experience: '',
+    contactMethod: 'email'
+  });
+  
+  const handleInputChange = (field: keyof JobFormData, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    
+    // Clear validation error when user starts typing
+    if (validationErrors[field]) {
+      setValidationErrors(prev => {
+        const newErrors = {...prev};
+        delete newErrors[field];
+        return newErrors;
+      });
+    }
+  };
 
   // Function to format phone number as user types
   const formatPhoneNumber = (value: string) => {
@@ -29,64 +61,81 @@ export default function JobApplicationForm() {
   const handlePhoneInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formattedValue = formatPhoneNumber(e.target.value);
     e.target.value = formattedValue;
+    handleInputChange('phone', formattedValue);
   };
 
-  const validateForm = (formData: FormData): boolean => {
+  const validateForm = () => {
     const errors: {[key: string]: string} = {};
     
     // Check name
-    const name = formData.get('job-name') as string;
-    if (!name || name.trim() === '') {
-      errors['job-name'] = 'Please enter your name';
+    if (!formData.name || formData.name.trim() === '') {
+      errors['name'] = 'Please enter your name';
     }
     
     // Check phone - ensure it has at least 10 digits
-    const phone = formData.get('job-phone') as string;
-    if (!phone || phone.trim() === '') {
-      errors['job-phone'] = 'Please enter your phone number';
-    } else if (phone.replace(/\D/g, '').length < 10) {
-      errors['job-phone'] = 'Please enter a valid phone number with at least 10 digits';
+    if (!formData.phone || formData.phone.trim() === '') {
+      errors['phone'] = 'Please enter your phone number';
+    } else if (formData.phone.replace(/\D/g, '').length < 10) {
+      errors['phone'] = 'Please enter a valid phone number with at least 10 digits';
     }
     
     // Check email
-    const email = formData.get('job-email') as string;
-    if (!email || email.trim() === '') {
-      errors['job-email'] = 'Please enter your email address';
-    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
-      errors['job-email'] = 'Please enter a valid email address';
+    if (!formData.email || formData.email.trim() === '') {
+      errors['email'] = 'Please enter your email address';
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+      errors['email'] = 'Please enter a valid email address';
     }
     
     // Check position
-    const position = formData.get('position') as string;
-    if (!position || position.trim() === '') {
+    if (!formData.position || formData.position.trim() === '') {
       errors['position'] = 'Please select a position';
     }
     
-    // Check experience
-    const experience = formData.get('experience') as string;
-    if (!experience || experience.trim() === '') {
-      errors['experience'] = 'Please describe your experience and skills';
-    }
+    // Experience is now optional - no validation needed
     
     setValidationErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
+  // Handle file selection
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    const validFiles = files.filter(file => {
+      const isValidType = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'].includes(file.type);
+      const isValidSize = file.size <= 10 * 1024 * 1024; // 10MB
+      return isValidType && isValidSize;
+    });
+    setAttachments(prev => [...prev, ...validFiles]);
+  };
+
+  // Remove attachment
+  const removeAttachment = (index: number) => {
+    setAttachments(prev => prev.filter((_, i) => i !== index));
+  };
+
+  // Handle drag and drop
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    const files = Array.from(e.dataTransfer.files);
+    const validFiles = files.filter(file => {
+      const isValidType = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'].includes(file.type);
+      const isValidSize = file.size <= 10 * 1024 * 1024; // 10MB
+      return isValidType && isValidSize;
+    });
+    setAttachments(prev => [...prev, ...validFiles]);
+  };
+
+
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    if (!formRef.current) return;
     
     // Clear previous validation errors and results
     setValidationErrors({});
     setSubmitResult(null);
     
-    // Get form data
-    const form = e.target as HTMLFormElement;
-    const formData = new FormData(form);
-    
     // Validate form
-    if (!validateForm(formData)) {
+    if (!validateForm()) {
       // Scroll to the first error
       const firstErrorField = document.querySelector('[data-error="true"]');
       if (firstErrorField) {
@@ -100,310 +149,290 @@ export default function JobApplicationForm() {
     try {
       console.log('Starting job application submission...');
       
-      // Extract values for email content
-      const name = formData.get('job-name') as string;
-      const email = formData.get('job-email') as string;
-      const phone = formData.get('job-phone') as string;
-      const position = formData.get('position') as string;
-      const experience = formData.get('experience') as string;
+      // Create FormData to handle file uploads
+      const apiFormData = new FormData();
       
-      // Build email body with plain text formatting (no HTML)
-      const emailBody = `
-Hello Lacombe Gutters,
-
-I would like to apply for the position of: ${position}
-
-About me:
-- Name: ${name}
-- Phone: ${phone}
-- Email: ${email}
-
-Experience and Skills:
-${experience}
-
-Thank you for considering my application. I look forward to the opportunity to discuss how my skills and experience can benefit your team.
-
-Best regards,
-${name}
-      `.trim();
+      // Add form fields
+      Object.entries(formData).forEach(([key, value]) => {
+        apiFormData.append(key, value);
+      });
+      apiFormData.append('source', 'job-application');
       
-      // Try to open default email client first
-      const mailtoLink = `mailto:lacombegutters@gmail.com?subject=Job Application - ${encodeURIComponent(position)} Position - ${encodeURIComponent(name)}&body=${encodeURIComponent(emailBody)}`;
+      // Add attachments
+      attachments.forEach(file => {
+        apiFormData.append('attachments', file);
+      });
       
-      // Show success message with copy options
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        body: apiFormData,
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+      
+      // Show success message
       setSubmitResult({
         success: true,
-        message: 'Application prepared! If your email app doesn\'t open, please copy the information below.'
+        message: 'Thank you for your application! We have received your submission and will respond ASAP, usually within 24 hours.'
       });
       
-      // Reset submitting state
-      setIsSubmitting(false);
-      
-      // Store email content for copying
-      setEmailContent({
-        to: 'lacombegutters@gmail.com',
-        subject: `Job Application - ${position} Position - ${name}`,
-        body: emailBody
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        position: '',
+        experience: '',
+        contactMethod: 'email'
       });
       
-      // Try to open mailto link
-      window.location.href = mailtoLink;
+      if (formRef.current) {
+        formRef.current.reset();
+      }
       
     } catch (error) {
-      console.error('Error preparing application:', error);
-      setIsSubmitting(false);
+      console.error('Error submitting application:', error);
       setSubmitResult({
         success: false,
-        message: 'There was a problem preparing your application. Please try again or contact us directly.'
+        message: 'There was a problem submitting your application. Please try again or contact us directly.'
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <form 
-      ref={formRef}
-      onSubmit={handleSubmit}
-      className="space-y-6 bg-white p-6 sm:p-8 rounded-lg border shadow-md"
-    >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label htmlFor="job-name" className="block text-sm font-medium text-gray-700 mb-1">
-            Full Name <span className="text-red-500">*</span>
-          </label>
-          <input 
-            type="text" 
-            id="job-name" 
-            name="job-name" 
-            className={`w-full p-3 border ${validationErrors['job-name'] ? 'border-red-500 bg-red-50' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-1 focus:ring-primary`}
-            required 
-            data-error={!!validationErrors['job-name']}
-          />
-          {validationErrors['job-name'] && (
-            <p className="mt-1 text-sm text-red-600">{validationErrors['job-name']}</p>
-          )}
-        </div>
-        <div>
-          <label htmlFor="job-phone" className="block text-sm font-medium text-gray-700 mb-1">
-            Phone Number <span className="text-red-500">*</span>
-          </label>
-          <input 
-            type="tel" 
-            id="job-phone" 
-            name="job-phone" 
-            className={`w-full p-3 border ${validationErrors['job-phone'] ? 'border-red-500 bg-red-50' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-1 focus:ring-primary`}
-            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-            placeholder="123-456-7890"
-            onInput={handlePhoneInput}
-            maxLength={12}
-            required 
-            data-error={!!validationErrors['job-phone']}
-          />
-          {validationErrors['job-phone'] && (
-            <p className="mt-1 text-sm text-red-600">{validationErrors['job-phone']}</p>
-          )}
-        </div>
-      </div>
-      
+    <div className="bg-white p-6 rounded-lg shadow-md">
       <div>
-        <label htmlFor="job-email" className="block text-sm font-medium text-gray-700 mb-1">
-          Email Address <span className="text-red-500">*</span>
-        </label>
-        <input 
-          type="email" 
-          id="job-email" 
-          name="job-email" 
-          className={`w-full p-3 border ${validationErrors['job-email'] ? 'border-red-500 bg-red-50' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-1 focus:ring-primary`}
-          required 
-          data-error={!!validationErrors['job-email']}
-        />
-        {validationErrors['job-email'] && (
-          <p className="mt-1 text-sm text-red-600">{validationErrors['job-email']}</p>
-        )}
-      </div>
-      
-      <div>
-        <label htmlFor="position" className="block text-sm font-medium text-gray-700 mb-1">
-          Position <span className="text-red-500">*</span>
-        </label>
-        <select 
-          id="position" 
-          name="position" 
-          className={`w-full p-3 border ${validationErrors['position'] ? 'border-red-500 bg-red-50' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-1 focus:ring-primary`}
-          required
-          data-error={!!validationErrors['position']}
-        >
-          <option value="">Select a position...</option>
-          <option value="Gutter Installer">Gutter Installer</option>
-          <option value="Soffit and Fascia Installer">Soffit and Fascia Installer</option>
-          <option value="Estimator">Estimator</option>
-          <option value="General Labor">General Labor</option>
-          <option value="Office Admin">Office Admin</option>
-          <option value="Other">Other</option>
-        </select>
-        {validationErrors['position'] && (
-          <p className="mt-1 text-sm text-red-600">{validationErrors['position']}</p>
-        )}
-      </div>
-      
-      <div>
-        <label htmlFor="experience" className="block text-sm font-medium text-gray-700 mb-1">
-          Experience <span className="text-red-500">*</span>
-        </label>
-        <textarea 
-          id="experience" 
-          name="experience" 
-          rows={5} 
-          className={`w-full p-3 border ${validationErrors['experience'] ? 'border-red-500 bg-red-50' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-1 focus:ring-primary`}
-          placeholder="Please describe your relevant experience, skills, and why you're interested in working with us."
-          required
-          data-error={!!validationErrors['experience']}
-        ></textarea>
-        {validationErrors['experience'] && (
-          <p className="mt-1 text-sm text-red-600">{validationErrors['experience']}</p>
-        )}
-      </div>
-      
-      {/* Resume instructions */}
-      <div className="relative border border-gray-200 rounded-lg bg-white shadow-sm overflow-hidden p-4">
-        {/* Construction theme elements */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-gray-300"></div>
-        <div className="screw-corner screw-top-left"></div>
-        <div className="screw-corner screw-top-right"></div>
+        <h2 className="text-2xl font-bold text-center mb-6" style={{color: "black"}}>
+          Join Our Team
+        </h2>
         
-        <div className="flex items-start space-x-3 pt-2">
-          <div className="text-primary">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
+        {submitResult ? (
+          <div className={`p-6 rounded-md mb-4 flex flex-col items-center ${
+            submitResult.success 
+              ? 'bg-green-50 border border-green-200' 
+              : 'bg-red-50 border border-red-200'
+          }`}>
+            {submitResult.success ? (
+              <div className="flex flex-col items-center w-full">
+                <CheckCircle2 className="h-12 w-12 text-green-500 mb-4" />
+                <p className="text-lg font-medium text-center mb-4" style={{color: "black"}}>{submitResult.message}</p>
+                {formData.contactMethod === 'email' && (
+                  <p className="text-sm text-center text-gray-600 mb-4" style={{color: "black"}}>
+                    <strong>Note:</strong> Please check your spam/junk folder if you don&apos;t see our confirmation email.
+                  </p>
+                )}
+                <Button 
+                  className="mt-4"
+                  onClick={() => setSubmitResult(null)}
+                  variant="outline"
+                >
+                  Submit Another Application
+                </Button>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center">
+                <AlertCircle className="h-12 w-12 text-red-500 mb-4" />
+                <p className="text-lg font-medium text-center" style={{color: "black"}}>{submitResult.message}</p>
+                <Button 
+                  className="mt-6"
+                  onClick={() => setSubmitResult(null)}
+                  variant="outline"
+                >
+                  Try Again
+                </Button>
+              </div>
+            )}
           </div>
-          <div>
-            <p className="text-sm text-gray-900 dark:text-white">
-              <strong>Resume & Qualifications</strong><br/>
-              When your default email app opens, please attach your resume and any relevant qualification documents to help us assess your application.
-            </p>
-            <p className="mt-2 text-xs text-gray-700 dark:text-gray-300">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              Note: This form will open your device&apos;s default email application. We will respond to the email address you provided above.
-            </p>
-          </div>
-        </div>
-      </div>
-      
-      <Button 
-        type="submit" 
-        variant="primary" 
-        size="lg"
-        className={`w-full transition-colors ${isSubmitting ? 'bg-green-600 hover:bg-green-700' : ''}`}
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? 'Form Ready...' : 'Send Application'}
-      </Button>
-      
-      {submitResult && (
-        <div className={`mt-4 p-4 rounded border ${submitResult.success ? 'bg-green-100 border-green-200' : 'bg-red-100 border-red-200'}`}>
-          <p className="text-sm font-medium">{submitResult.message}</p>
-          {submitResult.success && !showCopyOptions && (
-            <button 
-              className="ml-2 underline text-primary text-sm"
-              onClick={() => setShowCopyOptions(true)}
-            >
-              Show copy options
-            </button>
-          )}
-        </div>
-      )}
-      
-      {/* Copy options for web-based email clients */}
-      {showCopyOptions && emailContent && (
-        <div className="mt-6 border border-gray-300 rounded-md p-4 bg-gray-50 relative">
-          {/* Construction theme elements */}
-          <div className="absolute top-0 left-0 w-full h-0.5 bg-gray-300"></div>
-          <div className="screw-corner screw-top-left"></div>
-          <div className="screw-corner screw-top-right"></div>
-          
-          <div className="flex justify-between items-center mb-3 pt-2">
-            <h3 className="font-medium text-primary">Application Content (Copy/Paste to Gmail)</h3>
-            <button 
-              className="text-sm text-gray-600"
-              onClick={() => setShowCopyOptions(false)}
-            >
-              Hide
-            </button>
-          </div>
-          
-          <div className="space-y-3">
-            <div>
-              <p className="text-sm font-medium mb-1">To:</p>
-              <div className="flex">
+        ) : (
+          <form ref={formRef} onSubmit={handleSubmit}>
+            <div className="space-y-4 mb-8">
+
+
+              {/* Name field */}
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium" style={{color: "black"}}>
+                  Full Name <span className="text-red-600">*</span>
+                </label>
                 <input 
                   type="text" 
-                  readOnly 
-                  value={emailContent.to} 
-                  className="flex-1 p-2 border border-gray-300 rounded-md text-sm bg-white"
+                  id="name" 
+                  value={formData.name}
+                  onChange={(e) => handleInputChange('name', e.target.value)}
+                  className={`mt-1 block w-full rounded-md shadow-sm p-2.5 border ${validationErrors['name'] ? 'border-red-500' : 'border-gray-300'}`}
+                  placeholder="Your full name" 
+                  data-error={!!validationErrors['name']}
+                  required 
                 />
-                <button
-                  className="ml-2 px-3 py-1 bg-primary text-white text-sm rounded-md"
-                  onClick={() => {
-                    navigator.clipboard.writeText(emailContent.to);
-                    alert('Email address copied!');
-                  }}
-                >
-                  Copy
-                </button>
+                {validationErrors['name'] && (
+                  <p className="mt-1 text-sm text-red-600">{validationErrors['name']}</p>
+                )}
               </div>
-            </div>
-            
-            <div>
-              <p className="text-sm font-medium mb-1">Subject:</p>
-              <div className="flex">
+              
+              {/* Email field */}
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium" style={{color: "black"}}>
+                  Email <span className="text-red-600">*</span>
+                </label>
                 <input 
-                  type="text" 
-                  readOnly 
-                  value={emailContent.subject} 
-                  className="flex-1 p-2 border border-gray-300 rounded-md text-sm bg-white"
+                  type="email" 
+                  id="email"
+                  value={formData.email}
+                  onChange={(e) => handleInputChange('email', e.target.value)}
+                  className={`mt-1 block w-full rounded-md shadow-sm p-2.5 border ${validationErrors['email'] ? 'border-red-500' : 'border-gray-300'}`}
+                  placeholder="your.email@example.com" 
+                  data-error={!!validationErrors['email']}
+                  required 
                 />
-                <button
-                  className="ml-2 px-3 py-1 bg-primary text-white text-sm rounded-md"
-                  onClick={() => {
-                    navigator.clipboard.writeText(emailContent.subject);
-                    alert('Subject copied!');
-                  }}
-                >
-                  Copy
-                </button>
+                {validationErrors['email'] && (
+                  <p className="mt-1 text-sm text-red-600">{validationErrors['email']}</p>
+                )}
               </div>
-            </div>
-            
-            <div>
-              <p className="text-sm font-medium mb-1">Email Body:</p>
-              <div className="flex flex-col">
+              
+              {/* Phone field */}
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium" style={{color: "black"}}>
+                  Phone Number <span className="text-red-600">*</span>
+                </label>
+                <input 
+                  type="tel" 
+                  id="phone"
+                  value={formData.phone}
+                  onChange={handlePhoneInput}
+                  className={`mt-1 block w-full rounded-md shadow-sm p-2.5 border ${validationErrors['phone'] ? 'border-red-500' : 'border-gray-300'}`}
+                  placeholder="123-456-7890" 
+                  data-error={!!validationErrors['phone']}
+                  required 
+                />
+                {validationErrors['phone'] && (
+                  <p className="mt-1 text-sm text-red-600">{validationErrors['phone']}</p>
+                )}
+              </div>
+              
+
+              
+              {/* Position field */}
+              <div>
+                <label htmlFor="position" className="block text-sm font-medium" style={{color: "black"}}>
+                  Position Applying For <span className="text-red-600">*</span>
+                </label>
+                <select 
+                  id="position"
+                  value={formData.position}
+                  onChange={(e) => handleInputChange('position', e.target.value)}
+                  className={`mt-1 block w-full rounded-md shadow-sm p-2.5 border ${validationErrors['position'] ? 'border-red-500' : 'border-gray-300'}`}
+                  data-error={!!validationErrors['position']}
+                  required
+                >
+                  <option value="">Select a position</option>
+                  <option value="Installer">Installer</option>
+                  <option value="Helper">Helper</option>
+                  <option value="Sales Representative">Sales Representative</option>
+                  <option value="Office Admin">Office Admin</option>
+                  <option value="Other">Other</option>
+                </select>
+                {validationErrors['position'] && (
+                  <p className="mt-1 text-sm text-red-600">{validationErrors['position']}</p>
+                )}
+              </div>
+              
+              {/* Experience field */}
+              <div>
+                <label htmlFor="experience" className="block text-sm font-medium" style={{color: "black"}}>
+                  Additional Experience & Skills
+                </label>
                 <textarea 
-                  readOnly 
-                  value={emailContent.body} 
-                  className="p-2 border border-gray-300 rounded-md text-sm bg-white h-32"
-                />
-                <button
-                  className="mt-2 px-3 py-1 bg-primary text-white text-sm rounded-md self-end"
-                  onClick={() => {
-                    navigator.clipboard.writeText(emailContent.body);
-                    alert('Email body copied!');
-                  }}
+                  id="experience"
+                  value={formData.experience}
+                  onChange={(e) => handleInputChange('experience', e.target.value)}
+                  rows={4}
+                  className={`mt-1 block w-full rounded-md shadow-sm p-2.5 border ${validationErrors['experience'] ? 'border-red-500' : 'border-gray-300'}`}
+                  placeholder="Please describe your relevant experience and skills (optional)..." 
+                  data-error={!!validationErrors['experience']}
+                ></textarea>
+                {validationErrors['experience'] && (
+                  <p className="mt-1 text-sm text-red-600">{validationErrors['experience']}</p>
+                )}
+              </div>
+
+              {/* File Upload Section */}
+              <div>
+                <label className="block text-sm font-medium mb-2" style={{color: "black"}}>
+                  Resume & Cover Letter (Optional)
+                </label>
+                <div 
+                  className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors"
+                  onDrop={handleDrop}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDragEnter={(e) => e.preventDefault()}
                 >
-                  Copy Email Body
-                </button>
+                  <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+                  <p className="text-sm text-gray-600 mb-2" style={{color: "black"}}>
+                    <strong>Drag and drop files here, or </strong>
+                    <button 
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="text-blue-600 hover:text-blue-500 underline"
+                    >
+                      browse
+                    </button>
+                  </p>
+                  <p className="text-xs text-gray-500" style={{color: "black"}}>
+                    Accepted formats: PDF, JPG, PNG, WebP (max 10MB each)
+                  </p>
+                  {formData.contactMethod === 'sms' && (
+                    <p className="text-xs text-amber-600 mt-2">
+                      ⚠️ Note: Files cannot be sent via SMS. Please choose email as your preferred contact method to receive files.
+                    </p>
+                  )}
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    multiple
+                    accept=".pdf,.jpg,.jpeg,.png,.webp"
+                    onChange={handleFileSelect}
+                    className="hidden"
+                  />
+                </div>
+                
+                {/* Display selected files */}
+                {attachments.length > 0 && (
+                  <div className="mt-4">
+                    <p className="text-sm font-medium mb-2" style={{color: "black"}}>Selected Files:</p>
+                    <div className="space-y-2">
+                      {attachments.map((file, index) => (
+                        <div key={index} className="flex items-center justify-between p-2 bg-gray-50 rounded border">
+                          <span className="text-sm truncate" style={{color: "black"}}>{file.name}</span>
+                          <button
+                            type="button"
+                            onClick={() => removeAttachment(index)}
+                            className="text-red-600 hover:text-red-800 ml-2"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
             
-            <div className="bg-white border-l-4 border-primary p-3 mt-2">
-              <p className="text-sm">
-                <strong>Gmail Instructions:</strong> Open Gmail in a new tab, click &quot;Compose&quot;, and paste the content above into the appropriate fields. Don&apos;t forget to attach your resume!
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-    </form>
+            <Button 
+              type="submit" 
+              className="w-full bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-600 hover:to-blue-500 text-white font-bold" 
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Sending...' : 'Submit Application'}
+            </Button>
+          </form>
+        )}
+        
+
+      </div>
+    </div>
   );
 }

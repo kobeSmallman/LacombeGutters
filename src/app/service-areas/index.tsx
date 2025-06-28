@@ -72,7 +72,7 @@ export default function ServiceAreasIndex() {
         <div className="mt-6">
           <Link 
             href="/contact" 
-            className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary-dark transition-colors"
+            className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 transition-colors"
           >
             Contact Us About Your Area
           </Link>

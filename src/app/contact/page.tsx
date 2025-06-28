@@ -80,18 +80,19 @@ export default function ContactPage() {
       
       {/* Main Content with Services Background */}
       <div className="py-16 md:py-24 bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/30 dark:to-amber-950/50">
-        <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold font-heading mb-4">Contact Us</h1>
-        <div className="w-20 h-1 bg-amber-400 mx-auto mb-6"></div>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Get in touch with our team for expert advice and free estimates on all your gutter needs.
-        </p>
-      </div>
+        <div className="container mx-auto px-4 max-w-7xl">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h1 className="text-4xl font-bold font-heading mb-4" style={{color: "black"}}>Contact Us</h1>
+          <div className="w-24 h-2 bg-amber-400 mx-auto mb-6 rounded-full"></div>
+          <p className="text-lg max-w-2xl mx-auto" style={{color: "black"}}>
+            Get in touch with our team for expert advice and free estimates on all your gutter needs.
+          </p>
+        </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-16 bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-16 bg-white/95 dark:bg-gray-800/40 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-xl border border-gray-100 dark:border-gray-700">
           {/* Contact Info - 2 columns */}
-          <div className="lg:col-span-2 bg-white p-8 rounded-lg shadow-md relative">
+          <div className="lg:col-span-2 bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md relative overflow-hidden">
             {/* Construction screws in corners */}
             <div className="screw-corner screw-top-left"></div>
             <div className="screw-corner screw-top-right"></div>
@@ -101,7 +102,7 @@ export default function ContactPage() {
             {/* Metal strips at top */}
             <div className="absolute top-0 left-0 w-full h-1 bg-gray-700"></div>
             
-            <h2 className="text-2xl font-bold mb-6">Get In Touch</h2>
+            <h2 className="text-2xl font-bold mb-6" style={{color: "black", position: "relative", zIndex: 10}}>Get In Touch</h2>
             
             <div className="space-y-4 mb-6">
               <div className="flex items-start">
@@ -109,7 +110,7 @@ export default function ContactPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
                 <div>
-                  <p className="font-bold">Phone</p>
+                  <p className="font-bold" style={{color: "black"}}>Phone</p>
                   <p className="mb-1">Rob: <a href={`tel:${CONTACT_PHONE_ROB.replace(/-/g, '')}`} className="text-primary hover:underline">{CONTACT_PHONE_ROB}</a></p>
                   <p>Ryan: <a href={`tel:${CONTACT_PHONE_RYAN.replace(/-/g, '')}`} className="text-primary hover:underline">{CONTACT_PHONE_RYAN}</a></p>
                 </div>
@@ -120,7 +121,7 @@ export default function ContactPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
                 <div>
-                  <p className="font-bold">Email</p>
+                  <p className="font-bold" style={{color: "black"}}>Email</p>
                   <p><a href={`mailto:${CONTACT_EMAIL}`} className="text-primary hover:underline">{CONTACT_EMAIL}</a></p>
                 </div>
               </div>
@@ -131,26 +132,26 @@ export default function ContactPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
                 <div>
-                  <p className="font-bold">Address</p>
+                  <p className="font-bold" style={{color: "black"}}>Address</p>
                   <p>{CONTACT_ADDRESS}</p>
                 </div>
               </div>
             </div>
             
             <div className="mb-6">
-              <h3 className="text-lg font-bold mb-2">Hours of Operation</h3>
+              <h3 className="text-lg font-bold mb-2" style={{color: "black"}}>Hours of Operation</h3>
               <p className="mb-1">Monday - Friday: 7:00 AM - 6:00 PM</p>
               <p>Saturday: By appointment</p>
             </div>
             
             <div>
-              <h3 className="text-lg font-bold mb-2">Service Area</h3>
+              <h3 className="text-lg font-bold mb-2" style={{color: "black"}}>Service Area</h3>
               <p>{SERVICE_AREA_BOUNDS.description}</p>
             </div>
           </div>
           
           {/* Contact Form - 3 columns */}
-          <div className="lg:col-span-3 bg-white p-8 rounded-lg shadow-md relative">
+          <div className="lg:col-span-3 bg-white p-8 rounded-lg shadow-md relative overflow-hidden">
             {/* Construction screws in corners */}
             <div className="screw-corner screw-top-left"></div>
             <div className="screw-corner screw-top-right"></div>
@@ -160,13 +161,13 @@ export default function ContactPage() {
             {/* Metal strips at top */}
             <div className="absolute top-0 left-0 w-full h-1 bg-gray-700"></div>
             
-            <h2 className="text-2xl font-bold mb-6">Get a Free Estimate</h2>
+            <h2 className="text-2xl font-bold mb-6" style={{color: "black", position: "relative", zIndex: 10}}>Get a Free Estimate</h2>
             <ContactForm />
           </div>
         </div>
         
         {/* Careers/Job Application Section */}
-        <div className="bg-secondary p-8 rounded-lg shadow-md mb-12 relative">
+        <div className="bg-gradient-to-br from-secondary to-secondary/80 p-8 rounded-lg shadow-lg mb-12 relative border border-amber-300 overflow-hidden">
           {/* Construction screws in corners */}
           <div className="screw-corner screw-top-left"></div>
           <div className="screw-corner screw-top-right"></div>
@@ -177,16 +178,29 @@ export default function ContactPage() {
           <div className="absolute top-0 left-0 w-full h-1 bg-gray-700"></div>
           <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-700"></div>
           
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold font-heading mb-4 text-primary">Join Our Team</h2>
-            <p className="text-xl text-primary/80 max-w-3xl mx-auto">
+          <div className="text-center mb-8 relative z-10">
+            <h2 className="text-3xl font-bold font-heading mb-4" style={{color: "#215e7d"}}>Join Our Team</h2>
+            <div className="w-24 h-1.5 bg-white/80 mx-auto mb-5 rounded-full"></div>
+            <p className="text-xl max-w-3xl mx-auto" style={{color: "#215e7d"}}>
               Looking to work with a professional team in the gutter and eavestrough industry? 
               We&apos;re always looking for skilled, motivated individuals to join our crew.
             </p>
           </div>
           
-          <div className="bg-white p-8 rounded-lg">
-            <h3 className="text-2xl font-bold mb-6">Apply Now</h3>
+
+          
+          {/* Metal construction texture overlay */}
+          <div 
+            className="absolute inset-0 opacity-5 pointer-events-none" 
+            style={{
+              backgroundImage: 'repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 1px, transparent 10px)',
+              backgroundSize: '12px 12px',
+              mixBlendMode: 'multiply'
+            }}
+          ></div>
+          
+          <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-inner border border-gray-100 dark:border-gray-700">
+            <h3 className="text-2xl font-bold mb-6" style={{color: "black"}}>Apply Now</h3>
             <JobApplicationForm />
           </div>
         </div>

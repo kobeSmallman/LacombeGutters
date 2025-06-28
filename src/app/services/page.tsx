@@ -94,7 +94,7 @@ const servicesData: Service[] = [
 
 export default function ServicesPage() {
   return (
-    <main className="min-h-screen bg-white dark:bg-gray-900 relative">
+    <main className="min-h-screen bg-white relative">
       {/* Hero Section */}
       <section className="relative isolate overflow-hidden text-white bg-gradient-to-br from-slate-800 to-slate-900">
         {/* Dotted-node overlay (yellow construction pin-holes) */}
@@ -121,7 +121,7 @@ export default function ServicesPage() {
           </p>
           <div className="flex flex-col items-center sm:items-stretch sm:flex-row justify-center gap-4 sm:gap-6 w-full max-w-xs sm:max-w-none mx-auto">
             <Link href="/contact">
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105">
+              <Button className="bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105">
                 Get a Free Estimate
               </Button>
             </Link>
@@ -179,14 +179,14 @@ export default function ServicesPage() {
         }
       `}</style>
       {/* Services Grid with enhanced construction-themed background */}
-      <section className="services-section py-16 md:py-24 relative overflow-hidden bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/30 dark:to-amber-950/50">
+      <section className="services-section py-16 md:py-24 relative overflow-hidden bg-gradient-to-br from-amber-50 to-amber-100">
         {/* Enhanced Background with Construction Elements */}
         <div className="absolute inset-0">
           {/* Base Wood Grain */}
           <div className={styles.woodGrain}></div>
           
           {/* Animated Construction Symbols */}
-          <div className="absolute inset-0 opacity-5 dark:opacity-[0.03] overflow-hidden">
+          <div className="absolute inset-0 opacity-5 overflow-hidden">
             {/* Gutter Symbol */}
             <div className="absolute top-1/4 left-1/4 w-32 h-32 opacity-30 animate-float-slow">
               <svg viewBox="0 0 24 24" className="w-full h-full">
@@ -234,9 +234,9 @@ export default function ServicesPage() {
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Our Expert Services</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Expert Services</h2>
             <div className="w-24 h-1 bg-amber-500 mx-auto mb-6"></div>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               Professional gutter solutions tailored to protect your property from water damage and enhance its curb appeal.
             </p>
           </div>
@@ -245,7 +245,7 @@ export default function ServicesPage() {
             {servicesData.map((service: Service) => (
               <div 
                 key={service.slug}
-                className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-amber-100 dark:border-amber-900/50"
+                className="group bg-white/80 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-amber-100"
               >
                 <div className="relative h-64 overflow-hidden">
                   <Image 
@@ -261,19 +261,19 @@ export default function ServicesPage() {
                 </div>
                 
                 <div className="p-6">
-                  <p className="text-gray-700 dark:text-white/90 mb-4">
+                  <p className="text-gray-700 mb-4">
                     {service.excerpt}
                   </p>
                   
                   <div className="space-y-3 mb-6">
-                    <h4 className="font-semibold text-gray-800 dark:text-white">Features:</h4>
+                    <h4 className="font-semibold text-gray-800">Features:</h4>
                     <ul className="space-y-2">
                       {service.features.map((feature: string, i: number) => (
                         <li key={i} className="flex items-start">
                           <svg className="h-5 w-5 text-amber-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                           </svg>
-                          <span className="text-gray-700 dark:text-white/90">{feature}</span>
+                          <span className="text-gray-700">{feature}</span>
                         </li>
                       ))}
                     </ul>
