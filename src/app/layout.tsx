@@ -30,9 +30,6 @@ export const viewport = {
   maximumScale: 5,
 }
 
-// Prevent caching of the page
-const CACHE_VERSION = '1.0.0';
-
 export const metadata: Metadata = {
   title: {
     template: `%s | ${SITE_NAME}`,
@@ -41,7 +38,7 @@ export const metadata: Metadata = {
   description: SITE_DESCRIPTION,
   keywords: [
     'Lacombe gutters',
-    'eavestrough installation',
+    'eavestrough installation', 
     'gutter repair',
     'soffit and fascia',
     'gutter cleaning',
@@ -53,13 +50,6 @@ export const metadata: Metadata = {
     'gutter maintenance'
   ],
   metadataBase: new URL('https://lacombeguttersltd.com'),
-  // Add cache control headers
-  other: {
-    'cache-control': 'no-cache, no-store, must-revalidate',
-    pragma: 'no-cache',
-    expires: '0',
-    'x-version': CACHE_VERSION,
-  },
   alternates: {
     canonical: '/',
   },
