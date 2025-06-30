@@ -119,12 +119,12 @@ export default function FAQContent() {
       <FAQJsonLd faqItems={faq.slice(0, 25)} />
       
       {/* FAQ Content */}
-      <section className="py-16 md:py-24 relative overflow-hidden bg-gradient-to-br from-amber-50 to-amber-100 dark:from-slate-900 dark:to-slate-800">
+      <section className="py-16 md:py-24 relative overflow-hidden bg-gradient-to-br from-amber-50 to-amber-100">
         {/* Light Mode: Wood Texture */}
-        <div className="absolute inset-0 bg-[url('/images/textures/wood-texture-light.jpg')] opacity-30 dark:opacity-10 bg-cover bg-center"></div>
+        <div className="absolute inset-0 bg-[url('/images/textures/wood-texture-light.jpg')] opacity-30 bg-cover bg-center"></div>
         
         {/* Dark Mode: Construction Grid */}
-        <div className="hidden dark:block absolute inset-0 bg-[url('/images/textures/construction-grid-dark.svg')] opacity-10"></div>
+
         
         {/* Screw Accents in Corners */}
         <div className="absolute top-4 left-4 w-2 h-2 bg-amber-400 rounded-full"></div>
@@ -133,7 +133,7 @@ export default function FAQContent() {
         <div className="absolute bottom-4 right-4 w-2 h-2 bg-amber-400 rounded-full"></div>
         
         {/* Subtle gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 to-amber-100/50 dark:from-slate-900/50 dark:to-slate-800/50"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 to-amber-100/50"></div>
         <div className="container mx-auto px-4 max-w-7xl relative z-10">
           {/* Search Box with Construction Theme */}
           <AnimateOnScroll type="fadeIn" duration={0.7} delay={0.3}>

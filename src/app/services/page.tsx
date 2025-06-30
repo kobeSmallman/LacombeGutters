@@ -279,7 +279,17 @@ export default function ServicesPage() {
                     </ul>
                   </div>
                   
-                  <div className="pt-4 mt-auto">
+                  <div className="pt-4 mt-auto space-y-3">
+                    {/* Learn More Button */}
+                    <Link 
+                      href={`/services/${service.slug}`}
+                      className="block w-full text-center px-6 py-3 text-sm font-semibold text-blue-700 bg-transparent border-2 border-blue-700 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-600 hover:text-white hover:border-transparent rounded-full transition-all duration-300 transform hover:-translate-y-0.5"
+                    >
+                      Learn More
+                      <ArrowRight className="ml-2 h-4 w-4 inline transition-transform group-hover:translate-x-1" />
+                    </Link>
+                    
+                    {/* Get Estimate Button */}
                     <div className="relative group w-full">
                       <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-400 to-amber-600 rounded-full blur opacity-0 group-hover:opacity-100 transition duration-300"></div>
                       <button 

@@ -9,7 +9,6 @@ import {
   CONTACT_EMAIL, 
   CONTACT_ADDRESS,
   FACEBOOK_URL,
-  SERVICES,
   NAVIGATION_ITEMS,
   FOOTER_ADDITIONAL_ITEMS
 } from "@/lib/constants";
@@ -80,16 +79,54 @@ export default function Footer() {
           <div className="md:col-span-3 lg:col-span-2">
             <h3 className="text-lg font-semibold text-white mb-6 uppercase tracking-wider">Our Services</h3>
             <ul className="space-y-3">
-              {SERVICES.filter(service => service !== "Free Estimates").map((service, index) => (
-                <li key={index}>
-                  <Link 
-                    href="/services" 
-                    className="text-gray-400 hover:text-amber-400 transition-colors"
-                  >
-                    {service}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link 
+                  href="/services/5-inch-gutters" 
+                  className="text-gray-400 hover:text-amber-400 transition-colors"
+                >
+                  5&quot; Gutters
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/services/6-inch-gutters" 
+                  className="text-gray-400 hover:text-amber-400 transition-colors"
+                >
+                  6&quot; Gutters
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/services/soffit-fascia" 
+                  className="text-gray-400 hover:text-amber-400 transition-colors"
+                >
+                  Soffit & Fascia
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/services/gutter-cleaning" 
+                  className="text-gray-400 hover:text-amber-400 transition-colors"
+                >
+                  Gutter Cleaning
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/services/downspouts" 
+                  className="text-gray-400 hover:text-amber-400 transition-colors"
+                >
+                  Downspouts
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/services/industrial-eavestrough" 
+                  className="text-gray-400 hover:text-amber-400 transition-colors"
+                >
+                  Commercial Eavestrough
+                </Link>
+              </li>
             </ul>
           </div>
           

@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   ],
   metadataBase: new URL('https://lacombeguttersltd.com'),
   alternates: {
-    canonical: '/',
+    canonical: 'https://www.lacombeguttersltd.com/',
   },
   openGraph: {
     title: `${SITE_NAME} | Professional Eavestrough Services in Lacombe, AB`,

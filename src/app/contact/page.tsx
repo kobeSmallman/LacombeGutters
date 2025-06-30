@@ -26,7 +26,7 @@ export const metadata = {
   openGraph: {
     title: 'Contact Lacombe Gutters | Free Estimate & Inquiries',
     description: "Contact Lacombe Gutters today for professional eavestrough services. Get a free quote, schedule service, or ask about our gutter solutions in Central Alberta.",
-    url: 'https://lacombeguttersltd.com/contact',
+    url: 'https://www.lacombeguttersltd.com/contact',
     type: 'website',
     images: [
       {
@@ -44,7 +44,7 @@ export const metadata = {
     images: ['/images/og-contact.jpg'],
   },
   alternates: {
-    canonical: '/contact',
+    canonical: 'https://www.lacombeguttersltd.com/contact',
   },
 };
 

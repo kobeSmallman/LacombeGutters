@@ -6,7 +6,7 @@ export const metadata = {
   description: "View our portfolio of completed gutter, eavestrough, soffit, and fascia installations across central Alberta.",
   keywords: ["gutter installation", "eavestrough projects", "soffit installation", "fascia replacement", "central alberta gutters", "residential gutter systems"],
   alternates: {
-    canonical: '/gallery',
+    canonical: 'https://www.lacombeguttersltd.com/gallery',
   },
   openGraph: {
     title: "Project Gallery | Lacombe Gutters Ltd",

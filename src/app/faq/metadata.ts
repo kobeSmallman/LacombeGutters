@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "Answers to common gutter, soffit & fascia questions for Central Alberta homeowners.",
   keywords: ["gutter FAQ", "eavestrough questions", "soffit fascia installation", "gutter maintenance", "Alberta home gutters", "gutter repair FAQ"],
   alternates: {
-    canonical: '/faq',
+    canonical: 'https://www.lacombeguttersltd.com/faq',
   },
   openGraph: {
     title: "FAQ | Lacombe Gutters Ltd",

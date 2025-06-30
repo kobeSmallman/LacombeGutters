@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "Professional gutter installation, soffit & fascia replacement, and eavestrough maintenance services across Central Alberta with 40+ years of combined experience.",
   keywords: ["gutter installation", "eavestrough services", "soffit and fascia", "gutter cleaning", "downspout installation", "commercial eavestrough", "Central Alberta gutters"],
   alternates: {
-    canonical: '/services',
+    canonical: 'https://www.lacombeguttersltd.com/services',
   },
   openGraph: {
     title: "Gutter & Eavestrough Services | Lacombe Gutters Ltd",

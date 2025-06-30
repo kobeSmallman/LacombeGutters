@@ -40,7 +40,7 @@ export const metadata = {
     images: ['/images/og-about.jpg'],
   },
   alternates: {
-    canonical: '/about',
+    canonical: 'https://www.lacombeguttersltd.com/about',
   },
 };
 

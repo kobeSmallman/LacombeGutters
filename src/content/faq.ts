@@ -107,7 +107,7 @@ export const FAQConfig = {
     },
     { "id": 19,
       "question": "Is the estimate still valid if I wait six months?",
-      "answer": "Quotes are honoured for 60 days. After that we'll happily refresh material pricing for you.",
+      "answer": "Quotes are honoured for 30 days. After that we'll happily refresh material pricing for you.",
       "category": "Estimates & Payment"
     },
     { "id": 20,
