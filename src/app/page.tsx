@@ -153,10 +153,8 @@ export default function Home() {
               <span className="text-sm font-semibold tracking-wider text-primary uppercase">Our Services</span>
               <span className="h-1 w-12 bg-secondary ml-3"></span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-4">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
-                Expert Eavestrough Solutions
-              </span>
+            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-4 text-primary">
+              Expert Eavestrough Solutions
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-4">
               Professional installation, maintenance, and repair services with 40+ years of combined expertise
