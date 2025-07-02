@@ -39,7 +39,32 @@ const nextConfig: NextConfig = {
         destination: '/services',
         permanent: true,
       },
-      // No redirect needed - /services/6-inch-gutters is handled by dynamic routing
+      // Specific legacy service page redirects
+      {
+        source: '/service-page/windows',
+        destination: '/services',
+        permanent: true,
+      },
+      {
+        source: '/service-page/plumbing',
+        destination: '/services',
+        permanent: true,
+      },
+      {
+        source: '/service-page/carpentry',
+        destination: '/services',
+        permanent: true,
+      },
+      {
+        source: '/service-page/remodeling',
+        destination: '/services',
+        permanent: true,
+      },
+      {
+        source: '/service-page/electrical',
+        destination: '/services',
+        permanent: true,
+      },
       {
         source: '/book-online',
         destination: '/contact',

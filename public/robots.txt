@@ -3,12 +3,15 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://lacombeguttersltd.com/sitemap.xml
+Sitemap: https://www.lacombeguttersltd.com/sitemap.xml
 
 # Disallow admin and API routes
 Disallow: /admin/
 Disallow: /api/
-Disallow: /_next/
+# Allow static assets but disallow specific Next.js internals
+Disallow: /_next/server/
+Disallow: /_next/cache/
+Allow: /_next/static/
 
 # Allow all user agents to access the rest of the site
 User-agent: *

@@ -37,12 +37,7 @@ export function middleware(request: NextRequest) {
     '/form__map': '/contact',
     '/book-online': '/contact',
     
-    // Old service pages that don't reflect current offerings
-    '/service-page/carpentry': '/services',
-    '/service-page/remodeling': '/services',
-    '/service-page/electrical': '/services',
-    
-    // Handle potential URL variations of service pages
+    // Handle potential URL variations of service pages that don't exist
     '/services/carpentry': '/services',
     '/services/remodeling': '/services',
     '/services/electrical': '/services',
@@ -62,11 +57,7 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // Handle service-page pattern with any service name (even ones not specifically listed)
-  if (pathname.startsWith('/service-page/')) {
-    url.pathname = '/services';
-    return NextResponse.redirect(url);
-  }
+  // Note: /service-page/ redirects are handled in next.config.ts to avoid conflicts
 
   return NextResponse.next();
 }

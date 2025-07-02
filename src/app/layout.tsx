@@ -50,14 +50,14 @@ export const metadata: Metadata = {
     'gutter guards',
     'gutter maintenance'
   ],
-  metadataBase: new URL('https://lacombeguttersltd.com'),
+  metadataBase: new URL('https://www.lacombeguttersltd.com'),
   alternates: {
     canonical: 'https://www.lacombeguttersltd.com/',
   },
   openGraph: {
     title: `${SITE_NAME} | Professional Eavestrough Services in Lacombe, AB`,
     description: SITE_DESCRIPTION,
-    url: 'https://lacombeguttersltd.com',
+    url: 'https://www.lacombeguttersltd.com',
     siteName: SITE_NAME,
     locale: 'en_CA',
     type: 'website',
