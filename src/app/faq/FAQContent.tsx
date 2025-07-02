@@ -1,7 +1,7 @@
-'use client';
+// Main FAQ Content - SSR compatible for SEO
 
 import { FAQConfig, getFAQCategories } from "@/content/faq";
-import AnimateOnScroll from "@/components/ui/animate-on-scroll";
+// import AnimateOnScroll from "@/components/ui/animate-on-scroll"; // Disabled for SSR
 import { 
   MessageCircle, 
   Wrench, 
@@ -15,8 +15,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import FAQSection from "@/components/faq/FAQSection";
-import FAQJsonLd from "@/components/faq/FAQJsonLd";
-import ClientFAQSearch from "@/components/faq/ClientFAQSearch";
+// import FAQJsonLd from "@/components/faq/FAQJsonLd"; // REMOVED: Duplicate schema (already in layout)
+import ClientFAQSearchWrapper from '@/components/faq/ClientFAQSearchWrapper';
 
 // Helper function to get icon based on category
 const getCategoryIcon = (category: string) => {
@@ -44,47 +44,7 @@ export default function FAQContent() {
 
   return (
     <div className="relative min-h-screen overflow-hidden">
-      <style jsx global>{`
-        @keyframes gradientShift {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        
-        /* Wave animations */
-        @keyframes waveMoveSlow {
-          0% { transform: translateX(0) translateY(0); }
-          100% { transform: translateX(-50%) translateY(0); }
-        }
-        
-        @keyframes waveMoveMedium {
-          0% { transform: translateX(0) translateY(0); }
-          100% { transform: translateX(-25%) translateY(0); }
-        }
-        
-        @keyframes waveMoveFast {
-          0% { transform: translateX(0) translateY(0); }
-          100% { transform: translateX(-10%) translateY(0); }
-        }
-        
-        .wave-animation-slow {
-          animation: waveMoveSlow 120s linear infinite;
-          animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-          transform-origin: left center;
-        }
-        
-        .wave-animation-medium {
-          animation: waveMoveMedium 80s linear infinite reverse;
-          animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-          transform-origin: left center;
-        }
-        
-        .wave-animation-fast {
-          animation: waveMoveFast 40s linear infinite;
-          animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-          transform-origin: left center;
-        }
-      `}</style>
+      {/* Removed styled-jsx global styles for SSR compatibility - animations handled by Tailwind CSS */}
       
       {/* Hero Section */}
       <section className="relative isolate overflow-hidden text-white bg-gradient-to-br from-[#0f172a] to-[#1e3a8a] min-h-[50vh] md:min-h-[55vh] flex items-center">
@@ -116,7 +76,7 @@ export default function FAQContent() {
         </div>
       </section>
 
-      <FAQJsonLd faqItems={faq.slice(0, 25)} />
+      {/* FAQJsonLd removed - already provided by FAQSchema in layout.tsx to avoid duplicate schema */}
       
       {/* FAQ Content */}
       <section className="py-16 md:py-24 relative overflow-hidden bg-gradient-to-br from-amber-50 to-amber-100">
@@ -136,28 +96,21 @@ export default function FAQContent() {
         <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 to-amber-100/50"></div>
         <div className="container mx-auto px-4 max-w-7xl relative z-10">
           {/* Search Box with Construction Theme */}
-          <AnimateOnScroll type="fadeIn" duration={0.7} delay={0.3}>
-            <div className="relative mb-16">
-              <ClientFAQSearch />
-            </div>
-          </AnimateOnScroll>
+          <div className="relative mb-16">
+            <ClientFAQSearchWrapper />
+          </div>
         
           {/* FAQ Categories as Collapsible Sections */}
           <div className="space-y-10">
-            {categories.map((category, index) => (
-              <AnimateOnScroll 
-                key={category} 
-                type="fadeIn" 
-                duration={0.7} 
-                delay={0.1 * (index + 1)}
-              >
+            {categories.map((category) => (
+              <div key={category}>
                 <FAQSection
                   category={category}
                   icon={getCategoryIcon(category)}
                   questions={faq.filter(q => q.category === category)} 
                   collapsible={true}
                 />
-              </AnimateOnScroll>
+              </div>
             ))}
           </div>
         </div>
