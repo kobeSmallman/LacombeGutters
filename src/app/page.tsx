@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 import TestimonialsSection from "@/components/ui/testimonials-section";
 import RainEffect from "@/components/ui/rain-effect";
+
 import "@/styles/rain-bg.css";
 import "./mobile-styles.css";
 
@@ -143,9 +144,6 @@ export default function Home() {
         {/* Top border */}
         <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600"></div>
         
-        {/* Decorative corner elements - bottom only */}
-        <div className="absolute bottom-0 right-0 w-24 h-24 border-b-4 border-r-4 border-secondary/20 rounded-br-2xl"></div>
-        
         <div className="container mx-auto px-4 relative z-10">
           <AnimateOnScroll type="fadeIn" className="text-center mb-16">
             <div className="inline-flex items-center justify-center mb-4">
@@ -172,12 +170,12 @@ export default function Home() {
             </div>
           </AnimateOnScroll>
           
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" style={{gridAutoRows: '1fr'}}>
             {/* 5" Eavestrough */}
             <AnimateOnScroll type="zoomIn" delay={0.2} className="h-full">
-              <div className="group h-full flex flex-col bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 border border-gray-100">
+              <div className="group h-full flex flex-col bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 border border-gray-100" style={{minHeight: '648px'}}>
                 {/* Card Top Decoration */}
-                <div className="h-1.5 bg-gradient-to-r from-secondary to-primary"></div>
+                <div className="h-1.5 bg-gradient-to-r from-blue-600 to-blue-700"></div>
                 
                 {/* Card Content */}
                 <div className="relative overflow-hidden">
@@ -190,16 +188,16 @@ export default function Home() {
                       sizes="(max-width: 768px) 100vw, 50vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
-                      <span className="inline-block px-3 py-1 text-xs font-medium bg-primary text-white rounded-full">
+                      <span className="inline-block px-3 py-1 text-xs font-medium bg-blue-600 text-white rounded-full">
                         Residential & Commercial
                       </span>
                     </div>
                   </div>
                   
-                  <div className="p-6 md:p-8">
+                  <div className="p-6 md:p-8 relative pb-24">
                     <div className="flex items-center mb-4">
-                      <div className="bg-primary/10 p-2 rounded-lg mr-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <div className="bg-blue-600/10 p-2 rounded-lg mr-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                         </svg>
                       </div>
@@ -212,38 +210,40 @@ export default function Home() {
                     
                     <div className="space-y-3 mb-6">
                       <div className="flex items-center">
-                        <svg className="h-5 w-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="h-5 w-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                         <span className="text-sm text-gray-700">Standard residential size</span>
                       </div>
                       <div className="flex items-center">
-                        <svg className="h-5 w-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="h-5 w-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                         <span className="text-sm text-gray-700">Seamless installation</span>
                       </div>
                       <div className="flex items-center">
-                        <svg className="h-5 w-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="h-5 w-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                         <span className="text-sm text-gray-700">Multiple color options</span>
                       </div>
                     </div>
                     
-                    <div className="flex justify-between items-center">
-                      <Link href="/services/5-inch-gutters" className="group flex items-center text-primary font-medium hover:text-secondary transition-colors">
+                    {/* Mobile buttons - inside card */}
+                    <div className="flex justify-between items-center lg:hidden px-6 pb-6">
+                      <Link href="/services/5-inch-gutters" className="group flex items-center text-blue-600 font-medium hover:text-blue-700 transition-colors">
                         Learn more
                         <svg className="ml-1 h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                       </Link>
                       <Link href="/contact">
-                        <Button variant="outline" size="sm" className="border-primary text-primary hover:bg-primary/10">
+                        <Button variant="outline" size="sm" className="border-blue-600 text-blue-600 hover:bg-blue-600/10">
                           Get Quote
                         </Button>
                       </Link>
                     </div>
+
                   </div>
                 </div>
               </div>
@@ -251,9 +251,9 @@ export default function Home() {
             
             {/* 6" Oversized Gutters */}
             <AnimateOnScroll type="zoomIn" delay={0.3} className="h-full">
-              <div className="group h-full flex flex-col bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 border border-gray-100">
+              <div className="group h-full flex flex-col bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 border border-gray-100" style={{minHeight: '648px'}}>
                 {/* Card Top Decoration */}
-                <div className="h-1.5 bg-gradient-to-r from-primary to-secondary"></div>
+                <div className="h-1.5 bg-gradient-to-r from-blue-600 to-blue-700"></div>
                 
                 {/* Card Content */}
                 <div className="relative overflow-hidden">
@@ -266,16 +266,16 @@ export default function Home() {
                       sizes="(max-width: 768px) 100vw, 50vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
-                      <span className="inline-block px-3 py-1 text-xs font-medium bg-primary text-white rounded-full">
+                      <span className="inline-block px-3 py-1 text-xs font-medium bg-blue-600 text-white rounded-full">
                         Heavy Rainfall Areas
                       </span>
                     </div>
                   </div>
                   
-                  <div className="p-6 md:p-8">
+                  <div className="p-6 md:p-8 relative pb-24">
                     <div className="flex items-center mb-4">
-                      <div className="bg-primary/10 p-2 rounded-lg mr-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <div className="bg-blue-600/10 p-2 rounded-lg mr-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                         </svg>
                       </div>
@@ -288,38 +288,40 @@ export default function Home() {
                     
                     <div className="space-y-3 mb-6">
                       <div className="flex items-center">
-                        <svg className="h-5 w-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="h-5 w-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
-                        <span className="text-sm text-gray-700">36% more capacity than standard</span>
+                        <span className="text-sm text-gray-700">40% more capacity</span>
                       </div>
                       <div className="flex items-center">
-                        <svg className="h-5 w-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="h-5 w-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                         <span className="text-sm text-gray-700">Ideal for large roof areas</span>
                       </div>
                       <div className="flex items-center">
-                        <svg className="h-5 w-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="h-5 w-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                         <span className="text-sm text-gray-700">Reduces overflow risk</span>
                       </div>
                     </div>
                     
-                    <div className="flex justify-between items-center">
-                      <Link href="/services/6-inch-gutters" className="group flex items-center text-primary font-medium hover:text-secondary transition-colors">
+                    {/* Mobile buttons - inside card */}
+                    <div className="flex justify-between items-center lg:hidden px-6 pb-6">
+                      <Link href="/services/6-inch-gutters" className="group flex items-center text-blue-600 font-medium hover:text-blue-700 transition-colors">
                         Learn more
                         <svg className="ml-1 h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                       </Link>
                       <Link href="/contact">
-                        <Button variant="outline" size="sm" className="border-primary text-primary hover:bg-primary/10">
+                        <Button variant="outline" size="sm" className="border-blue-600 text-blue-600 hover:bg-blue-600/10">
                           Get Quote
                         </Button>
                       </Link>
                     </div>
+
                   </div>
                 </div>
               </div>
@@ -327,9 +329,9 @@ export default function Home() {
             
             {/* Soffit & Fascia */}
             <AnimateOnScroll type="zoomIn" delay={0.4} className="h-full">
-              <div className="group h-full flex flex-col bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 border border-gray-100">
+              <div className="group h-full flex flex-col bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 border border-gray-100" style={{minHeight: '648px'}}>
                 {/* Card Top Decoration */}
-                <div className="h-1.5 bg-gradient-to-r from-secondary to-primary"></div>
+                <div className="h-1.5 bg-gradient-to-r from-blue-600 to-blue-700"></div>
                 
                 {/* Card Content */}
                 <div className="relative overflow-hidden">
@@ -342,16 +344,16 @@ export default function Home() {
                       sizes="(max-width: 768px) 100vw, 33vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
-                      <span className="inline-block px-3 py-1 text-xs font-medium bg-primary text-white rounded-full">
+                      <span className="inline-block px-3 py-1 text-xs font-medium bg-blue-600 text-white rounded-full">
                         Complete Roofline Solutions
                       </span>
                     </div>
                   </div>
                   
-                  <div className="p-6 md:p-8">
+                  <div className="p-6 md:p-8 relative pb-24">
                     <div className="flex items-center mb-4">
-                      <div className="bg-primary/10 p-2 rounded-lg mr-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <div className="bg-blue-600/10 p-2 rounded-lg mr-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                         </svg>
                       </div>
@@ -364,42 +366,185 @@ export default function Home() {
                     
                     <div className="space-y-3 mb-6">
                       <div className="flex items-center">
-                        <svg className="h-5 w-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="h-5 w-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                         <span className="text-sm text-gray-700">Ventilated for proper airflow</span>
                       </div>
                       <div className="flex items-center">
-                        <svg className="h-5 w-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="h-5 w-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                         <span className="text-sm text-gray-700">Custom color matching</span>
                       </div>
                       <div className="flex items-center">
-                        <svg className="h-5 w-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="h-5 w-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                         <span className="text-sm text-gray-700">Long-lasting protection</span>
                       </div>
                     </div>
                     
-                    <div className="flex justify-between items-center">
-                      <Link href="/services/soffit-fascia" className="group flex items-center text-primary font-medium hover:text-secondary transition-colors">
+                    {/* Mobile buttons - inside card */}
+                    <div className="flex justify-between items-center lg:hidden px-6 pb-6">
+                      <Link href="/services/soffit-fascia" className="group flex items-center text-blue-600 font-medium hover:text-blue-700 transition-colors">
                         Learn more
                         <svg className="ml-1 h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                       </Link>
                       <Link href="/contact">
-                        <Button variant="outline" size="sm" className="border-primary text-primary hover:bg-primary/10">
+                        <Button variant="outline" size="sm" className="border-blue-600 text-blue-600 hover:bg-blue-600/10">
                           Get Quote
                         </Button>
                       </Link>
                     </div>
+
                   </div>
                 </div>
               </div>
             </AnimateOnScroll>
+            
+            {/* Alurex Continuous Hanger */}
+            <AnimateOnScroll type="zoomIn" delay={0.5} className="h-full">
+              <div className="group h-full flex flex-col bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 border border-gray-100" style={{minHeight: '648px'}}>
+                {/* Card Top Decoration */}
+                <div className="h-1.5 bg-gradient-to-r from-blue-600 to-blue-700"></div>
+                
+                {/* Card Content */}
+                <div className="relative overflow-hidden">
+                  <div className="relative aspect-video overflow-hidden">
+                    <Image 
+                      src="/images/Alurex/doublepro-protection-pine.jpg" 
+                      alt="Alu-Rex Continuous Hanger - Pine Needles Protection" 
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      sizes="(max-width: 768px) 100vw, 25vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+                      <span className="inline-block px-3 py-1 text-xs font-medium bg-blue-600 text-white rounded-full">
+                        Advanced Protection System
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div className="p-6 md:p-8 relative pb-24">
+                    <div className="flex items-center mb-4">
+                      <div className="bg-blue-600/10 p-2 rounded-lg mr-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                      </div>
+                      <h3 className="text-xl font-bold text-gray-900">Alu-Rex Hangers</h3>
+                    </div>
+                    
+                    <p className="text-gray-600 mb-6 leading-relaxed">
+                      Advanced continuous hanger system that strengthens gutters, prevents sagging, and eliminates spikes for superior long-lasting protection.
+                    </p>
+                    
+                    <div className="space-y-3 mb-6">
+                      <div className="flex items-center">
+                        <svg className="h-5 w-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                        <span className="text-sm text-gray-700">Lifetime Warranty</span>
+                      </div>
+                      <div className="flex items-center">
+                        <svg className="h-5 w-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                        <span className="text-sm text-gray-700">Superior load capacity</span>
+                      </div>
+                      <div className="flex items-center">
+                        <svg className="h-5 w-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                        <span className="text-sm text-gray-700">Built-in leaf guard</span>
+                      </div>
+                    </div>
+                    
+                    {/* Mobile buttons - inside card */}
+                    <div className="flex justify-between items-center lg:hidden px-6 pb-6">
+                      <Link href="/alurex-gutter-systems" className="group flex items-center text-blue-600 font-medium hover:text-blue-700 transition-colors">
+                        Learn more
+                        <svg className="ml-1 h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </Link>
+                      <Link href="/contact">
+                        <Button variant="outline" size="sm" className="border-blue-600 text-blue-600 hover:bg-blue-600/10">
+                          Get Quote
+                        </Button>
+                      </Link>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </AnimateOnScroll>
+          </div>
+          
+          {/* Separate Button Overlay Grid - Desktop only */}
+          <div className="hidden lg:grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-[-80px] relative z-10 pointer-events-none">
+            {/* Buttons for 5" Conventional */}
+            <div className="flex justify-between items-center px-6 pb-6 pointer-events-auto">
+              <Link href="/services/5-inch-gutters" className="group flex items-center text-blue-600 font-medium hover:text-blue-700 transition-colors">
+                Learn more
+                <svg className="ml-1 h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+              <Link href="/contact">
+                <Button variant="outline" size="sm" className="border-blue-600 text-blue-600 hover:bg-blue-600/10">
+                  Get Quote
+                </Button>
+              </Link>
+            </div>
+            
+            {/* Buttons for 6" Oversized */}
+            <div className="flex justify-between items-center px-6 pb-6 pointer-events-auto">
+              <Link href="/services/6-inch-gutters" className="group flex items-center text-blue-600 font-medium hover:text-blue-700 transition-colors">
+                Learn more
+                <svg className="ml-1 h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+              <Link href="/contact">
+                <Button variant="outline" size="sm" className="border-blue-600 text-blue-600 hover:bg-blue-600/10">
+                  Get Quote
+                </Button>
+              </Link>
+            </div>
+            
+            {/* Buttons for Soffit & Fascia */}
+            <div className="flex justify-between items-center px-6 pb-6 pointer-events-auto">
+              <Link href="/services/soffit-fascia" className="group flex items-center text-blue-600 font-medium hover:text-blue-700 transition-colors">
+                Learn more
+                <svg className="ml-1 h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+              <Link href="/contact">
+                <Button variant="outline" size="sm" className="border-blue-600 text-blue-600 hover:bg-blue-600/10">
+                  Get Quote
+                </Button>
+              </Link>
+            </div>
+            
+            {/* Buttons for Alurex */}
+            <div className="flex justify-between items-center px-6 pb-6 pointer-events-auto">
+              <Link href="/alurex-gutter-systems" className="group flex items-center text-blue-600 font-medium hover:text-blue-700 transition-colors">
+                Learn more
+                <svg className="ml-1 h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+              <Link href="/contact">
+                <Button variant="outline" size="sm" className="border-blue-600 text-blue-600 hover:bg-blue-600/10">
+                  Get Quote
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>

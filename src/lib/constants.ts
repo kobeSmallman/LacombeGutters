@@ -19,6 +19,7 @@ export const FOOTER_ADDITIONAL_ITEMS = [
   { label: "About", path: "/about" },
   { label: "Gallery", path: "/gallery" },
   { label: "FAQ", path: "/faq" },
+  { label: "Alurex Partner", path: "/alurex-gutter-systems" },
 ];
 
 export const SERVICE_AREA_BOUNDS = {
@@ -35,6 +36,8 @@ export const SERVICES = [
   "Soffit & Fascia",
   "Gutter Cleaning",
   "Industrial-scale Eavestrough",
+  "Alurex Continuous Hanger Systems",
+  "Gutter Guard Installation",
   "Free Estimates"
 ];
 
@@ -53,3 +56,40 @@ export const TEAM_MEMBERS = [
     image: "/images/gallery/Ryan.png"
   }
 ];
+
+// Alurex SEO Keywords and Phrases
+export const ALUREX_SEO_KEYWORDS = [
+  "Alurex gutter guard installation Lacombe",
+  "continuous hanger system Alberta",
+  "DoublePro gutter protection Red Deer",
+  "T-Rex gutter system installation",
+  "professional gutter guard services",
+  "micro-filtration leaf guard Alberta",
+  "Alurex continuous hanger Lacombe Alberta",
+  "gutter installation experts Red Deer",
+  "DoublePro microfiltration system",
+  "T-Rex continuous hanger",
+  "professional gutter systems Red Deer",
+  "Alurex authorized dealer Alberta",
+  "gutter guard installation central Alberta",
+  "continuous hanger gutter protection",
+  "Lacombe gutter guard specialists"
+];
+
+export const ALUREX_PRODUCT_INFO = {
+  DoublePro: {
+    name: "DoublePro® Microfiltration Continuous Hanger™",
+    strength: "425 lb per linear foot",
+    features: ["Dual-layer perforated aluminum", "Micro-filtration leaf guard", "Continuous hanger support"]
+  },
+  TRex: {
+    name: "T-Rex® Continuous Hanger™",
+    strength: "250 lb per linear foot",
+    features: ["Integrated continuous hanger", "Lifetime durability", "Professional installation"]
+  },
+  GutterClean: {
+    name: "Gutter Clean System®",
+    strength: "All-season protection",
+    features: ["Debris blocking", "Ice & snow protection", "Fits existing gutters"]
+  }
+};
