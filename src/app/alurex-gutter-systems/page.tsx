@@ -116,11 +116,12 @@ export default function AlurexGutterSystemsPage() {
                   <div className="mb-8">
                     <h2 className="text-2xl font-bold text-gray-900 mb-4">Next-Gen Gutter System</h2>
                     <Image
-                      src="/images/alurex/LogoBlack-DoublePro.png"
+                      src="/images/Alurex/LogoBlack-DoublePro.png"
                       alt="DoublePro Logo"
                       width={200}
                       height={60}
                       className="object-contain"
+                      priority
                     />
                     <h3 className="text-xl font-semibold text-gray-800 mt-2">Microfiltration Continuous Hanger™</h3>
                   </div>
@@ -162,11 +163,12 @@ export default function AlurexGutterSystemsPage() {
                 <div className="bg-white p-8 lg:p-16 order-1 lg:order-2">
                   <div className="relative aspect-square">
                     <Image
-                      src="/images/alurex/Alurex-DoublePro-D11500-WEB.png"
+                      src="/images/Alurex/Alurex-DoublePro-D11500-WEB.png"
                       alt="DoublePro® Microfiltration Continuous Hanger System"
                       fill
                       className="object-contain"
-                      sizes="50vw"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      priority
                     />
                   </div>
                 </div>
@@ -177,11 +179,12 @@ export default function AlurexGutterSystemsPage() {
                 <div className="bg-white p-8 lg:p-16">
                   <div className="relative aspect-square">
                     <Image
-                      src="/images/alurex/Alurex-Trex-M5200B95-WEB.png"
+                      src="/images/Alurex/Alurex-Trex-M5200B95-WEB.png"
                       alt="T-Rex® Continuous Hanger System"
                       fill
                       className="object-contain"
-                      sizes="50vw"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      priority
                     />
                   </div>
                 </div>
