@@ -2,22 +2,37 @@
 User-agent: *
 Allow: /
 
+# Block all API endpoints and internal routes
+Disallow: /api/
+Disallow: /_api/
+Disallow: /_next/server/
+Disallow: /_next/cache/
+Disallow: /admin/
+
+# Block legacy URLs that should redirect
+Disallow: /home
+Disallow: /service-page/
+Disallow: /page3
+Disallow: /book-online
+
+# Allow static assets
+Allow: /_next/static/
+Allow: /favicon.ico
+Allow: /manifest.json
+Allow: /site.webmanifest
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.webp
+Allow: /*.svg
+Allow: /*.woff2
+Allow: /*.woff
+
 # Sitemap
 Sitemap: https://www.lacombeguttersltd.com/sitemap.xml
 
-# Disallow admin and API routes
-Disallow: /admin/
-Disallow: /api/
-# Allow static assets but disallow specific Next.js internals
-Disallow: /_next/server/
-Disallow: /_next/cache/
-Allow: /_next/static/
-
-# Allow all user agents to access the rest of the site
-User-agent: *
-Allow: /
-
-# Crawl-delay: 10
+# Crawl delay to prevent overwhelming
+Crawl-delay: 1
 
 # Additional directives for specific search engines
 User-agent: Googlebot

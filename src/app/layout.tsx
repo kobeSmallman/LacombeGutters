@@ -87,6 +87,16 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  // ONLY ADD these missing pieces for Google Search Console
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
+  },
+  other: {
+    'geo.region': 'CA-AB',
+    'geo.placename': 'Lacombe, Alberta',
+    'geo.position': '52.4667;-113.7333',
+    'ICBM': '52.4667, -113.7333',
+  },
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },

@@ -39,14 +39,14 @@ const nextConfig: NextConfig = {
         destination: '/services',
         permanent: true,
       },
-      // Specific legacy service page redirects
+      // Specific legacy service page redirects that are failing in GSC
       {
-        source: '/service-page/windows',
+        source: '/service-page/electrical',
         destination: '/services',
         permanent: true,
       },
       {
-        source: '/service-page/plumbing',
+        source: '/service-page/remodeling', 
         destination: '/services',
         permanent: true,
       },
@@ -56,12 +56,12 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: '/service-page/remodeling',
+        source: '/service-page/windows',
         destination: '/services',
         permanent: true,
       },
       {
-        source: '/service-page/electrical',
+        source: '/service-page/plumbing',
         destination: '/services',
         permanent: true,
       },
@@ -75,11 +75,78 @@ const nextConfig: NextConfig = {
         destination: '/',
         permanent: true,
       },
+      // Block API endpoints from being accessed directly
+      {
+        source: '/_api/:path*',
+        destination: '/404',
+        permanent: true,
+      },
+      // Form map redirect (appears in GSC failures)
+      {
+        source: '/form__map',
+        destination: '/contact',
+        permanent: true,
+      },
     ];
   },
-  // Ensure proper headers for SEO
   async headers() {
     return [
+      // Add security headers and prevent indexing of API routes
+      {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow',
+          },
+        ],
+      },
+      {
+        source: '/_api/:path*',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow',
+          },
+        ],
+      },
+      // Ensure static assets have proper cache headers
+      {
+        source: '/_next/static/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      // PWA manifest headers
+      {
+        source: '/manifest.json',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'application/manifest+json',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400',
+          },
+        ],
+      },
+      {
+        source: '/site.webmanifest',
+        headers: [
+          {
+            key: 'Content-Type', 
+            value: 'application/manifest+json',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400',
+          },
+        ],
+      },
       {
         source: '/(.*)',
         headers: [

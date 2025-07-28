@@ -12,6 +12,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
     'downspouts',
     'industrial-eavestrough'
   ];
+
+  // Define service area cities
+  const serviceAreas = [
+    'lacombe',
+    'red-deer',
+    'blackfalds',
+    'sylvan-lake',
+    'rocky-mountain-house',
+    'innisfail',
+    'olds',
+    'didsbury',
+    'carstairs',
+    'sundre',
+    'bowden',
+    'penhold',
+    'deer-meadow',
+    'bentley',
+    'gull-lake',
+    'mirror',
+    'alix',
+    'clive',
+    'delburne',
+    'lousana'
+  ];
   
   // Base pages
   const basePages = [
@@ -90,6 +114,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }));
+
+  // Service area city pages
+  const serviceAreaPages = serviceAreas.map(area => ({
+    url: `${baseUrl}/service-areas/${area}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
   
-  return [...basePages, ...servicePages];
+  return [...basePages, ...servicePages, ...serviceAreaPages];
 }
