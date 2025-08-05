@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run build:images && next build",
+    "build:images": "node scripts/build-city-images.js",
+    "build:next": "next build",
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
@@ -26,6 +28,7 @@
     "autoprefixer": "^10.4.16",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dotenv": "^17.2.1",
     "framer-motion": "^12.12.1",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.294.0",

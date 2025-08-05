@@ -87,6 +87,7 @@ const nextConfig: NextConfig = {
         destination: '/contact',
         permanent: true,
       },
+
     ];
   },
   async headers() {

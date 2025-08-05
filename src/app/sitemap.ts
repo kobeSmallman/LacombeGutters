@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import { serviceLocations } from '@/lib/locations';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.lacombeguttersltd.com';
@@ -13,28 +14,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
     'industrial-eavestrough'
   ];
 
-  // Define service area cities
-  const serviceAreas = [
-    'lacombe',
+  // Priority service area cities that get custom content and higher SEO priority
+  const priorityServiceAreas = [
+    'edmonton',
     'red-deer',
+    'lacombe', 
     'blackfalds',
-    'sylvan-lake',
-    'rocky-mountain-house',
-    'innisfail',
-    'olds',
-    'didsbury',
-    'carstairs',
-    'sundre',
-    'bowden',
+    'st-albert',
+    'spruce-grove',
+    'airdrie',
+    'leduc',
+    'calgary',
     'penhold',
-    'deer-meadow',
-    'bentley',
-    'gull-lake',
-    'mirror',
-    'alix',
-    'clive',
-    'delburne',
-    'lousana'
+    'stettler',
+    'camrose',
+    'wetaskiwin',
+    'olds',
+    'ponoka',
+    'sylvan-lake',
+    'nordegg',
+    'innisfail'
   ];
   
   // Base pages
@@ -60,8 +59,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: `${baseUrl}/service-areas`,
       lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
+      changeFrequency: 'weekly' as const,
+      priority: 0.9, // High priority for local SEO
     },
     {
       url: `${baseUrl}/gallery`,
@@ -115,13 +114,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  // Service area city pages
-  const serviceAreaPages = serviceAreas.map(area => ({
-    url: `${baseUrl}/service-areas/${area}`,
+  // ALL service area pages (both priority and generic cities)
+  const allServiceAreaPages = serviceLocations.map(location => ({
+    url: `${baseUrl}/service-areas/${location.slug}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
-    priority: 0.7,
+    priority: priorityServiceAreas.includes(location.slug) ? 0.8 : 0.6, // Higher priority for custom content cities
   }));
+
+
   
-  return [...basePages, ...servicePages, ...serviceAreaPages];
+  return [...basePages, ...servicePages, ...allServiceAreaPages];
 }

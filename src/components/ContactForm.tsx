@@ -215,10 +215,10 @@ export default function ContactForm() {
   return (
     <form ref={formRef} onSubmit={handleSubmit} method="POST" className="space-y-6">
       {/* Preferred Contact Method - Moved to top */}
-      <div className="mb-6">
+      <div className="mb-6" style={{ overflow: 'visible', paddingLeft: '12px' }}>
         <h3 className="font-bold text-lg mb-3">Preferred Contact Method *</h3>
-        <div className="flex gap-6">
-          <label className="flex items-center text-sm">
+        <div className="flex gap-6" style={{ paddingLeft: '0px', overflow: 'visible', minWidth: '100%' }}>
+          <label className="flex items-center text-sm" style={{ paddingLeft: '4px' }}>
             <input
               type="radio"
               name="contactMethod"
@@ -226,10 +226,11 @@ export default function ContactForm() {
               checked={contactMethod === 'email'}
               onChange={() => setContactMethod('email')}
               className="mr-3 scale-125"
+              style={{ marginLeft: '0px', marginRight: '12px', transform: 'translateX(8px)' }}
             />
             Email
           </label>
-          <label className="flex items-center text-sm">
+          <label className="flex items-center text-sm" style={{ paddingLeft: '4px' }}>
             <input
               type="radio"
               name="contactMethod"
@@ -237,6 +238,7 @@ export default function ContactForm() {
               checked={contactMethod === 'sms'}
               onChange={() => setContactMethod('sms')}
               className="mr-3 scale-125"
+              style={{ marginLeft: '0px', marginRight: '12px', transform: 'translateX(8px)' }}
             />
             Text Message/SMS
           </label>

@@ -314,9 +314,9 @@ const QuoteRequestWidget: React.FC = () => {
                       <form onSubmit={handleSubmit} className="h-full flex flex-col">
                         <div className="flex-1 overflow-y-auto space-y-3 w-full pb-20" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'thin', scrollbarColor: '#cbd5e0 transparent' }}>
                         {/* Contact Method Selection */}
-                        <div className="space-y-1">
+                        <div className="space-y-1" style={{ overflow: 'visible', paddingLeft: '8px' }}>
                           <label className="block text-base font-bold text-gray-700">Preferred Contact Method *</label>
-                          <div className="flex gap-6">
+                          <div className="flex gap-6" style={{ overflow: 'visible' }}>
                             <label className="flex items-center text-sm">
                               <input
                                 type="radio"
@@ -325,6 +325,7 @@ const QuoteRequestWidget: React.FC = () => {
                                 checked={formData.contactMethod === 'email'}
                                 onChange={(e) => handleInputChange('contactMethod', e.target.value as 'email' | 'sms')}
                                 className="mr-3 scale-125"
+                                style={{ marginLeft: '4px' }}
                               />
                               Email
                             </label>
@@ -336,6 +337,7 @@ const QuoteRequestWidget: React.FC = () => {
                                 checked={formData.contactMethod === 'sms'}
                                 onChange={(e) => handleInputChange('contactMethod', e.target.value as 'email' | 'sms')}
                                 className="mr-3 scale-125"
+                                style={{ marginLeft: '4px' }}
                               />
                               Phone
                             </label>

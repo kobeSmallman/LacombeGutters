@@ -3,10 +3,10 @@ import dynamic from "next/dynamic";
 import { useMemo } from "react";
 
 export const SERVICE_POLYGON: [number, number][] = [
-  [53.5461, -111.0000],   // 1  top‑east  (east wall)
-  [53.5461, -113.4938],   // 2  Edmonton city centre
+  [53.6500, -111.0000],   // 1  top‑east  (east wall) - extended north for St. Albert
+  [53.6500, -114.0000],   // 2  Edmonton metro area including St. Albert & Spruce Grove
                           //    — keeps the top edge perfectly horizontal
-                          //      from east wall across to Edmonton
+                          //      from east wall across to Edmonton metro area
   [52.5200, -116.2000],   // 3  Nordegg apex (adjusted position)
   [50.7233, -113.9826],   // 4  Okotoks / Calgary knee
   [50.8000, -111.0000],   // 5  bottom‑east (east wall)

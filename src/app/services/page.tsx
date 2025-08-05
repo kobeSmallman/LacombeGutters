@@ -341,8 +341,8 @@ export default function ServicesPage() {
           }}
         ></div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-12">
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-4xl mx-auto text-center mb-16">
             <span className="inline-block px-4 py-1 text-sm font-semibold text-yellow-400 bg-yellow-400/10 rounded-full mb-4">
               Service Coverage
             </span>
@@ -350,65 +350,123 @@ export default function ServicesPage() {
               Our Service Area
             </h2>
             <div className="w-16 h-1 bg-yellow-400 mx-auto mb-6"></div>
-            <p className="text-gray-300 max-w-2xl mx-auto">
-              With over 40 years of experience, we&apos;ve been proudly serving Central Alberta with top-quality gutter solutions.
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+              We proudly serve the following areas in Central Alberta:
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            {/* North Card */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            {/* North Boundary Card */}
             <div className="group relative bg-gray-800/90 p-8 rounded-xl border border-gray-700/50 hover:border-yellow-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-400/10 hover:-translate-y-1">
               <div className="absolute -top-4 -right-4 w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center text-gray-900 font-bold text-lg shadow-lg transform group-hover:scale-110 transition-transform duration-300">N</div>
-              <h3 className="text-xl font-semibold text-yellow-400 mb-4 pb-3 border-b border-gray-700/50">North</h3>
+              <h3 className="text-xl font-semibold text-yellow-400 mb-4 pb-3 border-b border-gray-700/50">North Boundary</h3>
               <ul className="space-y-2">
-                {['Leduc', 'Beaumont', 'Devon', 'Stony Plain'].map((city, i) => (
-                  <li key={i} className="flex items-center text-gray-200 group-hover:text-white transition-colors">
-                    <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2.5"></span>
-                    {city}
-                  </li>
-                ))}
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/edmonton" className="hover:text-yellow-400 transition-colors">
+                    Edmonton
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/st-albert" className="hover:text-yellow-400 transition-colors">
+                    St. Albert
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/spruce-grove" className="hover:text-yellow-400 transition-colors">
+                    Spruce Grove
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/leduc" className="hover:text-yellow-400 transition-colors">
+                    Leduc
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/wetaskiwin" className="hover:text-yellow-400 transition-colors">
+                    Wetaskiwin
+                  </Link>
+                </li>
               </ul>
             </div>
 
-            {/* South Card */}
-            <div className="group relative bg-gray-800/80 p-6 rounded-lg border border-gray-700/50 hover:border-yellow-400/50 transition-colors">
-              <div className="absolute -top-3 -right-3 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-gray-900 font-bold text-sm shadow-lg">S</div>
-              <h3 className="text-xl font-semibold text-yellow-400 mb-4 pb-3 border-b border-gray-700/50">South</h3>
+            {/* Central Region Card */}
+            <div className="group relative bg-gray-800/90 p-8 rounded-xl border border-gray-700/50 hover:border-blue-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-400/10 hover:-translate-y-1">
+              <div className="absolute -top-4 -right-4 w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-gray-900 font-bold text-lg shadow-lg transform group-hover:scale-110 transition-transform duration-300">C</div>
+              <h3 className="text-xl font-semibold text-blue-400 mb-4 pb-3 border-b border-gray-700/50">Central Region</h3>
               <ul className="space-y-2">
-                {['Airdrie', 'Cochrane', 'Okotoks', 'High River'].map((city, i) => (
-                  <li key={i} className="flex items-center text-gray-200 group-hover:text-white transition-colors">
-                    <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2.5"></span>
-                    {city}
-                  </li>
-                ))}
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-blue-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/lacombe" className="hover:text-blue-400 transition-colors">
+                    Lacombe
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-blue-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/red-deer" className="hover:text-blue-400 transition-colors">
+                    Red Deer
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-blue-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/stettler" className="hover:text-blue-400 transition-colors">
+                    Stettler
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-blue-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/sylvan-lake" className="hover:text-blue-400 transition-colors">
+                    Sylvan Lake
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-blue-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/ponoka" className="hover:text-blue-400 transition-colors">
+                    Ponoka
+                  </Link>
+                </li>
               </ul>
             </div>
 
-            {/* East Card */}
-            <div className="group relative bg-gray-800/80 p-6 rounded-lg border border-gray-700/50 hover:border-yellow-400/50 transition-colors">
-              <div className="absolute -top-3 -right-3 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-gray-900 font-bold text-sm shadow-lg">E</div>
-              <h3 className="text-xl font-semibold text-yellow-400 mb-4 pb-3 border-b border-gray-700/50">East</h3>
+            {/* South Boundary Card */}
+            <div className="group relative bg-gray-800/90 p-8 rounded-xl border border-gray-700/50 hover:border-green-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-green-400/10 hover:-translate-y-1">
+              <div className="absolute -top-4 -right-4 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-gray-900 font-bold text-lg shadow-lg transform group-hover:scale-110 transition-transform duration-300">S</div>
+              <h3 className="text-xl font-semibold text-green-400 mb-4 pb-3 border-b border-gray-700/50">South Boundary</h3>
               <ul className="space-y-2">
-                {['Stettler', 'Three Hills', 'Hanna', 'Coronation'].map((city, i) => (
-                  <li key={i} className="flex items-center text-gray-200 group-hover:text-white transition-colors">
-                    <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2.5"></span>
-                    {city}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* West Card */}
-            <div className="group relative bg-gray-800/80 p-6 rounded-lg border border-gray-700/50 hover:border-yellow-400/50 transition-colors">
-              <div className="absolute -top-3 -right-3 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-gray-900 font-bold text-sm shadow-lg">W</div>
-              <h3 className="text-xl font-semibold text-yellow-400 mb-4 pb-3 border-b border-gray-700/50">West</h3>
-              <ul className="space-y-2">
-                {['Nordegg', 'Rocky Mountain House', 'Sundre', 'Carstairs'].map((city, i) => (
-                  <li key={i} className="flex items-center text-gray-200 group-hover:text-white transition-colors">
-                    <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2.5"></span>
-                    {city}
-                  </li>
-                ))}
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-green-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/airdrie" className="hover:text-green-400 transition-colors">
+                    Airdrie
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-green-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/calgary" className="hover:text-green-400 transition-colors">
+                    Calgary
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-green-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/olds" className="hover:text-green-400 transition-colors">
+                    Olds
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-green-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/penhold" className="hover:text-green-400 transition-colors">
+                    Penhold
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-green-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/innisfail" className="hover:text-green-400 transition-colors">
+                    Innisfail
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>

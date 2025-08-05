@@ -63,9 +63,15 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/images/og-image.jpg',
+        url: '/images/og-lacombe-owners-truck-1200x630.jpg',
         width: 1200,
         height: 630,
+        alt: 'Lacombe Gutters - Professional Eavestrough Services',
+      },
+      {
+        url: '/images/og-lacombe-owners-truck-2400x1260.jpg',
+        width: 2400,
+        height: 1260,
         alt: 'Lacombe Gutters - Professional Eavestrough Services',
       },
     ],
@@ -74,7 +80,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: `${SITE_NAME} | Professional Eavestrough Services`,
     description: SITE_DESCRIPTION,
-    images: ['/images/og-image.jpg'],
+    images: ['/images/og-lacombe-owners-truck-1200x630.jpg'],
   },
   robots: {
     index: true,

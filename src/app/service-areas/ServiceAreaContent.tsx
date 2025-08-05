@@ -340,12 +340,42 @@ export default function ServiceAreaContent() {
               <div className="absolute -top-4 -right-4 w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center text-gray-900 font-bold text-lg shadow-lg transform group-hover:scale-110 transition-transform duration-300">N</div>
               <h3 className="text-xl font-semibold text-yellow-400 mb-4 pb-3 border-b border-gray-700/50">North Boundary</h3>
               <ul className="space-y-2">
-                {['Edmonton', 'St. Albert', 'Spruce Grove'].map((city, i) => (
-                  <li key={i} className="flex items-center text-gray-200 group-hover:text-white transition-colors">
-                    <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2.5"></span>
-                    {city}
-                  </li>
-                ))}
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/edmonton" className="hover:text-yellow-400 transition-colors">
+                    Edmonton
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/st-albert" className="hover:text-yellow-400 transition-colors">
+                    St. Albert
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/spruce-grove" className="hover:text-yellow-400 transition-colors">
+                    Spruce Grove
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/leduc" className="hover:text-yellow-400 transition-colors">
+                    Leduc
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/wetaskiwin" className="hover:text-yellow-400 transition-colors">
+                    Wetaskiwin
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/beaumont" className="hover:text-yellow-400 transition-colors">
+                    Beaumont
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -354,12 +384,48 @@ export default function ServiceAreaContent() {
               <div className="absolute -top-4 -right-4 w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg transform group-hover:scale-110 transition-transform duration-300">C</div>
               <h3 className="text-xl font-semibold text-blue-400 mb-4 pb-3 border-b border-gray-700/50">Central Region</h3>
               <ul className="space-y-2">
-                {['Lacombe', 'Red Deer', 'Blackfalds'].map((city, i) => (
-                  <li key={i} className="flex items-center text-gray-200 group-hover:text-white transition-colors">
-                    <span className="w-2 h-2 bg-blue-400 rounded-full mr-2.5"></span>
-                    {city}
-                  </li>
-                ))}
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-blue-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/lacombe" className="hover:text-blue-400 transition-colors">
+                    Lacombe
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-blue-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/red-deer" className="hover:text-blue-400 transition-colors">
+                    Red Deer
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-blue-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/stettler" className="hover:text-blue-400 transition-colors">
+                    Stettler
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-blue-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/sylvan-lake" className="hover:text-blue-400 transition-colors">
+                    Sylvan Lake
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-blue-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/ponoka" className="hover:text-blue-400 transition-colors">
+                    Ponoka
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-blue-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/stettler" className="hover:text-blue-400 transition-colors">
+                    Stettler
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-blue-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/camrose" className="hover:text-blue-400 transition-colors">
+                    Camrose
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -368,12 +434,36 @@ export default function ServiceAreaContent() {
               <div className="absolute -top-4 -right-4 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg transform group-hover:scale-110 transition-transform duration-300">S</div>
               <h3 className="text-xl font-semibold text-green-400 mb-4 pb-3 border-b border-gray-700/50">South Boundary</h3>
               <ul className="space-y-2">
-                {['Ponoka', 'Wetaskiwin', 'Leduc'].map((city, i) => (
-                  <li key={i} className="flex items-center text-gray-200 group-hover:text-white transition-colors">
-                    <span className="w-2 h-2 bg-green-400 rounded-full mr-2.5"></span>
-                    {city}
-                  </li>
-                ))}
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-green-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/airdrie" className="hover:text-green-400 transition-colors">
+                    Airdrie
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-green-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/calgary" className="hover:text-green-400 transition-colors">
+                    Calgary
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-green-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/olds" className="hover:text-green-400 transition-colors">
+                    Olds
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-green-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/penhold" className="hover:text-green-400 transition-colors">
+                    Penhold
+                  </Link>
+                </li>
+                <li className="flex items-center text-gray-200 group-hover:text-white transition-colors">
+                  <span className="w-2 h-2 bg-green-400 rounded-full mr-2.5"></span>
+                  <Link href="/service-areas/innisfail" className="hover:text-green-400 transition-colors">
+                    Innisfail
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
