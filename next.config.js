@@ -47,14 +47,21 @@ const nextConfig = {
 
   async redirects() {
     return [
-      // HTTP to HTTPS redirect
+      // CRITICAL: Base domain redirects (handles Google's crawl of http://lacombeguttersltd.com/)
+      {
+        source: '/',
+        has: [{ type: 'host', value: 'lacombeguttersltd.com' }],
+        destination: 'https://www.lacombeguttersltd.com/',
+        permanent: true,
+      },
+      // HTTP to HTTPS redirect for all paths
       {
         source: '/:path*',
         has: [{ type: 'header', key: 'x-forwarded-proto', value: 'http' }],
         destination: 'https://www.lacombeguttersltd.com/:path*',
         permanent: true,
       },
-      // Non-www to www redirect
+      // Non-www to www redirect for all paths
       {
         source: '/:path*',
         has: [{ type: 'host', value: 'lacombeguttersltd.com' }],
