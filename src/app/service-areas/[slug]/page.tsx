@@ -83,10 +83,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     };
   } else {
-    // Generic SEO for other cities
+    // P3 pages - noindex,follow for thin content
     return {
       title: `${cityName} Gutter Services | Lacombe Gutters`,
       description: `Professional gutter installation and repair services in ${cityName}, Alberta. Serving Central Alberta with 40+ years experience. Free estimates available.`,
+      robots: {
+        index: false,
+        follow: true,
+      },
       keywords: `${cityName} gutters, gutter services ${cityName}, eavestrough ${cityName}, Alberta gutters`,
       openGraph: {
         title: `${cityName} Gutter Services | Lacombe Gutters`,

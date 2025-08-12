@@ -114,15 +114,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  // ALL service area pages (both priority and generic cities)
-  const allServiceAreaPages = serviceLocations.map(location => ({
-    url: `${baseUrl}/service-areas/${location.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: priorityServiceAreas.includes(location.slug) ? 0.8 : 0.6, // Higher priority for custom content cities
-  }));
+  // Only P1 and P2 service area pages (exclude P3 from sitemap)
+  // P2 cities that have unique researched content
+  const p2Cities = ['beaumont', 'stony-plain', 'morinville'];
+  
+  const indexableServiceAreaPages = serviceLocations
+    .filter(location => {
+      // Include P1 (priority cities) and P2 (researched content)
+      return priorityServiceAreas.includes(location.slug) || p2Cities.includes(location.slug);
+    })
+    .map(location => ({
+      url: `${baseUrl}/service-areas/${location.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: priorityServiceAreas.includes(location.slug) ? 0.8 : 0.7, // P1=0.8, P2=0.7
+    }));
 
 
   
-  return [...basePages, ...servicePages, ...allServiceAreaPages];
+  return [...basePages, ...servicePages, ...indexableServiceAreaPages];
 }
