@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, AlertCircle, Upload, X } from "lucide-react";
 
@@ -11,6 +11,7 @@ export default function ContactForm() {
   const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
   const [contactMethod, setContactMethod] = useState<'email' | 'sms'>('email');
   const [attachments, setAttachments] = useState<File[]>([]);
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Function to format phone number as user types
@@ -36,6 +37,40 @@ export default function ContactForm() {
     // Trigger a change event to update any controlled components
     const event = new Event('input', { bubbles: true });
     input.dispatchEvent(event);
+  };
+
+  // Map service names from services page to checkbox values
+  const mapServiceNameToValue = (serviceName: string): string => {
+    const mapping: {[key: string]: string} = {
+      '5" Gutters': '5-inch-gutters',
+      '6" Gutters': '6-inch-gutters', 
+      'Soffit & Fascia': 'soffit-fascia',
+      'Gutter Cleaning': 'gutter-cleaning',
+      'Downspouts': 'downspouts',
+      'Commercial Eavestrough': 'other'
+    };
+    
+    return mapping[serviceName] || 'other';
+  };
+
+  // Check for preselected service from sessionStorage
+  useEffect(() => {
+    const selectedService = sessionStorage.getItem('selectedService');
+    if (selectedService) {
+      const mappedService = mapServiceNameToValue(selectedService);
+      setSelectedServices([mappedService]);
+      // Clear the sessionStorage after using it
+      sessionStorage.removeItem('selectedService');
+    }
+  }, []);
+
+  // Handle service checkbox changes
+  const handleServiceChange = (service: string, checked: boolean) => {
+    if (checked) {
+      setSelectedServices(prev => [...prev, service]);
+    } else {
+      setSelectedServices(prev => prev.filter(s => s !== service));
+    }
   };
 
   const validateForm = (formData: FormData): boolean => {
@@ -70,8 +105,7 @@ export default function ContactForm() {
     }
     
     // Check if at least one service is selected
-    const services = formData.getAll('services') as string[];
-    if (services.length === 0) {
+    if (selectedServices.length === 0) {
       errors['services'] = 'Please select at least one service';
     }
     
@@ -160,8 +194,7 @@ export default function ContactForm() {
       apiFormData.append('formType', 'contact-form');
       
       // Add services
-      const services = formData.getAll('services') as string[];
-      services.forEach(service => {
+      selectedServices.forEach(service => {
         apiFormData.append('services', service);
       });
       
@@ -170,7 +203,7 @@ export default function ContactForm() {
         apiFormData.append('attachments', file);
       });
       
-      console.log('Submitting form with', services.length, 'services and', attachments.length, 'attachments');
+      console.log('Submitting form with', selectedServices.length, 'services and', attachments.length, 'attachments');
       
       // Send data to API endpoint
       const response = await fetch('/api/contact', {
@@ -191,6 +224,7 @@ export default function ContactForm() {
         form.reset();
         setContactMethod('email');
         setAttachments([]);
+        setSelectedServices([]);
         if (fileInputRef.current) {
           fileInputRef.current.value = '';
         }
@@ -333,32 +367,74 @@ export default function ContactForm() {
         
         <div className={`grid grid-cols-1 sm:grid-cols-2 gap-2 ${validationErrors['services'] ? 'border border-red-500 bg-red-50 p-2 rounded-md' : ''}`} data-error={!!validationErrors['services']}>
           <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-            <input type="checkbox" name="services" value="5-inch-gutters" className="h-4 w-4 text-primary" />
+            <input 
+              type="checkbox" 
+              name="services" 
+              value="5-inch-gutters" 
+              className="h-4 w-4 text-primary"
+              checked={selectedServices.includes('5-inch-gutters')}
+              onChange={(e) => handleServiceChange('5-inch-gutters', e.target.checked)}
+            />
             <span className="text-black dark:text-white">5-Inch Gutters</span>
           </label>
           
           <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-            <input type="checkbox" name="services" value="6-inch-gutters" className="h-4 w-4 text-primary" />
+            <input 
+              type="checkbox" 
+              name="services" 
+              value="6-inch-gutters" 
+              className="h-4 w-4 text-primary"
+              checked={selectedServices.includes('6-inch-gutters')}
+              onChange={(e) => handleServiceChange('6-inch-gutters', e.target.checked)}
+            />
             <span className="text-black dark:text-white">6-Inch Gutters</span>
           </label>
           
           <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-            <input type="checkbox" name="services" value="soffit-fascia" className="h-4 w-4 text-primary" />
+            <input 
+              type="checkbox" 
+              name="services" 
+              value="soffit-fascia" 
+              className="h-4 w-4 text-primary"
+              checked={selectedServices.includes('soffit-fascia')}
+              onChange={(e) => handleServiceChange('soffit-fascia', e.target.checked)}
+            />
             <span className="text-black dark:text-white">Soffit & Fascia</span>
           </label>
           
           <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-            <input type="checkbox" name="services" value="downspouts" className="h-4 w-4 text-primary" />
+            <input 
+              type="checkbox" 
+              name="services" 
+              value="downspouts" 
+              className="h-4 w-4 text-primary"
+              checked={selectedServices.includes('downspouts')}
+              onChange={(e) => handleServiceChange('downspouts', e.target.checked)}
+            />
             <span className="text-black dark:text-white">Downspouts</span>
           </label>
           
           <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-            <input type="checkbox" name="services" value="gutter-cleaning" className="h-4 w-4 text-primary" />
+            <input 
+              type="checkbox" 
+              name="services" 
+              value="gutter-cleaning" 
+              className="h-4 w-4 text-primary"
+              checked={selectedServices.includes('gutter-cleaning')}
+              onChange={(e) => handleServiceChange('gutter-cleaning', e.target.checked)}
+            />
             <span className="text-black dark:text-white">Gutter Cleaning</span>
           </label>
           
           <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-            <input type="checkbox" name="services" value="other" className="h-4 w-4 text-primary" />
+            <input 
+              type="checkbox" 
+              name="services" 
+              value="other" 
+              className="h-4 w-4 text-primary"
+              checked={selectedServices.includes('other')}
+              onChange={(e) => handleServiceChange('other', e.target.checked)}
+            />
             <span className="text-black dark:text-white">Other</span>
           </label>
         </div>
