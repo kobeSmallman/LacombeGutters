@@ -18,6 +18,10 @@
       "source": "/(.*)",
       "has": [
         {
+          "type": "host",
+          "value": "www.lacombeguttersltd.com"
+        },
+        {
           "type": "header",
           "key": "x-forwarded-proto",
           "value": "http"
