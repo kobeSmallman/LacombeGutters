@@ -450,6 +450,25 @@ export default function ServiceAreaPageContent({ location, isPriority }: Props) 
                 </div>
               ))}
             </div>
+            
+            {/* Distance Charge Notice */}
+            <div className="mt-12 bg-blue-50 border border-blue-200 rounded-lg p-6">
+              <div className="flex items-start gap-3">
+                <MapPin className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="text-lg font-semibold text-blue-900 mb-2">Service Area Information</h3>
+                  <p className="text-blue-800">
+                    <strong>Within 50km radius:</strong> No distance charges applied to your service.
+                  </p>
+                  <p className="text-blue-800 mt-1">
+                    <strong>Beyond 50km:</strong> Distance charges may apply for travel to your location.
+                  </p>
+                  <p className="text-sm text-blue-700 mt-2">
+                    Contact us for specific pricing details for your area.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
