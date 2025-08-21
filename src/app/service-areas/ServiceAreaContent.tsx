@@ -468,6 +468,27 @@ export default function ServiceAreaContent() {
             </div>
           </div>
           
+          {/* Distance Charge Notice */}
+          <div className="max-w-2xl mx-auto mb-12">
+            <div className="bg-blue-900/30 border border-blue-600/50 rounded-lg p-6">
+              <div className="flex items-start gap-3">
+                <MapPin className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="text-lg font-semibold text-blue-300 mb-2">Service Area Information</h3>
+                  <p className="text-gray-200">
+                    <strong>Within 50km radius:</strong> No distance charges applied to your service.
+                  </p>
+                  <p className="text-gray-200 mt-1">
+                    <strong>Beyond 50km:</strong> Distance charges may apply for travel to your location.
+                  </p>
+                  <p className="text-sm text-blue-200 mt-2">
+                    Contact us for specific pricing details for your area.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="text-center">
             <div className="inline-flex flex-col sm:flex-row gap-4">
               <Button asChild variant="secondary" size="lg" className="group bg-yellow-500 hover:bg-yellow-600 text-gray-900">
