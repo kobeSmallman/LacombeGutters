@@ -5,22 +5,22 @@ Allow: /
 # Block all API endpoints and internal routes
 Disallow: /api/
 Disallow: /_api/
-Disallow: /_next/server/
-Disallow: /_next/cache/
+Disallow: /_next/
 Disallow: /admin/
 
-# Allow static assets
-Allow: /_next/static/
-Allow: /favicon.ico
-Allow: /manifest.json
-Allow: /site.webmanifest
+# Block font files and manifests from being indexed as pages
+Disallow: /*.woff2$
+Disallow: /*.woff$
+Disallow: /manifest.json
+Disallow: /site.webmanifest
+Disallow: /favicon.ico
+
+# Allow images
 Allow: /*.png
 Allow: /*.jpg
 Allow: /*.jpeg
 Allow: /*.webp
 Allow: /*.svg
-Allow: /*.woff2
-Allow: /*.woff
 
 # Sitemap
 Sitemap: https://www.lacombeguttersltd.com/sitemap.xml

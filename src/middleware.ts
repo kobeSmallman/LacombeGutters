@@ -39,6 +39,11 @@ export function middleware(request: NextRequest) {
     '/form__map': '/contact',
     '/book-online': '/contact',
     
+    // Legacy service pages that were crawled but don't exist
+    '/service-page/windows': '/services',
+    '/service-page/plumbing': '/services', 
+    '/page3': '/services',
+    
     // Handle potential URL variations of service pages that don't exist
     '/services/carpentry': '/services',
     '/services/remodeling': '/services',

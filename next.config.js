@@ -34,7 +34,18 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: '/(.*)',
+        // HTML pages should have shorter cache
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 's-maxage=86400, stale-while-revalidate=59',
+          },
+        ],
+      },
+      {
+        // Static assets can have longer cache
+        source: '/_next/static/:path*',
         headers: [
           {
             key: 'Cache-Control',
@@ -47,24 +58,20 @@ const nextConfig = {
 
   async redirects() {
     return [
-      // CRITICAL: Base domain redirects (handles Google's crawl of http://lacombeguttersltd.com/)
-      {
-        source: '/',
-        has: [{ type: 'host', value: 'lacombeguttersltd.com' }],
-        destination: 'https://www.lacombeguttersltd.com/',
-        permanent: true,
-      },
-      // HTTP to HTTPS redirect for all paths
+      // Non-www to www redirect (must come first to avoid chains)
       {
         source: '/:path*',
-        has: [{ type: 'header', key: 'x-forwarded-proto', value: 'http' }],
+        has: [{ type: 'host', value: 'lacombeguttersltd.com' }],
         destination: 'https://www.lacombeguttersltd.com/:path*',
         permanent: true,
       },
-      // Non-www to www redirect for all paths
+      // HTTP to HTTPS redirect for www domain
       {
         source: '/:path*',
-        has: [{ type: 'host', value: 'lacombeguttersltd.com' }],
+        has: [
+          { type: 'host', value: 'www.lacombeguttersltd.com' },
+          { type: 'header', key: 'x-forwarded-proto', value: 'http' }
+        ],
         destination: 'https://www.lacombeguttersltd.com/:path*',
         permanent: true,
       },

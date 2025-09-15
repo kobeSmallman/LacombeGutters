@@ -3,8 +3,9 @@ import { notFound } from 'next/navigation';
 import { serviceLocations } from '@/lib/locations';
 import ServiceAreaPageContent from './ServiceAreaPageContent';
 
-// Priority cities that get custom content
+// Priority cities that get custom content and should be indexed
 const PRIORITY_CITIES = [
+  // P1 cities - main service areas
   'edmonton',
   'red-deer',
   'lacombe', 
@@ -22,7 +23,11 @@ const PRIORITY_CITIES = [
   'ponoka',
   'sylvan-lake',
   'nordegg',
-  'innisfail'
+  'innisfail',
+  // P2 cities - secondary areas with unique content that should be indexed
+  'beaumont',
+  'stony-plain',
+  'morinville'
 ];
 
 interface Props {
