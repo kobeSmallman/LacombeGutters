@@ -58,10 +58,22 @@ const nextConfig = {
 
   async redirects() {
     return [
-      // Non-www to www redirect (must come first to avoid chains)
+      // Non-www to www redirect (split by protocol to avoid chains)
       {
         source: '/:path*',
-        has: [{ type: 'host', value: 'lacombeguttersltd.com' }],
+        has: [
+          { type: 'host', value: 'lacombeguttersltd.com' },
+          { type: 'header', key: 'x-forwarded-proto', value: 'http' }
+        ],
+        destination: 'https://www.lacombeguttersltd.com/:path*',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [
+          { type: 'host', value: 'lacombeguttersltd.com' },
+          { type: 'header', key: 'x-forwarded-proto', value: 'https' }
+        ],
         destination: 'https://www.lacombeguttersltd.com/:path*',
         permanent: true,
       },
@@ -75,10 +87,22 @@ const nextConfig = {
         destination: 'https://www.lacombeguttersltd.com/:path*',
         permanent: true,
       },
-      // Domain redirect (existing)
+      // Vercel domain redirect (split by protocol to avoid chains)
       {
         source: '/:path*',
-        has: [{ type: 'host', value: 'lacombe-gutters.vercel.app' }],
+        has: [
+          { type: 'host', value: 'lacombe-gutters.vercel.app' },
+          { type: 'header', key: 'x-forwarded-proto', value: 'http' }
+        ],
+        destination: 'https://www.lacombeguttersltd.com/:path*',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [
+          { type: 'host', value: 'lacombe-gutters.vercel.app' },
+          { type: 'header', key: 'x-forwarded-proto', value: 'https' }
+        ],
         destination: 'https://www.lacombeguttersltd.com/:path*',
         permanent: true,
       },

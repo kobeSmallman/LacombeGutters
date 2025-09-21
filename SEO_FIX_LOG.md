@@ -146,7 +146,62 @@ Based on the fixes:
 - Google Search Console: https://search.google.com/search-console
 - Indexing API (if needed): Consider for critical pages
 
+## 2025-09-21 - Redirect Chain Fix for Google Console Validation
+
+### Issue:
+Google Search Console was failing redirect validation for `http://www.lacombeguttersltd.com/` due to redirect chains:
+1. `http://lacombeguttersltd.com/` → `https://lacombeguttersltd.com/` (Vercel automatic HTTP→HTTPS)
+2. `https://lacombeguttersltd.com/` → `https://www.lacombeguttersltd.com/` (Next.js non-www→www)
+
+This created a 3-hop redirect chain that Google flags as problematic for SEO.
+
+### Solution:
+Split domain-based redirects in `next.config.js` by protocol to eliminate chains:
+- Handle HTTP and HTTPS non-www domains separately using `x-forwarded-proto` header
+- Both redirect directly to final HTTPS www destination in single hop
+- Applied same fix to Vercel domain redirects (`lacombe-gutters.vercel.app`)
+
+### Files Modified:
+- `next.config.js` (lines 62-108) - Split redirects by protocol to avoid chains
+
+### Technical Implementation:
+```js
+// Old (creates chain):
+{
+  source: '/:path*',
+  has: [{ type: 'host', value: 'lacombeguttersltd.com' }],
+  destination: 'https://www.lacombeguttersltd.com/:path*',
+  permanent: true,
+}
+
+// New (eliminates chain):
+{
+  source: '/:path*',
+  has: [
+    { type: 'host', value: 'lacombeguttersltd.com' },
+    { type: 'header', key: 'x-forwarded-proto', value: 'http' }
+  ],
+  destination: 'https://www.lacombeguttersltd.com/:path*',
+  permanent: true,
+},
+{
+  source: '/:path*',
+  has: [
+    { type: 'host', value: 'lacombeguttersltd.com' },
+    { type: 'header', key: 'x-forwarded-proto', value: 'https' }
+  ],
+  destination: 'https://www.lacombeguttersltd.com/:path*',
+  permanent: true,
+}
+```
+
+### Results:
+- Eliminates redirect chains for all domain variants
+- Direct 1-hop redirects: `http://lacombeguttersltd.com/` → `https://www.lacombeguttersltd.com/`
+- Should resolve Google Search Console validation errors after deployment
+
 ## Notes
 - The noindex on P3 cities is INTENTIONAL - do not change
 - Never remove redirects from next.config.js without adding replacements
 - Always test redirects after deployment
+- Redirect chains create SEO issues - always ensure single-hop redirects for domain canonicalization
