@@ -200,6 +200,54 @@ Split domain-based redirects in `next.config.js` by protocol to eliminate chains
 - Direct 1-hop redirects: `http://lacombeguttersltd.com/` → `https://www.lacombeguttersltd.com/`
 - Should resolve Google Search Console validation errors after deployment
 
+## 2025-09-29 - Clean Up Duplicate Redirects and Remove Unused Templates
+
+### Issue:
+Google Search Console validation failures were occurring due to:
+1. Duplicate redirects between `next.config.js` and `middleware.ts` causing conflicts
+2. Existing template pages (`/owners`, `/reviews`) that duplicate content from main pages
+3. URLs discoverable by Google but handled inconsistently
+
+### Root Cause:
+- `/page3`, `/page4`, `/book-online` were defined in both redirect files
+- `/owners` template page duplicated team info already on `/about` page  
+- `/reviews` template page duplicated testimonials already on homepage
+- Multiple redirect handlers for same URLs created validation conflicts
+
+### Solution:
+Consolidated all redirects to `next.config.js` and removed duplicate template pages:
+
+#### Files Modified:
+- `src/middleware.ts` - Removed duplicate redirects for `/page3`, `/page4`, `/book-online`
+- `next.config.js` - Added `/owners` redirect to `/about` page
+- `src/app/owners/page.tsx` - Deleted (team info integrated in about page)
+
+#### Specific Changes:
+```js
+// Added to next.config.js:
+{
+  source: '/owners',
+  destination: '/about',  // Team info integrated on about page  
+  permanent: true,
+}
+```
+
+#### Redirects Removed from middleware.ts:
+- `/page3` → `/services` (already in next.config.js)
+- `/page4` → `/contact` (already in next.config.js)  
+- `/book-online` → `/contact` (already in next.config.js)
+
+### Results:
+- Eliminates redirect conflicts between files
+- Ensures single source of truth for URL handling
+- Removes duplicate content that could confuse search engines
+- Should resolve Google Console validation failures for affected URLs
+
+### Prevention:
+- Always check both `next.config.js` and `middleware.ts` before adding redirects
+- Use `next.config.js` for permanent redirects, `middleware.ts` only for dynamic logic
+- Before creating template pages, verify content isn't already integrated elsewhere
+
 ## Notes
 - The noindex on P3 cities is INTENTIONAL - do not change
 - Never remove redirects from next.config.js without adding replacements
