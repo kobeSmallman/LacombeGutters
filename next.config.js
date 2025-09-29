@@ -272,6 +272,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/owners',
+        destination: '/about',  // Team info integrated on about page
+        permanent: true,
+      },
+      {
         source: '/testimonials',
         destination: '/',  // Testimonials on homepage
         permanent: true,

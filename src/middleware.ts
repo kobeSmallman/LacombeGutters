@@ -33,16 +33,13 @@ export function middleware(request: NextRequest) {
     '/WHY-US': '/why-us',
     '/why_us': '/why-us',
     
-    // Specific old Wix paths found in search results  
-    '/page4': '/contact', // Google Console shows this should go to contact, not about
+    // Specific old Wix paths found in search results
     '/book-online/plumbing': '/contact',
     '/form__map': '/contact',
-    '/book-online': '/contact',
     
     // Legacy service pages that were crawled but don't exist
     '/service-page/windows': '/services',
-    '/service-page/plumbing': '/services', 
-    '/page3': '/services',
+    '/service-page/plumbing': '/services',
     
     // Handle potential URL variations of service pages that don't exist
     '/services/carpentry': '/services',
