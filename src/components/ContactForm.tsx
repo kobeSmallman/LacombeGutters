@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, AlertCircle, Upload, X } from "lucide-react";
+import CloudflareTurnstile from './CloudflareTurnstile';
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -13,6 +14,8 @@ export default function ContactForm() {
   const [attachments, setAttachments] = useState<File[]>([]);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string>('');
+  const [turnstileKey, setTurnstileKey] = useState(0);
 
   // Function to format phone number as user types
   const formatPhoneNumber = (value: string) => {
@@ -76,10 +79,23 @@ export default function ContactForm() {
   const validateForm = (formData: FormData): boolean => {
     const errors: {[key: string]: string} = {};
     
+    // Check honeypot field (should be empty)
+    const honeypot = formData.get('company_website') as string;
+    if (honeypot && honeypot.trim() !== '') {
+      console.warn('Honeypot field filled, likely spam submission');
+      errors['honeypot'] = 'Invalid submission detected';
+      setValidationErrors(errors);
+      return false;
+    }
+    
     // Check name
     const name = formData.get('name') as string;
     if (!name || name.trim() === '') {
       errors['name'] = 'Please enter your name';
+    } else if (name.trim().length < 2) {
+      errors['name'] = 'Please enter a valid name (at least 2 characters)';
+    } else if (name.trim().length > 100) {
+      errors['name'] = 'Name is too long (maximum 100 characters)';
     }
     
     // Check phone - ensure it has at least 10 digits
@@ -90,18 +106,25 @@ export default function ContactForm() {
       errors['phone'] = 'Please enter a valid phone number with at least 10 digits';
     }
     
-    // Check email
+    // Enhanced email validation
     const email = formData.get('email') as string;
     if (!email || email.trim() === '') {
       errors['email'] = 'Please enter your email address';
-    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
-      errors['email'] = 'Please enter a valid email address';
+    } else {
+      const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+      if (!emailRegex.test(email.trim())) {
+        errors['email'] = 'Please enter a valid email address';
+      } else if (email.trim().length > 254) {
+        errors['email'] = 'Email address is too long';
+      }
     }
     
     // Check address
     const address = formData.get('address') as string;
     if (!address || address.trim() === '') {
       errors['address'] = 'Please enter your address';
+    } else if (address.trim().length < 5) {
+      errors['address'] = 'Please enter a more complete address';
     }
     
     // Check if at least one service is selected
@@ -113,6 +136,15 @@ export default function ContactForm() {
     const message = formData.get('message') as string;
     if (!message || message.trim() === '') {
       errors['message'] = 'Please enter project details';
+    } else if (message.trim().length < 10) {
+      errors['message'] = 'Please provide more details (at least 10 characters)';
+    } else if (message.trim().length > 2000) {
+      errors['message'] = 'Message is too long (maximum 2000 characters)';
+    }
+
+    // Check Turnstile token
+    if (!turnstileToken) {
+      errors['turnstile'] = 'Please complete the security verification';
     }
     
     setValidationErrors(errors);
@@ -192,6 +224,7 @@ export default function ContactForm() {
       apiFormData.append('contactMethod', contactMethod);
       apiFormData.append('source', 'contact-page');
       apiFormData.append('formType', 'contact-form');
+      apiFormData.append('turnstile-token', turnstileToken);
       
       // Add services
       selectedServices.forEach(service => {
@@ -225,6 +258,8 @@ export default function ContactForm() {
         setContactMethod('email');
         setAttachments([]);
         setSelectedServices([]);
+        setTurnstileToken('');
+        setTurnstileKey(prev => prev + 1); // Force Turnstile reset
         if (fileInputRef.current) {
           fileInputRef.current.value = '';
         }
@@ -248,6 +283,16 @@ export default function ContactForm() {
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} method="POST" className="space-y-6">
+      {/* Honeypot field - hidden from users */}
+      <input
+        type="text"
+        name="company_website"
+        style={{ display: 'none' }}
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+      />
+      
       {/* Preferred Contact Method - Moved to top */}
       <div className="mb-6" style={{ overflow: 'visible', paddingLeft: '12px' }}>
         <h3 className="font-bold text-lg mb-3">Preferred Contact Method *</h3>
@@ -521,6 +566,39 @@ export default function ContactForm() {
               </div>
             ))}
           </div>
+        )}
+      </div>
+      
+      {/* Cloudflare Turnstile */}
+      <div>
+        <CloudflareTurnstile
+          key={turnstileKey}
+          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+          onVerify={(token) => {
+            setTurnstileToken(token);
+            setValidationErrors(prev => {
+              const newErrors = { ...prev };
+              delete newErrors.turnstile;
+              return newErrors;
+            });
+          }}
+          onError={() => {
+            setTurnstileToken('');
+            setValidationErrors(prev => ({
+              ...prev,
+              turnstile: 'Security verification failed. Please try again.'
+            }));
+          }}
+          onExpire={() => {
+            setTurnstileToken('');
+            setValidationErrors(prev => ({
+              ...prev,
+              turnstile: 'Security verification expired. Please verify again.'
+            }));
+          }}
+        />
+        {validationErrors['turnstile'] && (
+          <p className="mt-2 text-sm text-red-600 dark:text-red-400">{validationErrors['turnstile']}</p>
         )}
       </div>
       

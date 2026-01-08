@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 import TestimonialsSection from "@/components/ui/testimonials-section";
 import RainEffect from "@/components/ui/rain-effect";
+import WinterServicesSection from "@/components/WinterServicesSection";
 
 import "@/styles/rain-bg.css";
 import "./mobile-styles.css";
@@ -548,6 +549,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Winter Services Section */}
+      <WinterServicesSection />
 
       {/* CTA Section with Rain */}
       <section className="py-24 md:py-32 relative overflow-hidden bg-gradient-to-b from-gray-900 to-blue-900 text-white min-h-[90vh] flex items-center justify-center">

@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Upload, X } from 'lucide-react';
+import CloudflareTurnstile from './CloudflareTurnstile';
 
 type FormData = {
   name: string;
@@ -16,6 +17,7 @@ type FormData = {
   message: string;
   services: string[];
   contactMethod: 'email' | 'sms';
+  company_website?: string; // Honeypot field
 };
 
 type FormErrors = {
@@ -40,7 +42,8 @@ const QuoteRequestWidget: React.FC = () => {
     address: '',
     message: '',
     services: [],
-    contactMethod: 'email'
+    contactMethod: 'email',
+    company_website: ''
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -50,6 +53,8 @@ const QuoteRequestWidget: React.FC = () => {
   const [attachments, setAttachments] = useState<File[]>([]);
   const formRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string>('');
+  const [turnstileKey, setTurnstileKey] = useState(0);
 
   // Phone number formatting function
   const formatPhoneNumber = (value: string): string => {
@@ -74,24 +79,58 @@ const QuoteRequestWidget: React.FC = () => {
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
 
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
+    // Check honeypot field (should be empty)
+    if (formData.company_website && formData.company_website.trim() !== '') {
+      console.warn('Honeypot field filled, likely spam submission');
+      setShowError(true);
+      setErrorMessage('Invalid submission detected');
+      return false;
     }
 
+    // Check name
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = 'Please enter a valid name (at least 2 characters)';
+    } else if (formData.name.trim().length > 100) {
+      newErrors.name = 'Name is too long (maximum 100 characters)';
+    }
+
+    // Enhanced email/phone validation
     if (formData.contactMethod === 'email') {
       if (!formData.email.trim()) {
         newErrors.email = 'Email is required when email contact is selected';
-      } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-        newErrors.email = 'Email is invalid';
+      } else {
+        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+        if (!emailRegex.test(formData.email.trim())) {
+          newErrors.email = 'Please enter a valid email address';
+        } else if (formData.email.trim().length > 254) {
+          newErrors.email = 'Email address is too long';
+        }
       }
     } else if (formData.contactMethod === 'sms') {
       if (!formData.phone.trim()) {
         newErrors.phone = 'Phone number is required when phone contact is selected';
+      } else if (formData.phone.replace(/\D/g, '').length < 10) {
+        newErrors.phone = 'Please enter a valid phone number with at least 10 digits';
       }
     }
 
+    // Enhanced message validation
     if (!formData.message.trim()) {
       newErrors.message = 'Message is required';
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = 'Please provide more details (at least 10 characters)';
+    } else if (formData.message.trim().length > 2000) {
+      newErrors.message = 'Message is too long (maximum 2000 characters)';
+    }
+
+    // Check Turnstile token
+    if (!turnstileToken) {
+      newErrors.message = newErrors.message || 'Please complete the security verification';
+      setShowError(true);
+      setErrorMessage('Please complete the security verification');
+      return false;
     }
 
     setErrors(newErrors);
@@ -154,6 +193,7 @@ const QuoteRequestWidget: React.FC = () => {
       });
       apiFormData.append('source', 'quote-widget');
       apiFormData.append('formType', 'quote-request');
+      apiFormData.append('turnstile-token', turnstileToken);
       
       // Add attachments
       attachments.forEach(file => {
@@ -181,9 +221,12 @@ const QuoteRequestWidget: React.FC = () => {
           address: '',
           message: '',
           services: [],
-          contactMethod: 'email'
+          contactMethod: 'email',
+          company_website: ''
         });
         setAttachments([]);
+        setTurnstileToken('');
+        setTurnstileKey(prev => prev + 1); // Force Turnstile reset
         // Longer timeout to give user time to read success message
         setTimeout(() => {
           setShowSuccess(false);
@@ -209,6 +252,8 @@ const QuoteRequestWidget: React.FC = () => {
       setShowSuccess(false);
       setShowError(false);
       setErrors({});
+      // Reset Turnstile when reopening
+      setTurnstileKey(prev => prev + 1);
     }
   };
 
@@ -312,6 +357,16 @@ const QuoteRequestWidget: React.FC = () => {
                         Request a Free Estimate
                       </h2>
                       <form onSubmit={handleSubmit} className="h-full flex flex-col">
+                        {/* Honeypot field - hidden from users */}
+                        <input
+                          type="text"
+                          value={formData.company_website || ''}
+                          onChange={(e) => handleInputChange('company_website', e.target.value)}
+                          style={{ display: 'none' }}
+                          tabIndex={-1}
+                          autoComplete="off"
+                          aria-hidden="true"
+                        />
                         <div className="flex-1 overflow-y-auto space-y-3 w-full pb-20" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'thin', scrollbarColor: '#cbd5e0 transparent' }}>
                         {/* Contact Method Selection */}
                         <div className="space-y-1" style={{ overflow: 'visible', paddingLeft: '8px' }}>
@@ -506,6 +561,30 @@ const QuoteRequestWidget: React.FC = () => {
                               </div>
                             </div>
                           )}
+                        </div>
+
+                        {/* Cloudflare Turnstile */}
+                        <div className="space-y-1">
+                          <CloudflareTurnstile
+                            key={turnstileKey}
+                            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+                            onVerify={(token) => {
+                              setTurnstileToken(token);
+                              setShowError(false);
+                              setErrorMessage('');
+                            }}
+                            onError={() => {
+                              setTurnstileToken('');
+                              setShowError(true);
+                              setErrorMessage('Security verification failed. Please try again.');
+                            }}
+                            onExpire={() => {
+                              setTurnstileToken('');
+                              setShowError(true);
+                              setErrorMessage('Security verification expired. Please verify again.');
+                            }}
+                            size="compact"
+                          />
                         </div>
 
                         {/* Error Message */}

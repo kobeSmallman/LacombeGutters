@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
 import { Phone } from 'lucide-react';
 import RainEffect from '@/components/ui/rain-effect';
+import WinterServicesSection from '@/components/WinterServicesSection';
 
 export const metadata = {
   title: "Why Choose Us",
@@ -438,6 +439,9 @@ export default function WhyUsPage() {
           </div>
         </div>
       </section>
+
+      {/* Winter Services Section */}
+      <WinterServicesSection />
     </div>
   );
 }

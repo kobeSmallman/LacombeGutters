@@ -3,7 +3,7 @@
 const path = require('path');
 
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false, // Disabled to prevent Turnstile double-mounting
   
   env: {
     NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,

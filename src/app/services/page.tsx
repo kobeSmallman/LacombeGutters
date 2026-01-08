@@ -62,7 +62,10 @@ const servicesData: Service[] = [
       'Debris removal',
       'Downspout flushing',
       'Leak inspection',
-      'Full system check'
+      'Full system check',
+      'Ice dam removal & winter blockages',
+      'Frozen downspout clearing',
+      'Winter damage repair'
     ],
     hero: '/images/gallery/filledGutter.png'
   },

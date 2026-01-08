@@ -486,6 +486,58 @@ export async function POST(request: Request) {
           formType: formData.get('formType') as string || 'contact',
           services: formData.getAll('services') as string[]
         };
+
+        // Check honeypot field
+        const honeypot = formData.get('company_website') as string;
+        if (honeypot && honeypot.trim() !== '') {
+          console.warn('Honeypot field filled, likely spam submission:', honeypot);
+          return NextResponse.json(
+            { success: false, message: 'Invalid submission detected.' },
+            { status: 400 }
+          );
+        }
+
+        // Verify Turnstile token
+        const turnstileToken = formData.get('turnstile-token') as string;
+        if (turnstileToken && process.env.TURNSTILE_SECRET_KEY) {
+          try {
+            const turnstileResponse = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                secret: process.env.TURNSTILE_SECRET_KEY,
+                response: turnstileToken,
+                remoteip: getClientIP(request),
+              }),
+            });
+
+            const turnstileResult = await turnstileResponse.json();
+            
+            if (!turnstileResult.success) {
+              console.warn('Turnstile verification failed:', turnstileResult['error-codes']);
+              return NextResponse.json(
+                { success: false, message: 'Security verification failed. Please try again.' },
+                { status: 400 }
+              );
+            }
+            
+            console.log('Turnstile verification successful');
+          } catch (error) {
+            console.error('Error verifying Turnstile token:', error);
+            return NextResponse.json(
+              { success: false, message: 'Security verification error. Please try again.' },
+              { status: 500 }
+            );
+          }
+        } else if (process.env.NODE_ENV === 'production') {
+          // Require Turnstile in production
+          return NextResponse.json(
+            { success: false, message: 'Security verification is required.' },
+            { status: 400 }
+          );
+        }
         
         // Handle file attachments
         const attachmentFiles = formData.getAll('attachments') as File[];
@@ -523,24 +575,74 @@ export async function POST(request: Request) {
       );
     }
 
-    // Validate required fields
+    // Enhanced server-side validation
+    const errors: string[] = [];
+
+    // Validate name
     if (!data.name?.trim()) {
-      return NextResponse.json(
-        { success: false, message: 'Name is required.' },
-        { status: 400 }
-      );
+      errors.push('Name is required.');
+    } else if (data.name.trim().length < 2) {
+      errors.push('Name must be at least 2 characters long.');
+    } else if (data.name.trim().length > 100) {
+      errors.push('Name must not exceed 100 characters.');
     }
 
-    if (data.contactMethod === 'email' && !data.email?.trim()) {
-      return NextResponse.json(
-        { success: false, message: 'Email is required when email contact method is selected.' },
-        { status: 400 }
-      );
+    // Validate email and phone based on contact method
+    if (data.contactMethod === 'email') {
+      if (!data.email?.trim()) {
+        errors.push('Email is required when email contact method is selected.');
+      } else {
+        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+        if (!emailRegex.test(data.email.trim())) {
+          errors.push('Please provide a valid email address.');
+        } else if (data.email.trim().length > 254) {
+          errors.push('Email address is too long.');
+        }
+      }
     }
 
-    if (data.contactMethod === 'sms' && !data.phone?.trim()) {
+    if (data.contactMethod === 'sms') {
+      if (!data.phone?.trim()) {
+        errors.push('Phone number is required when SMS contact method is selected.');
+      } else {
+        const phoneDigits = data.phone.replace(/\D/g, '');
+        if (phoneDigits.length < 10) {
+          errors.push('Please provide a valid phone number with at least 10 digits.');
+        }
+      }
+    }
+
+    // Validate message
+    if (!data.message?.trim()) {
+      errors.push('Message is required.');
+    } else if (data.message.trim().length < 10) {
+      errors.push('Message must be at least 10 characters long.');
+    } else if (data.message.trim().length > 2000) {
+      errors.push('Message must not exceed 2000 characters.');
+    }
+
+    // Check for common spam patterns
+    const suspiciousPatterns = [
+      /https?:\/\/[^\s]+/g, // URLs in message
+      /\b(?:viagra|cialis|loan|casino|poker|sex|xxx)\b/i, // Common spam words
+      /[A-Z]{10,}/, // Excessive caps
+      /(.)\1{5,}/, // Repeated characters
+    ];
+
+    if (data.message?.trim()) {
+      for (const pattern of suspiciousPatterns) {
+        if (pattern.test(data.message.trim())) {
+          console.warn('Suspicious content detected in message:', data.message.substring(0, 100));
+          errors.push('Message contains invalid content.');
+          break;
+        }
+      }
+    }
+
+    // Return validation errors if any
+    if (errors.length > 0) {
       return NextResponse.json(
-        { success: false, message: 'Phone number is required when SMS contact method is selected.' },
+        { success: false, message: errors.join(' ') },
         { status: 400 }
       );
     }
