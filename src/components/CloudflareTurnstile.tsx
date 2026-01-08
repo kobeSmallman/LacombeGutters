@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import Script from 'next/script';
 
 interface TurnstileProps {
   siteKey: string;
@@ -29,147 +30,39 @@ const CloudflareTurnstile = ({
   size = 'normal'
 }: TurnstileProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-    console.log('[Turnstile] Component mounted');
-  }, []);
+    if (!containerRef.current) return;
 
-  useEffect(() => {
-    if (!mounted) return;
-
-    console.log('[Turnstile] Starting initialization with siteKey:', siteKey);
-
-    let widgetId: string | null = null;
-
-    const loadScript = () => {
-      // Check if script already exists
-      const existingScript = document.querySelector('script[src*="challenges.cloudflare.com/turnstile"]');
-      if (existingScript) {
-        console.log('[Turnstile] Script already exists, attempting to render');
-        // Script exists, rendering
-        renderWidget();
-        return;
-      }
-
-      console.log('[Turnstile] Creating new script tag');
-      const script = document.createElement('script');
-      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
-      script.async = true;
-      script.defer = true;
-      
-      script.onload = () => {
-        console.log('[Turnstile] Script loaded successfully');
-        // Script loaded, rendering
-        renderWidget();
-      };
-      
-      script.onerror = (error) => {
-        console.error('[Turnstile] Failed to load script:', error);
-        // Script load failed
-        onError?.();
-      };
-      
-      document.head.appendChild(script);
-    };
-
-    const renderWidget = () => {
-      let attempts = 0;
-      const checkInterval = setInterval(() => {
-        attempts++;
-        console.log(`[Turnstile] Render attempt ${attempts}`);
-        
-        if (typeof window !== 'undefined' && window.turnstile && containerRef.current) {
-          clearInterval(checkInterval);
-          console.log('[Turnstile] Window.turnstile found, rendering widget');
-          // Rendering widget
-          
-          try {
-            // Check if container is empty
-            if (containerRef.current.children.length > 0) {
-              console.log('[Turnstile] Container already has children, clearing');
-              containerRef.current.innerHTML = '';
-            }
-
-            console.log('[Turnstile] Calling turnstile.render with:', {
-              sitekey: siteKey,
-              theme,
-              size
-            });
-
-            widgetId = window.turnstile.render(containerRef.current, {
-              sitekey: siteKey,
-              callback: (token: string) => {
-                console.log('[Turnstile] Success! Token received:', token.substring(0, 30) + '...');
-                // Verified
-                onVerify(token);
-              },
-              'error-callback': () => {
-                console.error('[Turnstile] Error callback triggered - likely invalid site key or domain mismatch');
-                // Error - check site key/domain
-                onError?.();
-              },
-              'expired-callback': () => {
-                console.log('[Turnstile] Token expired');
-                // Expired
-                onExpire?.();
-              },
-              theme,
-              size
-            });
-            
-            console.log('[Turnstile] Widget rendered with ID:', widgetId);
-            // Widget rendered
-          } catch (error) {
-            console.error('[Turnstile] Error rendering widget:', error);
-            // Render error
-            onError?.();
-          }
-        } else {
-          if (!window.turnstile) {
-            console.log(`[Turnstile] Attempt ${attempts}: window.turnstile not yet available`);
-          }
-          if (!containerRef.current) {
-            console.log(`[Turnstile] Attempt ${attempts}: container ref not available`);
-          }
-        }
-      }, 100);
-
-      // Stop checking after 5 seconds
-      setTimeout(() => {
-        if (attempts > 0) {
-          console.error('[Turnstile] Timeout after 5 seconds and', attempts, 'attempts');
-          // Timeout
-          clearInterval(checkInterval);
-          onError?.();
-        }
-      }, 5000);
-    };
-
-    loadScript();
-
-    // Cleanup
-    return () => {
-      if (widgetId && typeof window !== 'undefined' && window.turnstile?.remove) {
+    // Give the script time to load
+    const timeout = setTimeout(() => {
+      if (window.turnstile && containerRef.current) {
         try {
-          window.turnstile.remove(widgetId);
-          console.log('[Turnstile] Widget cleaned up');
-        } catch (e) {
-          console.error('[Turnstile] Cleanup error:', e);
+          window.turnstile.render(containerRef.current, {
+            sitekey: siteKey,
+            callback: onVerify,
+            'error-callback': onError,
+            'expired-callback': onExpire,
+            theme,
+            size
+          });
+        } catch (error) {
+          console.error('Turnstile render error:', error);
         }
       }
-    };
-  }, [mounted, siteKey, onVerify, onError, onExpire, theme, size]);
+    }, 1000);
 
-  if (!mounted) {
-    return <div className="h-[65px]" />;
-  }
+    return () => clearTimeout(timeout);
+  }, [siteKey, onVerify, onError, onExpire, theme, size]);
 
   return (
-    <div>
+    <>
+      <Script 
+        src="https://challenges.cloudflare.com/turnstile/v0/api.js" 
+        strategy="afterInteractive"
+      />
       <div ref={containerRef} />
-    </div>
+    </>
   );
 };
 
