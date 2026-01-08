@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import Script from 'next/script';
+import { memo, useEffect, useRef } from 'react';
 
 interface TurnstileProps {
   siteKey: string;
@@ -18,10 +17,12 @@ declare global {
       render: (element: HTMLElement, options: Record<string, unknown>) => string;
       remove: (widgetId: string) => void;
     };
+    onloadTurnstileCallback?: () => void;
   }
 }
 
-const CloudflareTurnstile = ({
+// Memoize to prevent re-renders
+const CloudflareTurnstile = memo(({
   siteKey,
   onVerify,
   onError,
@@ -31,57 +32,54 @@ const CloudflareTurnstile = ({
 }: TurnstileProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
-  const [scriptLoaded, setScriptLoaded] = useState(false);
+  const renderedRef = useRef(false);
 
   useEffect(() => {
-    if (!scriptLoaded || !containerRef.current || widgetIdRef.current) return;
-
-    try {
-      // Only render once
-      widgetIdRef.current = window.turnstile.render(containerRef.current, {
-        sitekey: siteKey,
-        callback: (token: string) => {
-          console.log('Turnstile verified');
-          onVerify(token);
-        },
-        'error-callback': () => {
-          console.error('Turnstile error');
-          onError?.();
-        },
-        'expired-callback': () => {
-          console.log('Turnstile expired');
-          onExpire?.();
-        },
-        theme,
-        size
-      });
-    } catch (error) {
-      console.error('Turnstile render error:', error);
-    }
-
-    // Cleanup
-    return () => {
-      if (widgetIdRef.current && window.turnstile) {
-        try {
-          window.turnstile.remove(widgetIdRef.current);
-          widgetIdRef.current = null;
-        } catch (e) {
-          // Ignore
-        }
+    // Only run once
+    if (renderedRef.current) return;
+    
+    const renderWidget = () => {
+      if (!containerRef.current || widgetIdRef.current) return;
+      
+      try {
+        widgetIdRef.current = window.turnstile.render(containerRef.current, {
+          sitekey: siteKey,
+          callback: onVerify,
+          'error-callback': onError,
+          'expired-callback': onExpire,
+          theme,
+          size
+        });
+        renderedRef.current = true;
+      } catch (error) {
+        console.error('Turnstile render error:', error);
       }
     };
-  }, [scriptLoaded, siteKey, onVerify, onError, onExpire, theme, size]);
 
-  return (
-    <>
-      <Script 
-        src="https://challenges.cloudflare.com/turnstile/v0/api.js" 
-        strategy="afterInteractive"
-        onLoad={() => setScriptLoaded(true)}
-      />
-      <div ref={containerRef} />
-    </>
-  );
-};
+    // Check if script is already loaded
+    if (window.turnstile) {
+      renderWidget();
+    } else {
+      // Load script if not present
+      if (!document.querySelector('script[src*="challenges.cloudflare.com/turnstile"]')) {
+        window.onloadTurnstileCallback = renderWidget;
+        const script = document.createElement('script');
+        script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback';
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+      }
+    }
+
+    // No cleanup - let the widget persist
+  }, []); // Empty deps - only run once
+
+  return <div ref={containerRef} />;
+}, 
+// Custom comparison - never re-render
+() => true
+);
+
+CloudflareTurnstile.displayName = 'CloudflareTurnstile';
 
 export default CloudflareTurnstile;
