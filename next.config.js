@@ -3,7 +3,7 @@
 const path = require('path');
 
 const nextConfig = {
-  turbo: false, // Disable Turbopack to use webpack with Next.js 16
+  turbopack: {}, // Empty turbopack config to silence error
   reactStrictMode: false, // Disabled to prevent Turnstile double-mounting
   
   env: {
