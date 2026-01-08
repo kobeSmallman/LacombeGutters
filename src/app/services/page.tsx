@@ -248,9 +248,9 @@ export default function ServicesPage() {
             {servicesData.map((service: Service) => (
               <div 
                 key={service.slug}
-                className="group bg-white/80 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-amber-100"
+                className="group bg-white/80 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-amber-100 flex flex-col h-full"
               >
-                <div className="relative h-64 overflow-hidden">
+                <div className="relative h-64 overflow-hidden flex-shrink-0">
                   <Image 
                     src={service.hero} 
                     alt={service.name}
@@ -263,12 +263,12 @@ export default function ServicesPage() {
                   </h3>
                 </div>
                 
-                <div className="p-6">
+                <div className="p-6 flex flex-col flex-grow">
                   <p className="text-gray-700 mb-4">
                     {service.excerpt}
                   </p>
                   
-                  <div className="space-y-3 mb-6">
+                  <div className="space-y-3 mb-6 flex-grow">
                     <h4 className="font-semibold text-gray-800">Features:</h4>
                     <ul className="space-y-2">
                       {service.features.map((feature: string, i: number) => (
@@ -282,7 +282,7 @@ export default function ServicesPage() {
                     </ul>
                   </div>
                   
-                  <div className="pt-4 mt-auto space-y-3">
+                  <div className="pt-4 space-y-3">
                     {/* Learn More Button */}
                     <Link 
                       href={`/services/${service.slug}`}
