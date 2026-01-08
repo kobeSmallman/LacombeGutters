@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Script from 'next/script';
 
 interface TurnstileProps {
@@ -30,36 +30,54 @@ const CloudflareTurnstile = ({
   size = 'normal'
 }: TurnstileProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const widgetIdRef = useRef<string | null>(null);
+  const [scriptLoaded, setScriptLoaded] = useState(false);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!scriptLoaded || !containerRef.current || widgetIdRef.current) return;
 
-    // Give the script time to load
-    const timeout = setTimeout(() => {
-      if (window.turnstile && containerRef.current) {
+    try {
+      // Only render once
+      widgetIdRef.current = window.turnstile.render(containerRef.current, {
+        sitekey: siteKey,
+        callback: (token: string) => {
+          console.log('Turnstile verified');
+          onVerify(token);
+        },
+        'error-callback': () => {
+          console.error('Turnstile error');
+          onError?.();
+        },
+        'expired-callback': () => {
+          console.log('Turnstile expired');
+          onExpire?.();
+        },
+        theme,
+        size
+      });
+    } catch (error) {
+      console.error('Turnstile render error:', error);
+    }
+
+    // Cleanup
+    return () => {
+      if (widgetIdRef.current && window.turnstile) {
         try {
-          window.turnstile.render(containerRef.current, {
-            sitekey: siteKey,
-            callback: onVerify,
-            'error-callback': onError,
-            'expired-callback': onExpire,
-            theme,
-            size
-          });
-        } catch (error) {
-          console.error('Turnstile render error:', error);
+          window.turnstile.remove(widgetIdRef.current);
+          widgetIdRef.current = null;
+        } catch (e) {
+          // Ignore
         }
       }
-    }, 1000);
-
-    return () => clearTimeout(timeout);
-  }, [siteKey, onVerify, onError, onExpire, theme, size]);
+    };
+  }, [scriptLoaded, siteKey, onVerify, onError, onExpire, theme, size]);
 
   return (
     <>
       <Script 
         src="https://challenges.cloudflare.com/turnstile/v0/api.js" 
         strategy="afterInteractive"
+        onLoad={() => setScriptLoaded(true)}
       />
       <div ref={containerRef} />
     </>
