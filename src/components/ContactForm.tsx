@@ -15,7 +15,6 @@ export default function ContactForm() {
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [turnstileToken, setTurnstileToken] = useState<string>('');
-  const [turnstileKey, setTurnstileKey] = useState(0);
 
   // Function to format phone number as user types
   const formatPhoneNumber = (value: string) => {
@@ -259,7 +258,6 @@ export default function ContactForm() {
         setAttachments([]);
         setSelectedServices([]);
         setTurnstileToken('');
-        setTurnstileKey(prev => prev + 1); // Force Turnstile reset
         if (fileInputRef.current) {
           fileInputRef.current.value = '';
         }
@@ -572,7 +570,6 @@ export default function ContactForm() {
       {/* Cloudflare Turnstile */}
       <div>
         <CloudflareTurnstile
-          key={turnstileKey}
           siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAACLMknOrovBOqBYa'}
           onVerify={(token) => {
             setTurnstileToken(token);

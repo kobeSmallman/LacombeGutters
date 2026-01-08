@@ -54,7 +54,6 @@ const QuoteRequestWidget: React.FC = () => {
   const formRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [turnstileToken, setTurnstileToken] = useState<string>('');
-  const [turnstileKey, setTurnstileKey] = useState(0);
 
   // Phone number formatting function
   const formatPhoneNumber = (value: string): string => {
@@ -226,7 +225,6 @@ const QuoteRequestWidget: React.FC = () => {
         });
         setAttachments([]);
         setTurnstileToken('');
-        setTurnstileKey(prev => prev + 1); // Force Turnstile reset
         // Longer timeout to give user time to read success message
         setTimeout(() => {
           setShowSuccess(false);
@@ -252,8 +250,8 @@ const QuoteRequestWidget: React.FC = () => {
       setShowSuccess(false);
       setShowError(false);
       setErrors({});
-      // Reset Turnstile when reopening
-      setTurnstileKey(prev => prev + 1);
+      // Reset Turnstile token when reopening
+      setTurnstileToken('');
     }
   };
 
@@ -566,7 +564,6 @@ const QuoteRequestWidget: React.FC = () => {
                         {/* Cloudflare Turnstile */}
                         <div className="space-y-1">
                           <CloudflareTurnstile
-                            key={turnstileKey}
                             siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAACLMknOrovBOqBYa'}
                             onVerify={(token) => {
                               setTurnstileToken(token);
