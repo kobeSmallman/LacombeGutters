@@ -573,7 +573,7 @@ export default function ContactForm() {
       <div>
         <CloudflareTurnstile
           key={turnstileKey}
-          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAACLMknOrovBOqBYa'}
           onVerify={(token) => {
             setTurnstileToken(token);
             setValidationErrors(prev => {

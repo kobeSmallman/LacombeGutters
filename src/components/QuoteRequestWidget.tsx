@@ -567,7 +567,7 @@ const QuoteRequestWidget: React.FC = () => {
                         <div className="space-y-1">
                           <CloudflareTurnstile
                             key={turnstileKey}
-                            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+                            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAACLMknOrovBOqBYa'}
                             onVerify={(token) => {
                               setTurnstileToken(token);
                               setShowError(false);
