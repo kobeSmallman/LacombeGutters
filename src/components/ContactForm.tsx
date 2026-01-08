@@ -573,25 +573,14 @@ export default function ContactForm() {
           siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAACLMknOrovBOqBYa'}
           onVerify={(token) => {
             setTurnstileToken(token);
-            setValidationErrors(prev => {
-              const newErrors = { ...prev };
-              delete newErrors.turnstile;
-              return newErrors;
-            });
           }}
           onError={() => {
             setTurnstileToken('');
-            setValidationErrors(prev => ({
-              ...prev,
-              turnstile: 'Security verification failed. Please try again.'
-            }));
+            console.error('Turnstile verification failed');
           }}
           onExpire={() => {
             setTurnstileToken('');
-            setValidationErrors(prev => ({
-              ...prev,
-              turnstile: 'Security verification expired. Please verify again.'
-            }));
+            console.log('Turnstile expired');
           }}
         />
         {validationErrors['turnstile'] && (

@@ -567,18 +567,14 @@ const QuoteRequestWidget: React.FC = () => {
                             siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAACLMknOrovBOqBYa'}
                             onVerify={(token) => {
                               setTurnstileToken(token);
-                              setShowError(false);
-                              setErrorMessage('');
                             }}
                             onError={() => {
                               setTurnstileToken('');
-                              setShowError(true);
-                              setErrorMessage('Security verification failed. Please try again.');
+                              console.error('Turnstile verification failed');
                             }}
                             onExpire={() => {
                               setTurnstileToken('');
-                              setShowError(true);
-                              setErrorMessage('Security verification expired. Please verify again.');
+                              console.log('Turnstile expired');
                             }}
                             size="compact"
                           />
