@@ -13,7 +13,10 @@ interface TurnstileProps {
 
 declare global {
   interface Window {
-    turnstile: any;
+    turnstile: {
+      render: (element: HTMLElement, options: Record<string, unknown>) => string;
+      remove: (widgetId: string) => void;
+    };
   }
 }
 
@@ -27,7 +30,6 @@ const CloudflareTurnstile = ({
 }: TurnstileProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
-  const [status, setStatus] = useState('initializing');
 
   useEffect(() => {
     setMounted(true);
@@ -38,7 +40,6 @@ const CloudflareTurnstile = ({
     if (!mounted) return;
 
     console.log('[Turnstile] Starting initialization with siteKey:', siteKey);
-    setStatus('loading script');
 
     let widgetId: string | null = null;
 
@@ -47,7 +48,7 @@ const CloudflareTurnstile = ({
       const existingScript = document.querySelector('script[src*="challenges.cloudflare.com/turnstile"]');
       if (existingScript) {
         console.log('[Turnstile] Script already exists, attempting to render');
-        setStatus('script exists, rendering');
+        // Script exists, rendering
         renderWidget();
         return;
       }
@@ -60,13 +61,13 @@ const CloudflareTurnstile = ({
       
       script.onload = () => {
         console.log('[Turnstile] Script loaded successfully');
-        setStatus('script loaded, rendering');
+        // Script loaded, rendering
         renderWidget();
       };
       
       script.onerror = (error) => {
         console.error('[Turnstile] Failed to load script:', error);
-        setStatus('script load failed');
+        // Script load failed
         onError?.();
       };
       
@@ -82,7 +83,7 @@ const CloudflareTurnstile = ({
         if (typeof window !== 'undefined' && window.turnstile && containerRef.current) {
           clearInterval(checkInterval);
           console.log('[Turnstile] Window.turnstile found, rendering widget');
-          setStatus('rendering widget');
+          // Rendering widget
           
           try {
             // Check if container is empty
@@ -101,17 +102,17 @@ const CloudflareTurnstile = ({
               sitekey: siteKey,
               callback: (token: string) => {
                 console.log('[Turnstile] Success! Token received:', token.substring(0, 30) + '...');
-                setStatus('verified');
+                // Verified
                 onVerify(token);
               },
               'error-callback': () => {
                 console.error('[Turnstile] Error callback triggered - likely invalid site key or domain mismatch');
-                setStatus('error - check site key/domain');
+                // Error - check site key/domain
                 onError?.();
               },
               'expired-callback': () => {
                 console.log('[Turnstile] Token expired');
-                setStatus('expired');
+                // Expired
                 onExpire?.();
               },
               theme,
@@ -119,10 +120,10 @@ const CloudflareTurnstile = ({
             });
             
             console.log('[Turnstile] Widget rendered with ID:', widgetId);
-            setStatus('widget rendered');
+            // Widget rendered
           } catch (error) {
             console.error('[Turnstile] Error rendering widget:', error);
-            setStatus('render error');
+            // Render error
             onError?.();
           }
         } else {
@@ -139,7 +140,7 @@ const CloudflareTurnstile = ({
       setTimeout(() => {
         if (attempts > 0) {
           console.error('[Turnstile] Timeout after 5 seconds and', attempts, 'attempts');
-          setStatus('timeout');
+          // Timeout
           clearInterval(checkInterval);
           onError?.();
         }
