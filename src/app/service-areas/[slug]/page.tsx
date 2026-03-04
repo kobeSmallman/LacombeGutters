@@ -59,12 +59,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (isPriority) {
     // Custom SEO for priority cities
     return {
-      title: `${cityName} Gutter Installation & Repair | Lacombe Gutters`,
-      description: `Professional gutter installation, repair & cleaning services in ${cityName}, Alberta. Free estimates, 40+ years experience. Call (403) 598-9137 today!`,
+      title: `${cityName} Eavestrough & Gutter Services | Lacombe Gutters`,
+      description: `Expert eavestrough and gutter services in ${cityName}, Alberta — installation, cleaning & repairs. 40+ years combined experience. Free estimates, call (403) 598-9137.`,
       keywords: `${cityName} gutters, gutter installation ${cityName}, gutter repair ${cityName}, eavestrough ${cityName}, gutter cleaning ${cityName}, Alberta gutters`,
       openGraph: {
-        title: `${cityName} Gutter Services | Lacombe Gutters`,
-        description: `Expert gutter installation and repair in ${cityName}. Free estimates and professional service.`,
+        title: `${cityName} Eavestrough & Gutter Services | Lacombe Gutters`,
+        description: `Expert eavestrough and gutter services in ${cityName}. Installation, cleaning & repairs with free estimates.`,
         url: `https://www.lacombeguttersltd.com/service-areas/${slug}`,
         siteName: 'Lacombe Gutters',
         type: 'website',
@@ -73,14 +73,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             url: '/images/og-image.jpg',
             width: 1200,
             height: 630,
-            alt: `${cityName} Gutter Services`,
+            alt: `${cityName} Eavestrough & Gutter Services`,
           },
         ],
       },
       twitter: {
         card: 'summary_large_image',
-        title: `${cityName} Gutter Services | Lacombe Gutters`,
-        description: `Expert gutter installation and repair in ${cityName}. Free estimates and professional service.`,
+        title: `${cityName} Eavestrough & Gutter Services | Lacombe Gutters`,
+        description: `Expert eavestrough and gutter services in ${cityName}. Installation, cleaning & repairs with free estimates.`,
         images: ['/images/og-image.jpg'],
       },
       alternates: {
