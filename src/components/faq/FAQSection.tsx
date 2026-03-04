@@ -15,6 +15,47 @@ type FAQItemType = {
   category?: string;
 };
 
+// Synonym expansion for common gutter/eavestrough terms (Alberta/Canadian market).
+// Searching any of these terms will also match the related terms.
+const SEARCH_SYNONYMS: [string, string[]][] = [
+  ['eavestrough', ['eavestrough', 'gutter', 'trough', 'eave']],
+  ['gutter',      ['gutter', 'eavestrough', 'trough']],
+  ['eave',        ['eave', 'eavestrough', 'soffit']],
+  ['downspout',   ['downspout', 'drain']],
+  ['leaf guard',  ['gutter guard', 'leaf guard', 'alurex']],
+  ['guard',       ['guard', 'alurex']],
+  ['cleaning',    ['cleaning', 'maintenance', 'clean']],
+  ['repair',      ['repair', 'fix', 'reseal', 'leaking']],
+  ['soffit',      ['soffit', 'eave']],
+  ['fascia',      ['fascia', 'board']],
+  ['ice',         ['ice', 'ice dam', 'freeze', 'winter']],
+  ['snow',        ['snow', 'winter', 'ice']],
+];
+
+function getExpandedTerms(query: string): string[] {
+  const lower = query.toLowerCase().trim();
+  if (!lower) return [];
+  const terms = new Set<string>([lower]);
+  for (const [key, synonyms] of SEARCH_SYNONYMS) {
+    if (lower.includes(key)) {
+      synonyms.forEach(s => terms.add(s));
+      break;
+    }
+  }
+  return Array.from(terms);
+}
+
+function getRelevanceScore(q: FAQItemType, terms: string[]): number {
+  let score = 0;
+  const questionLower = q.question.toLowerCase();
+  const answerLower = q.answer.toLowerCase();
+  for (const term of terms) {
+    if (questionLower.includes(term)) score += 3;
+    if (answerLower.includes(term)) score += 1;
+  }
+  return score;
+}
+
 type FAQSectionProps = {
   category: string;
   questions: FAQItemType[];
@@ -46,20 +87,23 @@ export default function FAQSection({ category, questions, icon, collapsible = fa
     return () => window.removeEventListener('resize', checkIfMobile);
   }, []);
   
-  // Filter questions based on search query
+  // Filter questions based on search query with synonym expansion and relevance ranking
   useEffect(() => {
     if (!searchQuery) {
       setFilteredQuestions(questions);
       return;
     }
-    
-    const filtered = questions.filter(
-      q => 
-        q.question.toLowerCase().includes(searchQuery.toLowerCase()) || 
-        q.answer.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+
+    const terms = getExpandedTerms(searchQuery);
+    const filtered = questions
+      .filter(q => terms.some(term =>
+        q.question.toLowerCase().includes(term) ||
+        q.answer.toLowerCase().includes(term)
+      ))
+      .sort((a, b) => getRelevanceScore(b, terms) - getRelevanceScore(a, terms));
+
     setFilteredQuestions(filtered);
-    
+
     // Auto-expand when search is active
     if (filtered.length > 0) {
       setIsExpanded(true);
