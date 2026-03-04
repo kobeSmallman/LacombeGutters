@@ -87,7 +87,7 @@ const WinterServicesSection = () => {
   })) : [];
 
   return (
-    <section className="relative py-24 md:py-32 overflow-hidden bg-gradient-to-b from-blue-800 to-slate-800 text-white min-h-[90vh] flex items-center winter-section">
+    <section className="relative py-24 md:py-32 overflow-hidden bg-gradient-to-b from-blue-800 to-gray-900 text-white min-h-[90vh] flex items-center winter-section">
       {/* Snow animation background - clipped to section bounds */}
       {mounted && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">

@@ -36,7 +36,7 @@ export default function Home() {
             duration={1.5}
             delay={0.2}
           >
-            <div className="relative text-center md:text-left pt-8 md:pt-0 h-[650px] md:h-[525px]">
+            <div className="relative text-center md:text-left pt-8 md:pt-0 min-h-[75vh] md:min-h-[60vh]">
               <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
                 {/* Logo - Hidden on mobile, shown on md and up */}
                 <div className="hidden md:block relative">
@@ -110,10 +110,10 @@ export default function Home() {
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center mt-12">
               {[
-                { value: '40+', label: 'Years of Combined Experience', className: 'h-32' },
-                { value: '3,000+', label: 'Completed Projects', className: 'h-32' },
-                { value: '4.8★', label: 'Customer Rating', className: 'h-32' },
-                { value: 'Free', label: 'Estimates', className: 'h-32' }
+                { value: '40+', label: 'Years of Combined Experience', className: 'min-h-[8rem]' },
+                { value: '3,000+', label: 'Completed Projects', className: 'min-h-[8rem]' },
+                { value: '4.8★', label: 'Customer Rating', className: 'min-h-[8rem]' },
+                { value: 'Free', label: 'Estimates', className: 'min-h-[8rem]' }
               ].map((item, index) => (
                 <AnimateOnScroll 
                   key={index} 
@@ -174,7 +174,7 @@ export default function Home() {
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" style={{gridAutoRows: '1fr'}}>
             {/* 5" Eavestrough */}
             <AnimateOnScroll type="zoomIn" delay={0.2} className="h-full">
-              <div className="group h-full flex flex-col bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 border border-gray-100" style={{minHeight: '648px'}}>
+              <div className="group h-full flex flex-col bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 border border-gray-100">
                 {/* Card Top Decoration */}
                 <div className="h-1.5 bg-gradient-to-r from-blue-600 to-blue-700"></div>
                 
@@ -252,7 +252,7 @@ export default function Home() {
             
             {/* 6" Oversized Gutters */}
             <AnimateOnScroll type="zoomIn" delay={0.3} className="h-full">
-              <div className="group h-full flex flex-col bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 border border-gray-100" style={{minHeight: '648px'}}>
+              <div className="group h-full flex flex-col bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 border border-gray-100">
                 {/* Card Top Decoration */}
                 <div className="h-1.5 bg-gradient-to-r from-blue-600 to-blue-700"></div>
                 
@@ -330,7 +330,7 @@ export default function Home() {
             
             {/* Soffit & Fascia */}
             <AnimateOnScroll type="zoomIn" delay={0.4} className="h-full">
-              <div className="group h-full flex flex-col bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 border border-gray-100" style={{minHeight: '648px'}}>
+              <div className="group h-full flex flex-col bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 border border-gray-100">
                 {/* Card Top Decoration */}
                 <div className="h-1.5 bg-gradient-to-r from-blue-600 to-blue-700"></div>
                 
@@ -408,7 +408,7 @@ export default function Home() {
             
             {/* Alurex Continuous Hanger */}
             <AnimateOnScroll type="zoomIn" delay={0.5} className="h-full">
-              <div className="group h-full flex flex-col bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 border border-gray-100" style={{minHeight: '648px'}}>
+              <div className="group h-full flex flex-col bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 border border-gray-100">
                 {/* Card Top Decoration */}
                 <div className="h-1.5 bg-gradient-to-r from-blue-600 to-blue-700"></div>
                 
@@ -555,6 +555,9 @@ export default function Home() {
 
       {/* CTA Section with Rain */}
       <section className="py-24 md:py-32 relative overflow-hidden bg-gradient-to-b from-gray-900 to-blue-900 text-white min-h-[90vh] flex items-center justify-center">
+        {/* Gradient bridge from Winter section */}
+        <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-gray-900 to-transparent z-[1]"></div>
+
         {/* Rain Effect - Full viewport */}
         <div className="absolute inset-0 z-0">
           <RainEffect />
