@@ -27,7 +27,7 @@ export default function Home() {
         />
         
         {/* Simple overlay for text readability */}
-        <div className="absolute inset-0 bg-black/30"></div>
+        <div className="absolute inset-0 bg-black/50"></div>
         
         <div className="container mx-auto px-4 relative z-10">
           <AnimateOnScroll 
@@ -84,12 +84,12 @@ export default function Home() {
                 <AnimateOnScroll type="fadeIn" duration={1.5} delay={1.3}>
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 justify-center md:justify-start md:mt-16 md:ml-[132px]">
                     <Link href="/contact" className="group w-full sm:w-auto">
-                      <Button className="w-full sm:w-auto bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 text-white !px-4 sm:!px-8 !py-2 sm:!py-4 !text-sm sm:!text-lg font-semibold transition-all duration-300 transform hover:scale-105" style={{fontSize: '0.875rem', padding: '0.4rem 0.75rem'}}>
+                      <Button size="lg" className="w-full sm:w-auto bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 text-white font-semibold transition-all duration-300 transform hover:scale-105">
                         GET A FREE ESTIMATE
                       </Button>
                     </Link>
                     <Link href="/services" className="group w-full sm:w-auto">
-                      <Button variant="outline" className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 !px-4 sm:!px-8 !py-2 sm:!py-4 !text-sm sm:!text-lg font-semibold transition-all duration-300 transform hover:scale-105" style={{fontSize: '0.875rem', padding: '0.4rem 0.75rem'}}>
+                      <Button variant="outline" size="lg" className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 font-semibold transition-all duration-300 transform hover:scale-105">
                         VIEW OUR SERVICES
                       </Button>
                     </Link>

@@ -1,3 +1,7 @@
+/* Custom section backgrounds */
+@import "../styles/testimonials-bg.css";
+@import "../styles/cta-bg.css";
+
 /* tailwind directives - these are valid Tailwind CSS directives */
 /* stylelint-disable-next-line */
 @tailwind base;
@@ -80,10 +84,6 @@
   from { background-position: 0 0; }
   to { background-position: 280px 160px; }
 }
-
-/* Custom section backgrounds */
-@import "../styles/testimonials-bg.css";
-@import "../styles/cta-bg.css";
 
 :root {
   --foreground-rgb: 28, 28, 28;
@@ -544,7 +544,7 @@ a:hover, button:hover {
   
   /* Improve touch targets */
   button, a.btn-construction, .nav-link {
-    min-height: 42px;
+    min-height: 44px;
   }
   
   /* Make service cards more visible */

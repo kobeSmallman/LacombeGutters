@@ -292,7 +292,7 @@ export default function ServiceAreaPageContent({ location, isPriority }: Props) 
             sizes="100vw"
           />
           {/* Light overlay for mobile */}
-          <div className="absolute inset-0 bg-black/30"></div>
+          <div className="absolute inset-0 bg-black/50"></div>
         </div>
         
         {/* Back Button Only on Mobile */}

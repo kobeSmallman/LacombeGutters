@@ -54,7 +54,7 @@ export default function Header() {
           
           {/* Mobile menu button */}
           <button 
-            className="lg:hidden p-2 rounded-md text-gray-700 hover:text-primary focus:outline-none"
+            className="lg:hidden p-2.5 rounded-md text-gray-700 hover:text-primary focus:outline-none"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           >

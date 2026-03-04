@@ -292,30 +292,28 @@ export default function ContactForm() {
       />
       
       {/* Preferred Contact Method - Moved to top */}
-      <div className="mb-6" style={{ overflow: 'visible', paddingLeft: '12px' }}>
+      <div className="mb-6 pl-3">
         <h3 className="font-bold text-lg mb-3">Preferred Contact Method *</h3>
-        <div className="flex gap-6" style={{ paddingLeft: '0px', overflow: 'visible', minWidth: '100%' }}>
-          <label className="flex items-center text-sm" style={{ paddingLeft: '4px' }}>
+        <div className="flex gap-4">
+          <label className="flex items-center text-sm p-3 min-h-[44px] rounded hover:bg-gray-50 cursor-pointer">
             <input
               type="radio"
               name="contactMethod"
               value="email"
               checked={contactMethod === 'email'}
               onChange={() => setContactMethod('email')}
-              className="mr-3 scale-125"
-              style={{ marginLeft: '0px', marginRight: '12px', transform: 'translateX(8px)' }}
+              className="h-5 w-5 mr-3"
             />
             Email
           </label>
-          <label className="flex items-center text-sm" style={{ paddingLeft: '4px' }}>
+          <label className="flex items-center text-sm p-3 min-h-[44px] rounded hover:bg-gray-50 cursor-pointer">
             <input
               type="radio"
               name="contactMethod"
               value="sms"
               checked={contactMethod === 'sms'}
               onChange={() => setContactMethod('sms')}
-              className="mr-3 scale-125"
-              style={{ marginLeft: '0px', marginRight: '12px', transform: 'translateX(8px)' }}
+              className="h-5 w-5 mr-3"
             />
             Text Message/SMS
           </label>
@@ -409,72 +407,72 @@ export default function ContactForm() {
         </label>
         
         <div className={`grid grid-cols-1 sm:grid-cols-2 gap-2 ${validationErrors['services'] ? 'border border-red-500 bg-red-50 p-2 rounded-md' : ''}`} data-error={!!validationErrors['services']}>
-          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-            <input 
-              type="checkbox" 
-              name="services" 
-              value="5-inch-gutters" 
-              className="h-4 w-4 text-primary"
+          <label className="flex items-center space-x-3 p-3 min-h-[44px] cursor-pointer border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+            <input
+              type="checkbox"
+              name="services"
+              value="5-inch-gutters"
+              className="h-5 w-5 text-primary"
               checked={selectedServices.includes('5-inch-gutters')}
               onChange={(e) => handleServiceChange('5-inch-gutters', e.target.checked)}
             />
             <span className="text-black dark:text-white">5-Inch Gutters</span>
           </label>
-          
-          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-            <input 
-              type="checkbox" 
-              name="services" 
-              value="6-inch-gutters" 
-              className="h-4 w-4 text-primary"
+
+          <label className="flex items-center space-x-3 p-3 min-h-[44px] cursor-pointer border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+            <input
+              type="checkbox"
+              name="services"
+              value="6-inch-gutters"
+              className="h-5 w-5 text-primary"
               checked={selectedServices.includes('6-inch-gutters')}
               onChange={(e) => handleServiceChange('6-inch-gutters', e.target.checked)}
             />
             <span className="text-black dark:text-white">6-Inch Gutters</span>
           </label>
-          
-          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-            <input 
-              type="checkbox" 
-              name="services" 
-              value="soffit-fascia" 
-              className="h-4 w-4 text-primary"
+
+          <label className="flex items-center space-x-3 p-3 min-h-[44px] cursor-pointer border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+            <input
+              type="checkbox"
+              name="services"
+              value="soffit-fascia"
+              className="h-5 w-5 text-primary"
               checked={selectedServices.includes('soffit-fascia')}
               onChange={(e) => handleServiceChange('soffit-fascia', e.target.checked)}
             />
             <span className="text-black dark:text-white">Soffit & Fascia</span>
           </label>
-          
-          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-            <input 
-              type="checkbox" 
-              name="services" 
-              value="downspouts" 
-              className="h-4 w-4 text-primary"
+
+          <label className="flex items-center space-x-3 p-3 min-h-[44px] cursor-pointer border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+            <input
+              type="checkbox"
+              name="services"
+              value="downspouts"
+              className="h-5 w-5 text-primary"
               checked={selectedServices.includes('downspouts')}
               onChange={(e) => handleServiceChange('downspouts', e.target.checked)}
             />
             <span className="text-black dark:text-white">Downspouts</span>
           </label>
-          
-          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-            <input 
-              type="checkbox" 
-              name="services" 
-              value="gutter-cleaning" 
-              className="h-4 w-4 text-primary"
+
+          <label className="flex items-center space-x-3 p-3 min-h-[44px] cursor-pointer border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+            <input
+              type="checkbox"
+              name="services"
+              value="gutter-cleaning"
+              className="h-5 w-5 text-primary"
               checked={selectedServices.includes('gutter-cleaning')}
               onChange={(e) => handleServiceChange('gutter-cleaning', e.target.checked)}
             />
             <span className="text-black dark:text-white">Gutter Cleaning</span>
           </label>
-          
-          <label className="flex items-center space-x-2 p-2 border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-            <input 
-              type="checkbox" 
-              name="services" 
-              value="other" 
-              className="h-4 w-4 text-primary"
+
+          <label className="flex items-center space-x-3 p-3 min-h-[44px] cursor-pointer border border-gray-200 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+            <input
+              type="checkbox"
+              name="services"
+              value="other"
+              className="h-5 w-5 text-primary"
               checked={selectedServices.includes('other')}
               onChange={(e) => handleServiceChange('other', e.target.checked)}
             />
