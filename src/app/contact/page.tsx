@@ -6,7 +6,6 @@ import {
   SERVICE_AREA_BOUNDS
 } from "@/lib/constants";
 import ContactForm from "@/components/ContactForm";
-import JobApplicationForm from "@/components/JobApplicationForm";
 
 export const metadata = {
   title: "Contact Lacombe Gutters | Free Estimate & Inquiries",
@@ -83,10 +82,10 @@ export default function ContactPage() {
         <div className="container mx-auto px-4 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold font-heading mb-4" style={{color: "black"}}>Contact Us</h1>
+          <h2 className="text-4xl font-bold font-heading mb-4" style={{color: "black"}}>Get Started Today</h2>
           <div className="w-24 h-2 bg-amber-400 mx-auto mb-6 rounded-full"></div>
           <p className="text-lg max-w-2xl mx-auto" style={{color: "black"}}>
-            Get in touch with our team for expert advice and free estimates on all your gutter needs.
+            Fill out the form or give us a call for a free, no-obligation estimate.
           </p>
         </div>
         
@@ -166,43 +165,14 @@ export default function ContactPage() {
           </div>
         </div>
         
-        {/* Careers/Job Application Section */}
-        <div className="bg-gradient-to-br from-secondary to-secondary/80 p-8 rounded-lg shadow-lg mb-12 relative border border-amber-300 overflow-hidden">
-          {/* Construction screws in corners */}
-          <div className="screw-corner screw-top-left"></div>
-          <div className="screw-corner screw-top-right"></div>
-          <div className="screw-corner screw-bottom-left"></div>
-          <div className="screw-corner screw-bottom-right"></div>
-          
-          {/* Metal strips at top and bottom */}
-          <div className="absolute top-0 left-0 w-full h-1 bg-gray-700"></div>
-          <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-700"></div>
-          
-          <div className="text-center mb-8 relative z-10">
-            <h2 className="text-3xl font-bold font-heading mb-4" style={{color: "#215e7d"}}>Join Our Team</h2>
-            <div className="w-24 h-1.5 bg-white/80 mx-auto mb-5 rounded-full"></div>
-            <p className="text-xl max-w-3xl mx-auto" style={{color: "#215e7d"}}>
-              Looking to work with a professional team in the gutter and eavestrough industry? 
-              We&apos;re always looking for skilled, motivated individuals to join our crew.
-            </p>
-          </div>
-          
-
-          
-          {/* Metal construction texture overlay */}
-          <div 
-            className="absolute inset-0 opacity-5 pointer-events-none" 
-            style={{
-              backgroundImage: 'repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 1px, transparent 10px)',
-              backgroundSize: '12px 12px',
-              mixBlendMode: 'multiply'
-            }}
-          ></div>
-          
-          <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-inner border border-gray-100 dark:border-gray-700">
-            <h3 className="text-2xl font-bold mb-6" style={{color: "black"}}>Apply Now</h3>
-            <JobApplicationForm />
-          </div>
+        {/* Careers Link */}
+        <div className="text-center mb-12">
+          <p className="text-gray-600">
+            Looking for a job?{' '}
+            <a href="/careers" className="text-primary hover:underline font-medium">
+              View open positions and apply here
+            </a>.
+          </p>
         </div>
         </div>
       </div>

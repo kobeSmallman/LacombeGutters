@@ -15,13 +15,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   // Priority service area cities that get custom content and higher SEO priority
+  // Note: spruce-grove and st-albert were demoted to noindex (too far from service area)
   const priorityServiceAreas = [
     'edmonton',
     'red-deer',
-    'lacombe', 
+    'lacombe',
     'blackfalds',
-    'st-albert',
-    'spruce-grove',
     'airdrie',
     'leduc',
     'calgary',

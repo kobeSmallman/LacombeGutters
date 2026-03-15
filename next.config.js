@@ -11,7 +11,6 @@ const nextConfig = {
   },
 
   images: {
-    unoptimized: true,
     domains: ['maps.googleapis.com', 'picsum.photos'],
   },
 
