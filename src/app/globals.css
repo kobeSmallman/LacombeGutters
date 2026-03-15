@@ -57,19 +57,19 @@
 }
 
 .wave-animation-slow {
-  animation: waveMove 120s linear infinite;
+  animation: waveMove 120s linear 3;
   animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: left center;
 }
 
 .wave-animation-medium {
-  animation: waveMove 80s linear infinite reverse;
+  animation: waveMove 80s linear 3 reverse;
   animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: left center;
 }
 
 .wave-animation-fast {
-  animation: waveMove 40s linear infinite;
+  animation: waveMove 40s linear 3;
   animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: left center;
 }
@@ -237,7 +237,7 @@ a:hover, button:hover {
 .bg-nodes-lg {
   background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,.12) 2px, transparent 3px);
   background-size: 64px 64px;
-  animation: node-drift 90s linear infinite;
+  animation: node-drift 90s linear 3;
 }
 
 /* Day mode metal blue with nodes */
@@ -264,7 +264,7 @@ a:hover, button:hover {
     /* Nodes */
     radial-gradient(circle at 2px 2px, rgba(255,255,255,.25) 1.5px, transparent 2.5px);
   background-size: 100% 100%, 20px 20px, 64px 64px;
-  animation: node-drift 90s linear infinite, metal-shine 10s linear infinite;
+  animation: node-drift 90s linear 3, metal-shine 10s linear 3;
   box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.3);
 }
 
@@ -277,7 +277,7 @@ a:hover, button:hover {
 .bg-mesh {
   background: url('/images/textures/hex-mesh.svg') repeat;
   background-size: 140px 80px;
-  animation: mesh-pan 120s linear infinite;
+  animation: mesh-pan 120s linear 3;
 }
 
 /* Readability veil (dark-to-transparent gradient) */
