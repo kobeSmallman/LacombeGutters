@@ -205,6 +205,27 @@ const CUSTOM_CONTENT: Record<string, {
       { question: "Do you match competitor quotes?", answer: "Show us a recent written quote with comparable specs and we'll do our best to match or beat it." },
     ],
   },
+  'wetaskiwin': {
+    hero: "Wetaskiwin Eavestrough & Gutter Services",
+    subtitle: "Reliable Gutter Solutions for Wetaskiwin Homes and Businesses",
+    description: "Wetaskiwin's established neighbourhoods and surrounding rural properties need gutter systems that handle Central Alberta's weather extremes. From heritage homes along the downtown corridor to newer builds on the city's edges, we deliver proper drainage solutions that protect your investment.",
+    problemsTitle: "What Wetaskiwin Homeowners Deal With",
+    problems: [
+      "Wetaskiwin sits in a transition zone between Edmonton's urban sprawl and open farmland — wind exposure is significant, and wind-driven rain can bypass poorly sized gutters entirely.",
+      "Many homes in established areas like Willowbrook and the downtown core have original gutter systems well past their service life — sagging, leaking at seams, and pulling away from deteriorating fascia.",
+      "Heavy spring snowmelt from surrounding agricultural land increases moisture levels around foundations. Without proper downspout routing, water pools against basement walls and causes long-term damage.",
+      "Cottonwood and poplar are common throughout Wetaskiwin — the seed and leaf debris clogs gutters fast, especially in fall. Without gutter guards or regular cleaning, blockages lead to overflow and fascia rot."
+    ],
+    services: ['5-inch', '6-inch', 'gutter-cleaning', 'soffit-fascia', 'downspouts', 'industrial'],
+    neighborhoods: ["Downtown Wetaskiwin", "Willowbrook", "West Wetaskiwin", "Powers area", "Parkdale", "Heritage Estates", "South Wetaskiwin", "Wetaskiwin County"],
+    faqs: [
+      { question: "How far is Wetaskiwin from your shop?", answer: "Wetaskiwin is within our standard service range — no distance surcharges. We serve Wetaskiwin regularly and can typically schedule estimates within a few business days." },
+      { question: "Do you work on older homes in Wetaskiwin?", answer: "Yes. We inspect fascia condition before every install. If rot or damage is present, we replace the affected sections before mounting new gutters." },
+      { question: "What's the best time of year to replace gutters?", answer: "Spring through fall offers the best conditions for sealant curing. We install year-round when weather permits, but avoid days below -20°C." },
+      { question: "Can you add gutter guards to my existing system?", answer: "In most cases, yes — Alu-Rex gutter guards can be retrofitted to existing 5\" and 6\" eavestrough. We'll assess compatibility during your free estimate." },
+      { question: "Do you offer free estimates in Wetaskiwin?", answer: "Absolutely. No trip fees, no obligation. Call 403-598-9137 or use any Free Estimate button on our site." },
+    ],
+  },
 };
 
 export default function ServiceAreaPageContent({ location, isPriority }: Props) {
@@ -224,7 +245,7 @@ export default function ServiceAreaPageContent({ location, isPriority }: Props) 
       </div>
 
       {/* === SECTION 1: Hero + Trust Bar === */}
-      <section className="relative py-16 md:py-28 lg:py-32 overflow-hidden">
+      <section className="relative py-12 sm:py-16 md:py-28 lg:py-32 overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src={getCityImageUrl(location.slug)}
@@ -239,15 +260,15 @@ export default function ServiceAreaPageContent({ location, isPriority }: Props) 
         <div className="relative z-10 container mx-auto px-4">
           <AnimateOnScroll type="slideLeft" duration={1.5} delay={0.2}>
             <div className="max-w-4xl">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-heading text-white mb-6 leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold font-heading text-white mb-4 sm:mb-6 leading-tight">
                 {customContent?.hero || `${cityName} Gutter Services`}
               </h1>
               {customContent?.subtitle && (
-                <p className="text-xl md:text-2xl text-secondary font-semibold mb-8">
+                <p className="text-base sm:text-xl md:text-2xl text-secondary font-semibold mb-6 sm:mb-8">
                   {customContent.subtitle}
                 </p>
               )}
-              <div className="flex flex-col sm:flex-row gap-4 mb-12 md:mb-16">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-12 md:mb-16">
                 <Link href="/contact" className="group">
                   <Button size="lg" className="w-full sm:w-auto bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 text-white font-semibold transition-all duration-300 transform hover:scale-105">
                     GET A FREE ESTIMATE
@@ -265,16 +286,16 @@ export default function ServiceAreaPageContent({ location, isPriority }: Props) 
 
           {/* Trust indicators — integrated into hero */}
           <AnimateOnScroll type="fadeIn" delay={0.6}>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
               {[
                 { icon: Award, value: '40+', label: 'Years Combined Experience' },
                 { icon: Shield, value: '✓', label: 'Fully Insured & WCB' },
                 { icon: CheckCircle, value: '5yr', label: 'Workmanship Warranty' },
                 { icon: Clock, value: 'Free', label: 'Estimates' },
               ].map((item, index) => (
-                <div key={index} className="bg-white/10 backdrop-blur-sm p-4 rounded-xl border border-white/10 text-center transition-all duration-300 hover:bg-white/20 hover:border-secondary/50">
-                  <div className="text-2xl font-bold text-secondary mb-1 font-heading">{item.value}</div>
-                  <div className="text-xs font-medium text-gray-200 uppercase tracking-wider">{item.label}</div>
+                <div key={index} className="bg-white/10 backdrop-blur-sm p-3 sm:p-4 rounded-xl border border-white/10 text-center transition-all duration-300 hover:bg-white/20 hover:border-secondary/50">
+                  <div className="text-xl sm:text-2xl font-bold text-secondary mb-1 font-heading">{item.value}</div>
+                  <div className="text-[10px] sm:text-xs font-medium text-gray-200 uppercase tracking-wider">{item.label}</div>
                 </div>
               ))}
             </div>

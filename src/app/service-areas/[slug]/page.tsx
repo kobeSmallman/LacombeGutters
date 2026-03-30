@@ -65,6 +65,10 @@ const CITY_META: Record<string, { title: string; description: string }> = {
     title: "Camrose Gutter Installation, Cleaning & Repair | Lacombe Gutters",
     description: "Upgrading aging gutter systems and maintaining established Camrose homes. Assessment, replacement, and cleaning services. Free estimates available.",
   },
+  'wetaskiwin': {
+    title: "Wetaskiwin Eavestrough & Gutter Services — Installation, Cleaning & Repair | Lacombe Gutters",
+    description: "Professional eavestrough and gutter services in Wetaskiwin, Alberta. Installation, cleaning, repair, and gutter guards for homes and businesses. Free estimates — call (403) 598-9137.",
+  },
 };
 
 interface Props {

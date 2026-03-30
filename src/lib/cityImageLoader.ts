@@ -10,7 +10,7 @@ export const getCityImageUrl = (slug: string): string => {
     'st-albert': '/images/ServiceAreaImages/St_Albert_Alberta.jpg',
     'spruce-grove': '/images/ServiceAreaImages/Spruce_Grove.jpg',
     'leduc': '/images/gallery/Downspout.png',
-    'wetaskiwin': '/images/ServiceAreaImages/Wetaskwin.jpg',
+    'wetaskiwin': '/images/ServiceAreaImages/Wetaskiwin.jpg',
     'airdrie': '/images/ServiceAreaImages/Airdrie.jpg',
     'calgary': '/images/ServiceAreaImages/Calgary.jpg',
     'blackfalds': '/images/ServiceAreaImages/Blackfalds.JPG',
