@@ -97,11 +97,15 @@ export default function ContactForm() {
       errors['name'] = 'Name is too long (maximum 100 characters)';
     }
     
-    // Check phone - ensure it has at least 10 digits
+    // Check phone - required for SMS, optional for email
     const phone = formData.get('phone') as string;
-    if (!phone || phone.trim() === '') {
-      errors['phone'] = 'Please enter your phone number';
-    } else if (phone.replace(/\D/g, '').length < 10) {
+    if (contactMethod === 'sms') {
+      if (!phone || phone.trim() === '') {
+        errors['phone'] = 'Please enter your phone number';
+      } else if (phone.replace(/\D/g, '').length < 10) {
+        errors['phone'] = 'Please enter a valid phone number with at least 10 digits';
+      }
+    } else if (phone && phone.trim() !== '' && phone.replace(/\D/g, '').length < 10) {
       errors['phone'] = 'Please enter a valid phone number with at least 10 digits';
     }
     

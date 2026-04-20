@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, AlertCircle, Upload, X } from "lucide-react";
+import CloudflareTurnstile from './CloudflareTurnstile';
 
 type JobFormData = {
   name: string;
@@ -20,6 +21,7 @@ export default function JobApplicationForm() {
   const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
   const [attachments, setAttachments] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string>('');
 
   const [formData, setFormData] = useState<JobFormData>({
     name: '',
@@ -92,7 +94,11 @@ export default function JobApplicationForm() {
     }
     
     // Experience is now optional - no validation needed
-    
+
+    if (!turnstileToken) {
+      errors['turnstile'] = 'Please complete the security verification';
+    }
+
     setValidationErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -157,7 +163,8 @@ export default function JobApplicationForm() {
         apiFormData.append(key, value);
       });
       apiFormData.append('source', 'job-application');
-      
+      apiFormData.append('turnstile-token', turnstileToken);
+
       // Add attachments
       attachments.forEach(file => {
         apiFormData.append('attachments', file);
@@ -421,9 +428,21 @@ export default function JobApplicationForm() {
               </div>
             </div>
             
-            <Button 
-              type="submit" 
-              className="w-full bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-600 hover:to-blue-500 text-white font-bold" 
+            <div className="mb-4">
+              <CloudflareTurnstile
+                siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAACLMknOrovBOqBYa'}
+                onVerify={(token) => setTurnstileToken(token)}
+                onError={() => setTurnstileToken('')}
+                onExpire={() => setTurnstileToken('')}
+              />
+              {validationErrors['turnstile'] && (
+                <p className="mt-1 text-sm text-red-600">{validationErrors['turnstile']}</p>
+              )}
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-600 hover:to-blue-500 text-white font-bold"
               disabled={isSubmitting}
             >
               {isSubmitting ? 'Sending...' : 'Submit Application'}

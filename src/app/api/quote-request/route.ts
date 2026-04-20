@@ -1,40 +1,50 @@
 import { NextResponse } from 'next/server';
+import { sendEmail, sendClientConfirmation, ContactRequest } from '@/lib/contactNotifications';
 
 export const runtime = 'nodejs';
 
-// This endpoint is deprecated - redirect to unified contact API
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    
-    // Transform the request to match the new contact API format
-    const contactRequest = {
-      ...body,
+
+    const data: ContactRequest = {
+      name: body.name || '',
+      email: body.email || '',
+      phone: body.phone || '',
+      city: body.city || '',
+      services: body.services || [],
+      message: body.message || '',
       source: 'quote-widget',
-      contactMethod: 'email', // Default for backward compatibility
+      contactMethod: 'email',
     };
 
-    // Forward to the unified contact API
-    const contactResponse = await fetch(new URL('/api/contact', request.url), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        // Forward relevant headers
-        ...(request.headers.get('x-forwarded-for') && {
-          'x-forwarded-for': request.headers.get('x-forwarded-for')!,
-        }),
-        ...(request.headers.get('x-real-ip') && {
-          'x-real-ip': request.headers.get('x-real-ip')!,
-        }),
-      },
-      body: JSON.stringify(contactRequest),
-    });
+    // Basic validation
+    if (!data.name?.trim()) {
+      return NextResponse.json({ success: false, message: 'Name is required.' }, { status: 400 });
+    }
+    if (!data.email?.trim()) {
+      return NextResponse.json({ success: false, message: 'Email is required.' }, { status: 400 });
+    }
+    if (!data.phone?.trim()) {
+      return NextResponse.json({ success: false, message: 'Phone is required.' }, { status: 400 });
+    }
+    if (!data.services?.length) {
+      return NextResponse.json({ success: false, message: 'At least one service must be selected.' }, { status: 400 });
+    }
 
-    const result = await contactResponse.json();
-    return NextResponse.json(result, { status: contactResponse.status });
+    // Send business email — fail the request if this fails
+    await sendEmail(data);
+
+    // Client confirmation — non-critical
+    await Promise.allSettled([sendClientConfirmation(data)]);
+
+    return NextResponse.json(
+      { success: true, message: "Thank you! We've received your quote request and will be in touch shortly." },
+      { status: 200 }
+    );
 
   } catch (error) {
-    console.error('Quote request forwarding error:', error);
+    console.error('Quote request error:', error);
     return NextResponse.json(
       { success: false, message: 'Failed to process quote request.' },
       { status: 500 }
