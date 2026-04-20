@@ -38,7 +38,7 @@ interface LocalBusinessSchema {
  */
 export function buildLocalBusinessSchema(location?: LocationData): LocalBusinessSchema {
   const baseUrl = process.env.NODE_ENV === 'production' 
-    ? 'https://www.lacombegutters.com' 
+    ? 'https://www.lacombeguttersltd.com'
     : 'http://localhost:3000';
 
   const schema: LocalBusinessSchema = {

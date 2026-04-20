@@ -126,7 +126,7 @@ export default function LocalBusinessSchema({
       })),
       'hasOfferCatalog': {
         '@type': 'OfferCatalog',
-        'name': 'Gutter Services',
+        'name': 'Eavestrough & Gutter Services',
         'itemListElement': SERVICES.map(service => ({
           '@type': 'Offer',
           'itemOffered': {

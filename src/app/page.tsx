@@ -183,7 +183,7 @@ export default function Home() {
                   <div className="relative aspect-video overflow-hidden">
                     <Image 
                       src="/images/gallery/residential_backyard_view.png" 
-                      alt="5-inch Conventional Gutters" 
+                      alt="5-inch eavestrough and gutter installation Alberta"
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
                       sizes="(max-width: 768px) 100vw, 50vw"
@@ -261,7 +261,7 @@ export default function Home() {
                   <div className="relative aspect-video overflow-hidden">
                     <Image 
                       src="/images/gallery/06_ladders_on_building.png" 
-                      alt="6-inch Oversized Gutters" 
+                      alt="6-inch oversized eavestrough Alberta"
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
                       sizes="(max-width: 768px) 100vw, 50vw"

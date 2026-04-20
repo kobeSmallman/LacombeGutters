@@ -7,12 +7,12 @@ import Link from 'next/link';
 const services = [
   {
     slug: '5-inch-gutters',
-    name: '5" Gutters',
-    excerpt: 'Standard residential gutters for most homes with excellent water flow capacity.',
-    description: 'Our 5-inch gutter systems are the perfect solution for most residential properties in Central Alberta. Made from high-quality aluminum and steel materials with professional installation, these gutters provide reliable water management year-round.',
+    name: '5-Inch Gutters & Eavestrough',
+    excerpt: 'Standard 5-inch residential eavestrough and gutters for most Alberta homes with excellent water flow capacity.',
+    description: 'Our 5-inch eavestrough systems are the most common residential choice across Central Alberta. In Alberta, 5-inch eavestroughs are wide enough to handle spring snowmelt runoff while fitting cleanly beneath most standard rooflines. Made from high-quality aluminum and steel with professional seamless installation, these systems provide reliable water management year-round.',
     features: [
       'Available in aluminum and steel',
-      'Ideal for typical residential applications', 
+      'Standard eavestrough size for Alberta residential homes',
       '5-inch K-style profile',
       'Seamless installation',
       'Multiple color options available',
@@ -22,19 +22,19 @@ const services = [
     benefits: [
       'Protects your foundation from water damage',
       'Prevents basement flooding',
-      'Maintains proper drainage around your home',
+      'Handles Alberta spring snowmelt runoff',
       'Long-lasting construction',
       'Cost-effective solution for most homes'
     ]
   },
   {
     slug: '6-inch-gutters',
-    name: '6" Gutters',
-    excerpt: 'Heavy-duty gutters for properties with large roof areas or heavy rainfall.',
-    description: 'Our 6-inch gutter systems are designed for properties that need extra water handling capacity. Perfect for large homes, steep roofs, commercial properties, or areas that experience heavy rainfall.',
+    name: '6-Inch Oversized Eavestrough',
+    excerpt: 'Heavy-duty 6-inch eavestrough for properties with large roof areas or heavy Alberta rainfall.',
+    description: 'Our 6-inch oversized eavestrough systems are built for properties that need extra water handling capacity. If your home has a large roof pitch, a steep metal roof, or you\'ve had eavestrough overflow problems during Alberta\'s spring runoff season, upgrading to 6-inch is often the right call. Perfect for large homes, steep roofs, and commercial properties.',
     features: [
-      'Handles 40% more water than 5" gutters',
-      'Ideal for steep roofs',
+      'Handles 40% more water than 5" eavestroughs',
+      'Ideal for steep roofs and large roof areas',
       'Commercial-grade durability',
       'Reduced cleaning frequency',
       'Superior water flow capacity',
@@ -43,7 +43,7 @@ const services = [
     hero: '/images/gallery/snowyField.png',
     benefits: [
       'Superior water management for large properties',
-      'Reduced overflow during heavy rainfall',
+      'Reduced overflow during Alberta spring runoff',
       'Less frequent maintenance required',
       'Perfect for commercial and large residential properties',
       'Enhanced durability for harsh weather conditions'
@@ -51,9 +51,9 @@ const services = [
   },
   {
     slug: 'soffit-fascia',
-    name: 'Soffit & Fascia',
+    name: 'Soffit & Fascia Installation',
     excerpt: 'Complete roofline solutions that protect and enhance your home\'s exterior.',
-    description: 'Soffit and fascia are crucial components of your home\'s roofline system. They provide essential ventilation, protection from pests, and aesthetic appeal while working seamlessly with your eavestrough system.',
+    description: 'Soffit and fascia are crucial components of your home\'s roofline system. They provide essential ventilation, protection from pests, and aesthetic appeal while working seamlessly with your eavestrough system. Fascia board condition directly affects how well your eavestrough mounts and seals — we inspect and replace rotted fascia as part of any full eavestrough installation.',
     features: [
       'Improved ventilation',
       'Pest protection',
@@ -73,9 +73,9 @@ const services = [
   },
   {
     slug: 'gutter-cleaning',
-    name: 'Gutter Cleaning',
-    excerpt: 'Professional cleaning to prevent water damage and extend gutter life.',
-    description: 'Regular professional gutter cleaning is essential for maintaining proper water flow and preventing costly damage to your property. Our comprehensive cleaning service keeps your gutters functioning optimally year-round.',
+    name: 'Eavestrough & Gutter Cleaning',
+    excerpt: 'Professional eavestrough and gutter cleaning to prevent water damage and extend system life.',
+    description: 'Regular professional eavestrough and gutter cleaning is essential for maintaining proper water flow across Central Alberta. Alberta\'s cottonwood season, pine needles, and late-fall leaf drop make eavestrough cleaning essential at least once a year — twice if you have overhanging trees. Our comprehensive cleaning service keeps your system functioning optimally year-round.',
     features: [
       'Debris removal',
       'Downspout flushing',
@@ -87,7 +87,7 @@ const services = [
     hero: '/images/gallery/filledGutter.png',
     benefits: [
       'Prevents water damage to your foundation',
-      'Extends the life of your gutter system',
+      'Extends the life of your eavestrough system',
       'Maintains proper water flow and drainage',
       'Identifies potential issues before they become costly',
       'Keeps your property looking professional'
@@ -95,16 +95,16 @@ const services = [
   },
   {
     slug: 'downspouts',
-    name: 'Downspouts',
-    excerpt: 'Proper water drainage solutions to protect your foundation.',
-    description: 'Downspouts are critical for directing water away from your foundation and preventing water damage. Our custom downspout solutions ensure proper drainage and foundation protection for your property.',
+    name: 'Downspout Installation & Repair',
+    excerpt: 'Downspout installation, extensions, and repairs to direct water away from your foundation.',
+    description: 'A properly sized and positioned downspout is what actually moves water away from your foundation — the eavestrough collects it, the downspout directs it. We install round and rectangular downspouts, custom extensions, and underground tie-ins for properties where surface runoff is a concern. Most Alberta homes need at least one downspout per run of eavestrough.',
     features: [
-      'Custom sizing',
-      'Multiple material options',
-      'Foundation protection',
-      'Custom extensions available',
-      'Professional installation',
-      'Seamless integration with gutter systems'
+      'Custom round and rectangular sizing',
+      'Underground drainage tie-ins',
+      'Custom extensions across driveways or garden beds',
+      'Frozen downspout repair',
+      'Foundation protection planning',
+      'Seamless integration with eavestrough systems'
     ],
     hero: '/images/gallery/Downspout.png',
     benefits: [

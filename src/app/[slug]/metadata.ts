@@ -8,11 +8,11 @@ export async function generateMetadata({ params: { slug } }: { params: { slug: s
     .join(' ');
 
   return {
-    title: `Gutter Services in ${cityName} | Lacombe Gutters`,
-    description: `Professional gutter installation and repair services in ${cityName}, Alberta`,
+    title: `${cityName} Eavestrough & Gutter Services | Lacombe Gutters`,
+    description: `Professional eavestrough and gutter installation, cleaning, and repair in ${cityName}, Alberta. Free estimates.`,
     openGraph: {
-      title: `Gutter Services in ${cityName} | Lacombe Gutters`,
-      description: `Professional gutter installation and repair services in ${cityName}, Alberta`,
+      title: `${cityName} Eavestrough & Gutter Services | Lacombe Gutters`,
+      description: `Professional eavestrough and gutter installation, cleaning, and repair in ${cityName}, Alberta. Free estimates.`,
       type: 'website',
       locale: 'en_CA',
       siteName: 'Lacombe Gutters',

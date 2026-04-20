@@ -492,6 +492,69 @@ export const FAQConfig = {
       "answer": "Click Prepare Email, fill in the short form, and we'll respond within one business day.",
       "needsEmail": true,
       "category": "Miscellaneous"
+    },
+
+    /* ---------- 92‑102 : Eavestrough Terminology & Information ---------- */
+    { "id": 92,
+      "question": "What is the difference between an eavestrough and a gutter?",
+      "answer": "They're the same thing. \"Eavestrough\" is the standard Canadian term, \"gutter\" is more common in the US. Both refer to the channel installed along your roofline that collects and redirects rainwater and snowmelt away from your foundation.",
+      "category": "Eavestrough Terminology & Information"
+    },
+    { "id": 93,
+      "question": "Do you install eavestroughs?",
+      "answer": "Yes — eavestrough installation is our core service. We install 5-inch and 6-inch seamless aluminum eavestroughs across Central Alberta for residential and commercial properties.",
+      "category": "Eavestrough Terminology & Information"
+    },
+    { "id": 94,
+      "question": "What is eavestroughing?",
+      "answer": "Eavestroughing refers to the installation or servicing of the eavestrough system on a building — the channel, hangers, end caps, and downspouts that collect water off your roof and direct it away from your foundation.",
+      "category": "Eavestrough Terminology & Information"
+    },
+    { "id": 95,
+      "question": "How long does eavestrough installation take?",
+      "answer": "It depends on the size of your home, the number of corners, roofline complexity, and weather on the day. Most installations are completed within a day. Larger homes, properties requiring fascia work first, or jobs with challenging access may take longer. We'll give you a realistic timeframe when we come out for your free estimate.",
+      "category": "Eavestrough Terminology & Information"
+    },
+    { "id": 96,
+      "question": "How much does eavestrough installation cost in Alberta?",
+      "answer": "Every home is different, so the best way to get a ballpark is to send us a few photos of your roofline along with a basic description of what you're looking for — you can do that through the quote widget on the site or reach us through the contact page. We can usually give you a rough idea from there. Keep in mind it's an estimate, not a final quote, but it's a good starting point before we come out.",
+      "needsEmail": true,
+      "category": "Eavestrough Terminology & Information"
+    },
+    { "id": 97,
+      "question": "Can you replace just a section of eavestrough?",
+      "answer": "Yes, section replacement is possible when damage is isolated. That said, we often recommend replacing the full run rather than a section alone — partial replacements can result in colour or profile mismatches, and if one section has failed, neighbouring sections are frequently close behind. We'll assess your system and give you an honest recommendation.",
+      "category": "Eavestrough Terminology & Information"
+    },
+    { "id": 98,
+      "question": "How often should I clean my eavestroughs in Central Alberta?",
+      "answer": "At minimum, once a year — typically in late fall after leaves have dropped. If you have overhanging trees, especially cottonwood or poplar which are common across Central Alberta, twice a year is worth considering. A clogged eavestrough in winter causes ice backup that can damage your roofline.",
+      "category": "Eavestrough Terminology & Information"
+    },
+    { "id": 99,
+      "question": "What happens if I don't clean my eavestroughs?",
+      "answer": "Blocked eavestroughs overflow, pushing water against your fascia boards, soffits, and eventually your foundation. In winter, standing water in a clogged eavestrough freezes, expands, and can lift shingles, damage the roofline, and create ice dams that are expensive to fix.",
+      "category": "Eavestrough Terminology & Information"
+    },
+    { "id": 100,
+      "question": "What causes eavestroughs to pull away from the house?",
+      "answer": "Usually failed or corroded spike-and-ferrule hangers — the old-style fasteners that were common for decades. Over time the spikes work loose from the fascia, especially under snow load. We replace them with modern hidden hanger systems screwed directly into the fascia, which hold significantly better. In some cases the fascia board itself has rotted and needs replacement before the eavestrough can be properly remounted.",
+      "category": "Eavestrough Terminology & Information"
+    },
+    { "id": 101,
+      "question": "How are eavestroughs attached to the house?",
+      "answer": "We use hidden hanger systems screwed into the fascia board at regular intervals. This replaced the older spike-and-ferrule method and holds considerably better under Alberta snow and ice loads. The fascia board underneath needs to be in solid condition for a secure mount — we check this as part of every installation.",
+      "category": "Eavestrough Terminology & Information"
+    },
+    { "id": 102,
+      "question": "What eavestrough sizes do you offer?",
+      "answer": "We install standard 5-inch and 6-inch seamless aluminum eavestroughs. Five-inch is the most common residential size. Six-inch is recommended for larger roofs, steeper pitches, or properties that have experienced overflow issues. We can advise which is right for your home during the free estimate.",
+      "category": "Eavestrough Terminology & Information"
+    },
+    { "id": 103,
+      "question": "What colour eavestroughs can I get?",
+      "answer": "We carry more than 30 baked-enamel colours in both aluminum and steel — we bring physical swatches to every estimate so you can see them in natural light against your home. If you have something specific in mind, a paint chip or colour code helps. We can usually match or get close to whatever you're looking for.",
+      "category": "Eavestrough Terminology & Information"
     }
   ],
 

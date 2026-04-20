@@ -20,11 +20,11 @@ interface Service {
 const servicesData: Service[] = [
   {
     slug: '5-inch-gutters',
-    name: '5\" Gutters',
-    excerpt: 'Standard residential gutters for most homes with excellent water flow capacity.',
+    name: '5\" Gutters & Eavestrough',
+    excerpt: 'Standard 5-inch residential eavestrough and gutters for most Alberta homes with excellent water flow capacity.',
     features: [
       'Available in aluminum and steel',
-      'Ideal for typical residential applications',
+      'Standard eavestrough size for Alberta residential homes',
       '5-inch K-style profile',
       'Seamless installation'
     ],
@@ -32,11 +32,11 @@ const servicesData: Service[] = [
   },
   {
     slug: '6-inch-gutters',
-    name: '6\" Gutters',
-    excerpt: 'Heavy-duty gutters for properties with large roof areas or heavy rainfall.',
+    name: '6\" Oversized Eavestrough',
+    excerpt: 'Heavy-duty 6-inch eavestrough for properties with large roof areas or heavy Alberta rainfall.',
     features: [
-      'Handles 40% more water than 5" gutters',
-      'Ideal for steep roofs',
+      'Handles 40% more water than 5" eavestroughs',
+      'Ideal for steep roofs and large roof areas',
       'Commercial-grade durability',
       'Reduced cleaning frequency'
     ],
@@ -56,8 +56,8 @@ const servicesData: Service[] = [
   },
   {
     slug: 'gutter-cleaning',
-    name: 'Gutter Cleaning',
-    excerpt: 'Professional cleaning to prevent water damage and extend gutter life.',
+    name: 'Eavestrough & Gutter Cleaning',
+    excerpt: 'Professional eavestrough and gutter cleaning to prevent water damage and extend system life.',
     features: [
       'Debris removal',
       'Downspout flushing',
@@ -72,12 +72,12 @@ const servicesData: Service[] = [
   {
     slug: 'downspouts',
     name: 'Downspouts',
-    excerpt: 'Proper water drainage solutions to protect your foundation.',
+    excerpt: 'Downspout installation, extensions, and repairs to direct water away from your foundation.',
     features: [
-      'Custom sizing',
-      'Multiple material options',
-      'Foundation protection',
-      'Custom extensions available'
+      'Custom round and rectangular sizing',
+      'Underground drainage tie-ins',
+      'Custom extensions across driveways or garden beds',
+      'Foundation protection planning'
     ],
     hero: '/images/gallery/Downspout.png'
   },

@@ -60,7 +60,7 @@ const CityPageTemplate: React.FC<CityPageTemplateProps> = ({
           <div className="screw-corner screw-bottom-right"></div>
           <div className="relative z-10">
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
-              Professional Gutter Services in {city}, {province}
+              Professional Eavestrough & Gutter Services in {city}, Alberta
             </h1>
             <div className="prose lg:prose-xl max-w-4xl text-gray-800">
               {introParagraph}
@@ -123,34 +123,34 @@ const CityPageTemplate: React.FC<CityPageTemplateProps> = ({
                 OUR SERVICES
               </div>
               <h2 className="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-white">
-                Gutter Services in {city}
+                Eavestrough & Gutter Services in {city}
               </h2>
-              
+
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[
                   {
-                    title: 'Seamless Gutter Installation',
-                    description: 'Custom-fit, seamless gutters designed specifically for your home.'
+                    title: 'Seamless Eavestrough & Gutter Installation',
+                    description: 'Custom-fabricated on-site — seamless runs cut to the exact length of your roofline.'
                   },
                   {
-                    title: 'Gutter Cleaning & Maintenance',
-                    description: 'Keep your gutters flowing freely with our professional cleaning services.'
+                    title: 'Eavestrough Cleaning & Maintenance',
+                    description: 'Keep your eavestroughs and gutters flowing freely with professional cleaning.'
                   },
                   {
-                    title: 'Downspout Solutions',
-                    description: 'Properly directed downspouts to protect your foundation.'
+                    title: 'Downspout Installation & Extensions',
+                    description: 'Properly directed downspouts and custom extensions to protect your foundation.'
                   },
                   {
                     title: 'Soffit & Fascia Work',
                     description: 'Complete protection for your roofline with quality materials.'
                   },
                   {
-                    title: 'Seasonal Inspections',
+                    title: 'Seasonal Inspections & Ice Dam Removal',
                     description: 'Preventative maintenance to catch issues before they become problems.'
                   },
                   {
-                    title: 'Emergency Repairs',
-                    description: '24/7 service for urgent gutter issues that can\'t wait.'
+                    title: 'Emergency Eavestrough Repairs',
+                    description: 'Urgent eavestrough and gutter repairs when issues can\'t wait.'
                   }
                 ].map((service, index) => (
                   <div key={index} className="relative bg-gray-100/80 dark:bg-gray-700/80 rounded-xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg transition-all transform hover:-translate-y-1 group overflow-hidden">
@@ -167,7 +167,27 @@ const CityPageTemplate: React.FC<CityPageTemplateProps> = ({
         </section>
 
         <MetalStrip className="my-12" />
-        
+
+        {/* Eavestrough Section */}
+        <section className="mb-16 relative">
+          <div className="container mx-auto px-4">
+            <div className="relative bg-white dark:bg-gray-800/80 rounded-2xl shadow-xl p-8 border border-gray-200 dark:border-gray-700">
+              <div className="screw-corner screw-top-left"></div>
+              <div className="screw-corner screw-top-right"></div>
+              <div className="screw-corner screw-bottom-left"></div>
+              <div className="screw-corner screw-bottom-right"></div>
+              <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
+                Eavestrough Installation & Cleaning in {city}
+              </h2>
+              <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                Our {city} eavestrough installations are custom-fabricated on-site — seamless runs cut to the exact length of your roofline. Whether you need a full eavestrough replacement, a section repair, or a seasonal cleaning to clear Alberta debris, our crew serves {city} and the surrounding area.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <MetalStrip className="my-12" />
+
         {/* Commitment Section */}
         <section className="mb-16 relative">
           <div className="container mx-auto px-4">

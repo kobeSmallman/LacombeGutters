@@ -31,10 +31,13 @@ export const SERVICE_AREA_BOUNDS = {
 };
 
 export const SERVICES = [
-  "5\" and 6\" Gutters (aluminum & steel)",
+  "Eavestrough Installation",
+  "Eavestroughing",
+  "5-inch Eavestrough & Gutters",
+  "6-inch Oversized Eavestrough",
+  "Eavestrough Cleaning",
   "Downspouts",
   "Soffit & Fascia",
-  "Gutter Cleaning",
   "Industrial-scale Eavestrough",
   "Alurex Continuous Hanger Systems",
   "Gutter Guard Installation",
