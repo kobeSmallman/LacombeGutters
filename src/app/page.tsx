@@ -1,11 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Phone } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
-import RainEffect from "@/components/ui/rain-effect";
 import WinterServicesSection from "@/components/WinterServicesSection";
+import HomepageCTA from "@/components/HomepageCTA";
 
 import "@/styles/rain-bg.css";
 import "./mobile-styles.css";
@@ -29,72 +28,67 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/50"></div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <AnimateOnScroll 
-            type="slideLeft" 
-            className="max-w-6xl relative"
+          <AnimateOnScroll
+            type="slideLeft"
+            className="max-w-6xl"
             duration={1.5}
             delay={0.2}
           >
-            <div className="relative text-center md:text-left pt-8 md:pt-0 min-h-[75vh] md:min-h-[60vh]">
+            <div className="flex flex-col items-center md:items-start text-center md:text-left gap-6 sm:gap-8 md:gap-10">
+              {/* Title row: logo + heading */}
               <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-                {/* Logo - Hidden on mobile, shown on md and up */}
-                <div className="hidden md:block relative">
-                  <Image 
-                    src="/images/logos/logo.png" 
-                    alt="Lacombe Gutters Logo" 
+                {/* Logo — desktop only */}
+                <div className="hidden md:block shrink-0">
+                  <Image
+                    src="/images/logos/logo.png"
+                    alt="Lacombe Gutters Logo"
                     width={100}
                     height={100}
-                    className="rounded-lg shadow-xl border-4 border-white/20 mt  -2"
+                    className="rounded-lg shadow-xl border-4 border-white/20"
                   />
                 </div>
-                
-                {/* Title with description below on desktop */}
-                <div className="relative">
-                  <h1 className="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight mb-2 sm:mb-4">
-                    <AnimateOnScroll type="fadeIn" duration={1.5} delay={0.4} className="block">
-                      <span className="homepage-heading">Expert Eavestrough</span>
-                    </AnimateOnScroll>
-                    <AnimateOnScroll type="fadeIn" duration={1.5} delay={0.7}>
-                      <span className="text-secondary homepage-heading-solutions">Solutions</span>
-                    </AnimateOnScroll>
-                  </h1>
-                  {/* Description - Only visible on desktop */}
-                  <div className="hidden md:block mt-8">
-                    <AnimateOnScroll type="fadeIn" duration={1.5} delay={1.0}>
-                      <p className="text-2xl lg:text-3xl text-gray-200 max-w-3xl leading-relaxed">
-                        Professional installation, maintenance, and repair services with <span className="font-bold text-white">40+ years</span> of combined expertise
-                      </p>
-                    </AnimateOnScroll>
-                  </div>
+
+                {/* Title */}
+                <h1 className="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight">
+                  <AnimateOnScroll type="fadeIn" duration={1.5} delay={0.4} className="block">
+                    <span className="homepage-heading">Expert Eavestrough</span>
+                  </AnimateOnScroll>
+                  <AnimateOnScroll type="fadeIn" duration={1.5} delay={0.7}>
+                    <span className="text-secondary homepage-heading-solutions">Solutions</span>
+                  </AnimateOnScroll>
+                </h1>
+              </div>
+
+              {/* Description — single element, adapts to all sizes */}
+              <AnimateOnScroll type="fadeIn" duration={1.5} delay={1.0} className="w-full md:w-auto">
+                <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-200 max-w-3xl leading-relaxed mx-auto md:mx-0">
+                  Seamless eavestrough installs, gutter repairs, and soffit &amp; fascia work — backed by{' '}
+                  <span className="font-bold text-white">40+ years</span> of combined experience across Central Alberta.
+                </p>
+              </AnimateOnScroll>
+
+              {/* Buttons — natural flow, no absolute positioning */}
+              <AnimateOnScroll type="fadeIn" duration={1.5} delay={1.3} className="w-full md:w-auto">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 w-full md:w-auto">
+                  <Link href="/contact" className="group w-full sm:w-auto">
+                    <Button
+                      size="lg"
+                      className="w-full sm:w-auto bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 text-white font-semibold transition-all duration-300 transform hover:scale-105"
+                    >
+                      GET A FREE ESTIMATE
+                    </Button>
+                  </Link>
+                  <Link href="/services" className="group w-full sm:w-auto">
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 font-semibold transition-all duration-300 transform hover:scale-105"
+                    >
+                      VIEW OUR SERVICES
+                    </Button>
+                  </Link>
                 </div>
-              </div>
-              
-              {/* Description text - ONLY visible on mobile devices */}
-              <div className="absolute md:hidden" style={{top: '180px'}}>
-                <AnimateOnScroll type="fadeIn" duration={1.5} delay={1.0}>
-                  <p className="text-xl sm:text-2xl text-center text-gray-200 max-w-3xl mx-auto px-4 sm:px-6 leading-relaxed">
-                    Professional installation, maintenance, and repair services with <span className="font-bold text-white">40+ years</span> of combined expertise
-                  </p>
-                </AnimateOnScroll>
-              </div>
-              
-              {/* Buttons - Position low for mobile, with more space on desktop */}
-              <div className="absolute w-full" style={{bottom: '50px'}}>
-                <AnimateOnScroll type="fadeIn" duration={1.5} delay={1.3}>
-                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 justify-center md:justify-start md:mt-16 md:ml-[132px]">
-                    <Link href="/contact" className="group w-full sm:w-auto">
-                      <Button size="lg" className="w-full sm:w-auto bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 text-white font-semibold transition-all duration-300 transform hover:scale-105">
-                        GET A FREE ESTIMATE
-                      </Button>
-                    </Link>
-                    <Link href="/services" className="group w-full sm:w-auto">
-                      <Button variant="outline" size="lg" className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 font-semibold transition-all duration-300 transform hover:scale-105">
-                        VIEW OUR SERVICES
-                      </Button>
-                    </Link>
-                  </div>
-                </AnimateOnScroll>
-              </div>
+              </AnimateOnScroll>
             </div>
           </AnimateOnScroll>
         </div>
@@ -112,10 +106,10 @@ export default function Home() {
               <span className="h-1 w-12 bg-secondary ml-3" />
             </div>
             <h2 className="text-4xl md:text-5xl font-bold font-heading mb-4 text-primary">
-              Built on 40+ Years of Trust
+              Lacombe&apos;s Eavestrough &amp; Gutter Experts
             </h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-              The numbers behind Central Alberta&apos;s go-to eavestrough team.
+              Family-run and locally trusted — 40+ years of seamless eavestrough installs and gutter repairs across Central Alberta.
             </p>
           </AnimateOnScroll>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
@@ -157,10 +151,10 @@ export default function Home() {
               <span className="h-1 w-12 bg-secondary ml-3"></span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold font-heading mb-4 text-primary">
-              Expert Eavestrough Solutions
+              Eavestrough Installation &amp; Gutter Services
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-4">
-              Professional installation, maintenance, and repair services with 40+ years of combined expertise
+              Seamless eavestrough and gutter installation, soffit &amp; fascia, downspouts, and Alu-Rex protection — all backed by 40+ years of combined experience.
             </p>
             <div className="flex justify-center items-center mt-2 mb-6">
               <Link href="/gallery" className="group inline-flex items-center text-primary hover:text-secondary transition-colors bg-primary/5 hover:bg-primary/10 px-5 py-2 rounded-full">
@@ -557,69 +551,8 @@ export default function Home() {
       {/* Winter Services Section */}
       <WinterServicesSection />
 
-      {/* CTA Section with Rain */}
-      <section className="py-24 md:py-32 relative overflow-hidden bg-gradient-to-b from-gray-900 to-blue-900 text-white min-h-[90vh] flex items-center justify-center">
-        {/* Gradient bridge from Winter section */}
-        <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-gray-900 to-transparent z-[1]"></div>
-
-        {/* Rain Effect - Full viewport */}
-        <div className="absolute inset-0 z-0">
-          <RainEffect />
-        </div>
-        
-        {/* Back Panel with subtle shadow */}
-        <div className="absolute inset-0 flex items-center justify-center z-10">
-          <div className="relative w-full max-w-5xl mx-auto">
-            <div className="absolute inset-0 mx-4 rounded-xl" style={{
-              boxShadow: '0 0 0 100vmax rgba(0,0,0,0.5)',
-              clipPath: 'inset(0 0 0 0 round 1rem)',
-              pointerEvents: 'none'
-            }}></div>
-          </div>
-        </div>
-        
-        {/* Content Container - Glass Pane */}
-        <div className="container mx-auto px-4 relative z-20 py-16">
-          <AnimateOnScroll type="fadeIn" delay={0.2} className="text-center">
-            <div className="relative max-w-4xl mx-auto bg-white/20 backdrop-blur-sm rounded-xl border-2 border-white/30 shadow-lg overflow-hidden">
-              {/* Glass overlay effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-white/5" style={{
-                backdropFilter: 'blur(4px)',
-                WebkitBackdropFilter: 'blur(4px)'
-              }}></div>
-              
-              {/* Background fallback for iOS devices */}
-              <div className="absolute inset-0 bg-primary opacity-80"></div>
-              
-              {/* Content */}
-              <div className="relative z-10 p-8 lg:p-12">
-                <h3 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight" style={{color: "#ffffff !important"}}>
-                  Professional Gutter Protection
-                </h3>
-                <p className="text-xl md:text-2xl text-gray-100 mb-6 max-w-3xl mx-auto leading-relaxed" style={{color: "#ffffff !important"}}>
-                  Keep your home safe from water damage with our expert gutter solutions. Our team&apos;s 40+ years of combined experience means your home gets the best protection against the elements.
-                </p>
-                <p className="text-lg text-white font-medium mb-8" style={{color: "#ffffff !important"}}>
-                  Free estimates & guaranteed workmanship
-                </p>
-                <div className="flex flex-col sm:flex-row items-center justify-center w-full gap-6">
-                  <Link href="/contact" className="group w-full sm:w-auto text-center">
-                    <Button className="w-full sm:w-auto bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105">
-                      GET YOUR FREE ESTIMATE
-                    </Button>
-                  </Link>
-                  <Link href="tel:+14035989137" className="group w-full sm:w-auto">
-                    <Button variant="outline" className="w-full bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 px-8 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105">
-                      <Phone className="w-5 h-5 mr-2" />
-                      Call or Text
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </AnimateOnScroll>
-        </div>
-      </section>
+      {/* CTA Section with hover-to-sunny effect */}
+      <HomepageCTA />
     </div>
   )
 }
