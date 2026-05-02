@@ -8,7 +8,6 @@ import AlurexSchema from '@/components/alurex/AlurexSchema';
 
 
 import { ALUREX_SEO_KEYWORDS } from '@/lib/constants';
-import '@/styles/cta-bg.css';
 
 export const metadata: Metadata = {
   title: 'Alurex Gutter Systems & Installation | Lacombe Gutters Ltd',

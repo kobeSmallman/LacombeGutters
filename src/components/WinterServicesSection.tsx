@@ -41,13 +41,23 @@ const Snowflake = ({ delay, duration, size, startX }: SnowflakeProps) => {
   );
 };
 
+// Show only Nov 1 → Mar 30 (Alberta winter season).
+const isWinterSeason = () => {
+  const now = new Date();
+  const m = now.getMonth();
+  const d = now.getDate();
+  return m === 10 || m === 11 || m === 0 || m === 1 || (m === 2 && d <= 30);
+};
+
 const WinterServicesSection = () => {
   const [mounted, setMounted] = useState(false);
+  const [inSeason, setInSeason] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    setInSeason(isWinterSeason());
     
     // Check initial screen size
     const checkScreenSize = () => {
@@ -85,6 +95,8 @@ const WinterServicesSection = () => {
     size: baseSize + (i % sizeVariation), // Deterministic size variation
     startX: (i * 7.3) % 100, // Deterministic starting position
   })) : [];
+
+  if (mounted && !inSeason) return null;
 
   return (
     <section className="relative py-24 md:py-32 overflow-hidden bg-gradient-to-b from-blue-800 to-gray-900 text-white min-h-[90vh] flex items-center winter-section">

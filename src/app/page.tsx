@@ -4,7 +4,6 @@ import { Phone } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import AnimateOnScroll from "@/components/ui/animate-on-scroll";
-import TestimonialsSection from "@/components/ui/testimonials-section";
 import RainEffect from "@/components/ui/rain-effect";
 import WinterServicesSection from "@/components/WinterServicesSection";
 
@@ -17,12 +16,12 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative text-white py-24 md:py-44 lg:py-52 overflow-hidden hero-section">
         {/* Background image */}
-        <Image 
-          src="/images/gallery/ModernHouse.png" 
-          alt="Professional eavestrough installation on modern house" 
+        <Image
+          src="/images/banners/Homepage.png"
+          alt="Lacombe Gutters technician installing eavestroughs on a Central Alberta home"
           fill
-          className="object-cover md:object-center object-left hero-background-truck"
-          style={{ objectPosition: '80% center' }}
+          className="object-cover md:object-center object-center hero-background-truck"
+          style={{ objectPosition: '60% center' }}
           priority
         />
         
@@ -101,49 +100,54 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials Section - Moved right after hero */}
-      <section className="cta-bg py-16 md:py-20">
+      {/* Why Choose / Stats — leads into Services as one continuous block */}
+      <section className="relative pt-16 md:pt-20 pb-10 md:pb-12 overflow-hidden bg-white bg-[url('/images/textures/paper-fiber.png')] bg-white/95 dark:bg-[#1f1f1f] dark:bg-opacity-90">
+        {/* Top border — marks the transition from hero into the Why Choose / Services block */}
+        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600"></div>
         <div className="container mx-auto px-4 relative z-10">
-          <AnimateOnScroll type="fadeIn" className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-white">
-              Why Choose Lacombe Gutters
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center mt-12">
-              {[
-                { value: '40+', label: 'Years of Combined Experience', className: 'min-h-[8rem]' },
-                { value: '3,000+', label: 'Completed Projects', className: 'min-h-[8rem]' },
-                { value: '4.8★', label: 'Customer Rating', className: 'min-h-[8rem]' },
-                { value: 'Free', label: 'Estimates', className: 'min-h-[8rem]' }
-              ].map((item, index) => (
-                <AnimateOnScroll 
-                  key={index} 
-                  type="fadeIn" 
-                  delay={0.3 + (index * 0.1)} 
-                  className="group h-full"
-                >
-                  <div className={`bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10 transition-all duration-300 hover:bg-white/20 hover:border-secondary/50 hover:-translate-y-1 hover:shadow-lg flex flex-col items-center justify-center h-full ${item.className || ''}`}>
-                    <div className="text-3xl font-bold text-secondary mb-2 group-hover:scale-110 transition-transform min-h-[2.5rem] flex items-center">
-                      {item.value}
-                    </div>
-                    <div className="text-base font-medium text-gray-200 uppercase tracking-wider text-center">
-                      {item.label}
-                    </div>
-                  </div>
-                </AnimateOnScroll>
-              ))}
+          <AnimateOnScroll type="fadeIn" className="text-center mb-10">
+            <div className="inline-flex items-center justify-center mb-4">
+              <span className="h-1 w-12 bg-secondary mr-3" />
+              <span className="text-sm font-semibold tracking-wider text-primary uppercase">Why Choose Us</span>
+              <span className="h-1 w-12 bg-secondary ml-3" />
             </div>
+            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-4 text-primary">
+              Built on 40+ Years of Trust
+            </h2>
+            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+              The numbers behind Central Alberta&apos;s go-to eavestrough team.
+            </p>
           </AnimateOnScroll>
-        </div>
-        
-        <div className="relative z-10 pt-8">
-          <TestimonialsSection />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {[
+              { value: '40+', label: 'Years of Combined Experience' },
+              { value: '3,000+', label: 'Completed Projects' },
+              { value: '4.8★', label: 'Customer Rating' },
+              { value: 'Free', label: 'Estimates' },
+            ].map((item, index) => (
+              <AnimateOnScroll
+                key={index}
+                type="fadeIn"
+                delay={0.15 + index * 0.08}
+                className="h-full"
+              >
+                <div className="relative bg-white border border-gray-200 rounded-xl px-4 py-6 md:py-8 flex flex-col items-center justify-center text-center min-h-[8rem] shadow-sm hover:shadow-lg hover:-translate-y-0.5 hover:border-yellow-500/50 transition-all duration-300">
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-600 to-yellow-400 rounded-t-xl" />
+                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
+                    {item.value}
+                  </div>
+                  <div className="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wider">
+                    {item.label}
+                  </div>
+                </div>
+              </AnimateOnScroll>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Services Section */}
-      <section className="relative pt-0 pb-20 overflow-hidden bg-white bg-[url('/images/textures/paper-fiber.png')] bg-white/95 dark:bg-[#1f1f1f] dark:bg-opacity-90">
-        {/* Top border */}
-        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600"></div>
+      <section className="relative pt-4 pb-20 overflow-hidden bg-white bg-[url('/images/textures/paper-fiber.png')] bg-white/95 dark:bg-[#1f1f1f] dark:bg-opacity-90">
         
         <div className="container mx-auto px-4 relative z-10">
           <AnimateOnScroll type="fadeIn" className="text-center mb-16">

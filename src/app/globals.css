@@ -1,7 +1,3 @@
-/* Custom section backgrounds */
-@import "../styles/testimonials-bg.css";
-@import "../styles/cta-bg.css";
-
 /* tailwind directives - these are valid Tailwind CSS directives */
 /* stylelint-disable-next-line */
 @tailwind base;
