@@ -2,13 +2,31 @@
 
 import Link from 'next/link';
 import { Phone } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import AnimateOnScroll from '@/components/ui/animate-on-scroll';
 import RainEffect from '@/components/ui/rain-effect';
 
 export default function HomepageCTA() {
   const [isSunny, setIsSunny] = useState(false);
+
+  // Touch devices can't hover — auto-cycle the sunny effect so mobile users still see it.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const hasHover = window.matchMedia('(hover: hover)').matches;
+    if (hasHover) return;
+
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    const interval = setInterval(() => {
+      setIsSunny(true);
+      timeoutId = setTimeout(() => setIsSunny(false), 3500);
+    }, 9000);
+
+    return () => {
+      clearInterval(interval);
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, []);
 
   return (
     <section className="relative py-24 md:py-32 overflow-hidden text-white min-h-[90vh] flex items-center justify-center">
@@ -32,15 +50,15 @@ export default function HomepageCTA() {
         aria-hidden="true"
       />
 
-      {/* Sun — appears when sunny, positioned beyond the glass card */}
+      {/* Sun — appears when sunny, sized down for mobile so it fits above the glass card */}
       <div
-        className={`hidden md:block absolute top-16 right-12 lg:right-24 w-32 h-32 lg:w-40 lg:h-40 rounded-full transition-all duration-[900ms] ease-out ${
+        className={`absolute top-4 right-4 md:top-16 md:right-12 lg:right-24 w-20 h-20 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full transition-all duration-[900ms] ease-out ${
           isSunny ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
         }`}
         style={{
           background: 'radial-gradient(circle, #fff8d6 0%, #ffd34a 55%, #ffb928 100%)',
           boxShadow:
-            '0 0 80px 20px rgba(255, 200, 60, 0.55), 0 0 200px 60px rgba(255, 220, 120, 0.3)',
+            '0 0 60px 16px rgba(255, 200, 60, 0.55), 0 0 160px 40px rgba(255, 220, 120, 0.3)',
         }}
         aria-hidden="true"
       />
