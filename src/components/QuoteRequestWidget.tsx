@@ -126,9 +126,10 @@ const QuoteRequestWidget: React.FC = () => {
 
     // Check Turnstile token
     if (!turnstileToken) {
-      newErrors.message = newErrors.message || 'Please complete the security verification';
+      const turnstileMsg = 'Please complete the security check above before sending. If it isn\'t loading, try disabling your ad-blocker for this site or call us at 403-598-9137.';
+      newErrors.message = newErrors.message || turnstileMsg;
       setShowError(true);
-      setErrorMessage('Please complete the security verification');
+      setErrorMessage(turnstileMsg);
       return false;
     }
 
@@ -233,12 +234,12 @@ const QuoteRequestWidget: React.FC = () => {
       } else {
         console.log('❌ Form submission failed:', result);
         setShowError(true);
-        setErrorMessage(result.error || 'Failed to send request');
+        setErrorMessage(result.message || 'We couldn\'t send your request. Please try again, or call us at 403-598-9137.');
       }
     } catch (error) {
       console.error('😱 Error submitting form:', error);
       setShowError(true);
-      setErrorMessage('Network error. Please try again.');
+      setErrorMessage('Network error — please check your connection and try again, or call us at 403-598-9137.');
     } finally {
       setIsSubmitting(false);
     }

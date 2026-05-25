@@ -1,26 +1,20 @@
 # Lacombe Gutters — Project Notes for Claude
 
-## PENDING: Email DMARC Fix (do this before anything else email-related)
+## PENDING: Flip MAIL_FROM to the authenticated domain
 
-**The problem:**
-SendGrid is sending notification emails using a Gmail address as the `MAIL_FROM`. Gmail changed their DMARC enforcement in 2024/2025 and now rejects emails where the From domain (`gmail.com`) doesn't match the authenticated sending domain (SendGrid). This causes a `4.7.32` deferral error. The site is over a year old and this worked fine until Gmail tightened enforcement — nothing in the code was broken.
+**Status as of 2026-05-24:** SendGrid domain authentication for `lacombeguttersltd.com` is already done (`em5789.lacombeguttersltd.com` shows verified — the 3 CNAMEs are already in the registrar's DNS). Link branding (`url694.lacombeguttersltd.com`) is also verified. **No DNS work remaining.**
 
-Emails may still eventually deliver (421 is a temporary deferral, SendGrid retries) but it's unreliable and will get worse over time.
+**Why this still needs to happen:**
+`MAIL_FROM` in Vercel is still pointing at a Gmail address. Gmail tightened DMARC enforcement in 2024/2025 and rejects mail where the From domain (`gmail.com`) doesn't match the authenticated sending domain (SendGrid) — causes a `4.7.32` deferral. Mail mostly still gets through on retries but it's unreliable and will get worse.
 
-**The fix (15–20 minutes, no code changes required):**
+**Remaining steps (~5 minutes, no code changes required):**
 
-1. Log into SendGrid → Settings → Sender Authentication → Domain Authentication
-2. Enter `lacombeguttersltd.com` as the domain
-3. SendGrid generates 3 CNAME records — copy them
-4. Log into wherever `lacombeguttersltd.com` DNS is managed (ask Rob — likely GoDaddy, Namecheap, or Cloudflare)
-5. Add the 3 CNAME records to the DNS provider
-6. Back in SendGrid, click Verify (may take up to 48 hours to propagate)
-7. In Vercel → Project Settings → Environment Variables, change `MAIL_FROM` from the current Gmail address to `noreply@lacombeguttersltd.com`
-8. Trigger a Vercel redeploy
+1. Vercel → Project Settings → Environment Variables → change `MAIL_FROM` from the current Gmail address to `noreply@lacombeguttersltd.com` (Production scope).
+2. Redeploy.
 
-`noreply@lacombeguttersltd.com` does not need a real inbox — it just needs to be on the authenticated domain. The receiving address (`PROD_EMAIL_TO`) stays as the Gmail address unchanged.
+That's it. `noreply@lacombeguttersltd.com` doesn't need a real inbox — it just needs to be on the SendGrid-authenticated domain so DKIM/SPF align. `PROD_EMAIL_TO` (the inbox that receives notifications) stays as the Gmail address.
 
-**Nothing in the codebase needs to change.** `MAIL_FROM` is the only thing being updated.
+**Nothing in the codebase needs to change.** `src/lib/contactNotifications.ts:49` already reads `process.env.MAIL_FROM`, and the client-confirmation fallback at `:201` already defaults to `noreply@lacombeguttersltd.com`.
 
 ---
 

@@ -269,14 +269,14 @@ export default function ContactForm() {
         console.error('API error:', result);
         setSubmitResult({
           success: false,
-          message: result.message || 'Something went wrong. Please try again or contact us directly.'
+          message: result.message || 'Something went wrong. Please try again, or call us at 403-598-9137.'
         });
       }
     } catch (error) {
       console.error('Error submitting form:', error);
       setSubmitResult({
         success: false,
-        message: 'Network error. Please try again or contact us directly.'
+        message: 'Network error — please check your connection and try again, or call us at 403-598-9137.'
       });
     } finally {
       setIsSubmitting(false);

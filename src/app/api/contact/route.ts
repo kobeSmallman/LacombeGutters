@@ -65,7 +65,7 @@ export async function POST(request: Request) {
       }
     } else if (process.env.NODE_ENV === 'production') {
       return NextResponse.json(
-        { success: false, message: 'Security verification is required.' },
+        { success: false, message: 'Security verification didn\'t load. If you use an ad-blocker or strict privacy extension, try disabling it for this site, or call us at 403-598-9137.' },
         { status: 400 }
       );
     }
@@ -142,20 +142,17 @@ export async function POST(request: Request) {
       }
     }
 
-    const suspiciousPatterns = [
-      /https?:\/\/[^\s]+/g,
-      /\b(?:viagra|cialis|loan|casino|poker|sex|xxx)\b/i,
-      /[A-Z]{10,}/,
-      /(.)\1{5,}/,
-    ];
-
     if (data.message?.trim()) {
-      for (const pattern of suspiciousPatterns) {
-        if (pattern.test(data.message.trim())) {
-          console.warn('Suspicious content detected in message');
-          errors.push('Message contains invalid content.');
-          break;
-        }
+      const messageText = data.message.trim();
+      const urlPattern = /https?:\/\/[^\s]+/i;
+      const spamKeywordPattern = /\b(?:viagra|cialis|loan|casino|poker|sex|xxx)\b/i;
+
+      if (urlPattern.test(messageText)) {
+        console.warn('URL detected in message — blocking');
+        errors.push('For security, please remove any links from your message. You can describe details in plain text, or call us at 403-598-9137.');
+      } else if (spamKeywordPattern.test(messageText)) {
+        console.warn('Spam keyword detected in message');
+        errors.push('Your message was flagged by our spam filter. If this is a genuine inquiry, please call us at 403-598-9137.');
       }
     }
 
@@ -191,7 +188,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Contact API error:', error);
     return NextResponse.json(
-      { success: false, message: 'Sorry, there was an error processing your request. Please try calling us directly.' },
+      { success: false, message: 'Sorry, something went wrong on our end while sending your request. Please try again in a moment, or call us at 403-598-9137.' },
       { status: 500 }
     );
   }
