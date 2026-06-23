@@ -8,6 +8,9 @@ import WinterServicesSection from '@/components/WinterServicesSection';
 export const metadata = {
   title: "Why Choose Us",
   description: "Discover why Lacombe Gutters is the trusted choice for eavestrough services in central Alberta, with 40+ years of combined experience, quality workmanship, and excellent customer service.",
+  alternates: {
+    canonical: 'https://www.lacombeguttersltd.com/why-us',
+  },
 };
 
 // Cloud animation component

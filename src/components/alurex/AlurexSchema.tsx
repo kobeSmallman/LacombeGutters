@@ -22,47 +22,10 @@ export default function AlurexSchema() {
       "https://www.lacombeguttersltd.com/images/alurex/Alurex-Trex-M5200B95-WEB.png",
       "https://www.lacombeguttersltd.com/images/alurex/Alurex-GutterClean-M5300B95-WEB.png"
     ],
-    "offers": {
-      "@type": "Offer",
-      "priceCurrency": "CAD",
-      "price": "0",
-      "priceValidUntil": "2024-12-31",
-      "itemCondition": "https://schema.org/NewCondition",
-      "availability": "https://schema.org/InStock",
-      "seller": {
-        "@type": "Organization",
-        "name": "Lacombe Gutters Ltd",
-        "url": "https://www.lacombeguttersltd.com",
-        "telephone": "+1-403-598-9137",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "170 112 Queensgate crescent",
-          "addressLocality": "Red Deer",
-          "addressRegion": "AB",
-          "postalCode": "T4R 0L8",
-          "addressCountry": "CA"
-        }
-      }
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "5",
-      "reviewCount": "25"
-    },
-    "review": [
-      {
-        "@type": "Review",
-        "author": {
-          "@type": "Person",
-          "name": "Satisfied Customer"
-        },
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": "5"
-        },
-        "reviewBody": "Excellent Alurex continuous hanger installation. The system is incredibly strong and the leaf guard works perfectly."
-      }
-    ],
+    // NOTE: A fabricated aggregateRating (5/25), a fake "Satisfied Customer" review, and a
+    // $0/expired Offer were removed here. Self-authored or invented review/rating markup violates
+    // Google's structured-data policy and risks a site-wide manual action. Real, consented reviews
+    // should be surfaced through the LocalBusiness entity (behind a data flag) once available.
     "hasVariant": [
       {
         "@type": "ProductModel",

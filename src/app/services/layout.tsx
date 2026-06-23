@@ -4,6 +4,9 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: "Our Services | Lacombe Gutters",
   description: "Professional gutter, eavestrough, soffit & fascia services in Central Alberta. 40+ years of combined experience. Free estimates. Call today!",
+  alternates: {
+    canonical: 'https://www.lacombeguttersltd.com/services',
+  },
 };
 
 export default function ServicesLayout({
