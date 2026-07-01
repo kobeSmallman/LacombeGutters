@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { BUSINESS_ID } from '@/components/LocalBusinessSchema';
 
 // Complete services data matching the main services page
 const services = [
@@ -213,8 +214,30 @@ export default async function ServicePage({ params }: PageProps) {
     notFound();
   }
 
+  // Service structured data — lets AI answer engines (Copilot, AI Overviews,
+  // Perplexity) extract exactly what we offer and tie it back to the one
+  // business entity (#business) instead of guessing from the prose.
+  const serviceJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    'name': service.name,
+    'serviceType': service.name,
+    'description': service.description,
+    'url': `https://www.lacombeguttersltd.com/services/${service.slug}`,
+    'provider': { '@id': BUSINESS_ID },
+    'areaServed': [
+      { '@type': 'AdministrativeArea', 'name': 'Central Alberta' },
+      { '@type': 'City', 'name': 'Red Deer' },
+      { '@type': 'City', 'name': 'Lacombe' },
+    ],
+  };
+
   return (
     <main className="min-h-screen bg-white relative">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
       {/* Hero Section - Matching site theme */}
       <section className="relative isolate overflow-hidden text-white bg-gradient-to-br from-slate-800 to-slate-900">
         {/* Background Image */}

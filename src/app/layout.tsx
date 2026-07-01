@@ -96,6 +96,11 @@ export const metadata: Metadata = {
   // ONLY ADD these missing pieces for Google Search Console
   verification: {
     google: process.env.GOOGLE_SITE_VERIFICATION,
+    // Optional Bing verification fallback. You've already verified Bing (via the
+    // GSC import / DNS), so this stays inert unless BING_SITE_VERIFICATION is set.
+    ...(process.env.BING_SITE_VERIFICATION
+      ? { other: { 'msvalidate.01': process.env.BING_SITE_VERIFICATION } }
+      : {}),
   },
   other: {
     'geo.region': 'CA-AB',

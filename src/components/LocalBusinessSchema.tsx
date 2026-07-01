@@ -119,6 +119,7 @@ export default function LocalBusinessSchema({
     },
     'sameAs': [
       'https://www.facebook.com/lacombegutters',
+      'https://www.yellowpages.ca/bus/Alberta/Red-Deer/Lacombe-Gutters/6898264.html',
     ],
     'areaServed': serviceLocations.map((location) => ({
       '@type': 'City',

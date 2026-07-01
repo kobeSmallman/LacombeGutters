@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { serviceLocations } from '@/lib/locations';
+import { lastModifiedFor } from '@/lib/lastModified';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.lacombeguttersltd.com';
@@ -39,76 +40,76 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const basePages = [
     {
       url: baseUrl,
-      lastModified: new Date(),
+      lastModified: lastModifiedFor(''),
       changeFrequency: 'daily' as const,
       priority: 1,
     },
     {
       url: `${baseUrl}/about`,
-      lastModified: new Date(),
+      lastModified: lastModifiedFor('about'),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
     {
       url: `${baseUrl}/services`,
-      lastModified: new Date(),
+      lastModified: lastModifiedFor('services'),
       changeFrequency: 'weekly' as const,
       priority: 0.9,
     },
     {
       url: `${baseUrl}/service-areas`,
-      lastModified: new Date(),
+      lastModified: lastModifiedFor('service-areas'),
       changeFrequency: 'weekly' as const,
       priority: 0.9, // High priority for local SEO
     },
     {
       url: `${baseUrl}/gallery`,
-      lastModified: new Date(),
+      lastModified: lastModifiedFor('gallery'),
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     },
     {
       url: `${baseUrl}/contact`,
-      lastModified: new Date(),
+      lastModified: lastModifiedFor('contact'),
       changeFrequency: 'weekly' as const,
       priority: 0.9,
     },
     {
       url: `${baseUrl}/faq`,
-      lastModified: new Date(),
+      lastModified: lastModifiedFor('faq'),
       changeFrequency: 'monthly' as const,
       priority: 0.5,
     },
     {
       url: `${baseUrl}/why-us`,
-      lastModified: new Date(),
+      lastModified: lastModifiedFor('why-us'),
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     },
     {
       url: `${baseUrl}/terms`,
-      lastModified: new Date(),
+      lastModified: lastModifiedFor('terms'),
       changeFrequency: 'yearly' as const,
       priority: 0.3,
     },
     {
       url: `${baseUrl}/privacy-policy`,
-      lastModified: new Date(),
+      lastModified: lastModifiedFor('privacy-policy'),
       changeFrequency: 'yearly' as const,
       priority: 0.3,
     },
     {
       url: `${baseUrl}/alurex-gutter-systems`,
-      lastModified: new Date(),
+      lastModified: lastModifiedFor('alurex-gutter-systems'),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
   ];
-  
+
   // Individual service pages
   const servicePages = services.map(service => ({
     url: `${baseUrl}/services/${service}`,
-    lastModified: new Date(),
+    lastModified: lastModifiedFor(`services/${service}`),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }));
@@ -124,7 +125,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
     .map(location => ({
       url: `${baseUrl}/service-areas/${location.slug}`,
-      lastModified: new Date(),
+      lastModified: lastModifiedFor(`service-areas/${location.slug}`),
       changeFrequency: 'monthly' as const,
       priority: priorityServiceAreas.includes(location.slug) ? 0.8 : 0.7, // P1=0.8, P2=0.7
     }));
