@@ -106,7 +106,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
       title,
       description,
-      keywords: `${cityName} gutters, gutter installation ${cityName}, gutter repair ${cityName}, eavestrough ${cityName}, gutter cleaning ${cityName}, Alberta gutters`,
       openGraph: {
         title,
         description,
@@ -141,7 +140,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         index: false,
         follow: true,
       },
-      keywords: `${cityName} gutters, gutter services ${cityName}, eavestrough ${cityName}, Alberta gutters`,
       openGraph: {
         title: `${cityName} Gutter Services | Lacombe Gutters`,
         description: `Professional gutter services in ${cityName}, Alberta. Free estimates available.`,

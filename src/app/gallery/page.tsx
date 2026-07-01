@@ -4,7 +4,6 @@ import { galleryItems } from "@/data/gallery";
 export const metadata = {
   title: "Project Gallery | Lacombe Gutters Ltd",
   description: "View our portfolio of completed gutter, eavestrough, soffit, and fascia installations across central Alberta.",
-  keywords: ["gutter installation", "eavestrough projects", "soffit installation", "fascia replacement", "central alberta gutters", "residential gutter systems"],
   alternates: {
     canonical: 'https://www.lacombeguttersltd.com/gallery',
   },

@@ -6,13 +6,9 @@ import AnimateOnScroll from '@/components/ui/animate-on-scroll';
 import ContinuousHangerExplainer from '@/components/alurex/ContinuousHangerExplainer';
 import AlurexSchema from '@/components/alurex/AlurexSchema';
 
-
-import { ALUREX_SEO_KEYWORDS } from '@/lib/constants';
-
 export const metadata: Metadata = {
   title: 'Alurex Gutter Systems & Installation | Lacombe Gutters Ltd',
   description: 'Professional Alurex continuous hanger & gutter guard installation in Lacombe, Alberta. DoublePro & T-Rex systems with lifetime warranty. Free estimates.',
-  keywords: ALUREX_SEO_KEYWORDS.join(', '),
   openGraph: {
     title: 'Alurex Gutter Systems & Installation | Lacombe Gutters Ltd',
     description: 'Professional Alurex continuous hanger & gutter guard installation in Lacombe, Alberta. DoublePro & T-Rex systems with lifetime warranty.',

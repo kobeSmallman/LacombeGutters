@@ -4,7 +4,6 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Privacy Policy | Lacombe Gutters Ltd',
   description: 'Privacy policy for Lacombe Gutters Ltd - how we collect, use, and protect your personal information.',
-  keywords: 'privacy policy, data protection, Lacombe Gutters Ltd, personal information',
   openGraph: {
     title: 'Privacy Policy | Lacombe Gutters Ltd',
     description: 'Privacy policy for Lacombe Gutters Ltd - how we collect, use, and protect your personal information.',

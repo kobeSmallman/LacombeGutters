@@ -172,7 +172,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${service.name} | Lacombe Gutters Ltd`,
     description: service.excerpt,
-    keywords: `${service.name}, ${service.slug}, gutters, eavestrough, Lacombe, Alberta, Central Alberta`,
     openGraph: {
       title: `${service.name} | Lacombe Gutters Ltd`,
       description: service.excerpt,

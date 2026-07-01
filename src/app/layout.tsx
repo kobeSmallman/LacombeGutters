@@ -37,19 +37,6 @@ export const metadata: Metadata = {
     default: `${SITE_NAME} | Professional Eavestrough Services in Lacombe, AB`,
   },
   description: SITE_DESCRIPTION,
-  keywords: [
-    'Lacombe gutters',
-    'eavestrough installation', 
-    'gutter repair',
-    'soffit and fascia',
-    'gutter cleaning',
-    'rainwater management',
-    'Central Alberta gutters',
-    'residential gutters',
-    'commercial gutters',
-    'gutter guards',
-    'gutter maintenance'
-  ],
   metadataBase: new URL('https://www.lacombeguttersltd.com'),
   alternates: {
     canonical: 'https://www.lacombeguttersltd.com/',

@@ -4,7 +4,6 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Terms of Service | Lacombe Gutters Ltd',
   description: 'Terms of service and conditions for Lacombe Gutters Ltd services in Central Alberta.',
-  keywords: 'terms of service, conditions, Lacombe Gutters Ltd, Alberta gutter services',
   openGraph: {
     title: 'Terms of Service | Lacombe Gutters Ltd',
     description: 'Terms of service and conditions for Lacombe Gutters Ltd services in Central Alberta.',

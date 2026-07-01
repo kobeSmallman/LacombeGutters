@@ -3,7 +3,6 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Gutter & Eavestrough Services | Lacombe Gutters Ltd",
   description: "Professional gutter installation, soffit & fascia replacement, and eavestrough maintenance services across Central Alberta with 40+ years of combined experience.",
-  keywords: ["gutter installation", "eavestrough services", "soffit and fascia", "gutter cleaning", "downspout installation", "commercial eavestrough", "Central Alberta gutters"],
   alternates: {
     canonical: 'https://www.lacombeguttersltd.com/services',
   },

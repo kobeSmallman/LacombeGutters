@@ -10,18 +10,6 @@ import ContactForm from "@/components/ContactForm";
 export const metadata = {
   title: "Contact Lacombe Gutters | Free Estimate & Inquiries",
   description: "Get in touch with Lacombe Gutters for a free, no-obligation estimate on eavestrough services. Call, email, or visit our Lacombe location for professional gutter solutions in Central Alberta.",
-  keywords: [
-    'contact Lacombe Gutters',
-    'free gutter estimate',
-    'eavestrough service near me',
-    'gutter repair contact',
-    'Central Alberta gutter services',
-    'emergency gutter repair',
-    'gutter installation quote',
-    'Lacombe gutter specialists',
-    'gutter maintenance contact',
-    'roofing services contact'
-  ],
   openGraph: {
     title: 'Contact Lacombe Gutters | Free Estimate & Inquiries',
     description: "Contact Lacombe Gutters today for professional eavestrough services. Get a free quote, schedule service, or ask about our gutter solutions in Central Alberta.",

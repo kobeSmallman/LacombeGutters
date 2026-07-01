@@ -3,7 +3,6 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Frequently Asked Questions | Lacombe Gutters",
   description: "Answers to common gutter, soffit & fascia questions for Central Alberta homeowners.",
-  keywords: ["gutter FAQ", "eavestrough questions", "soffit fascia installation", "gutter maintenance", "Alberta home gutters", "gutter repair FAQ"],
   alternates: {
     canonical: 'https://www.lacombeguttersltd.com/faq',
   },
