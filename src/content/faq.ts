@@ -112,7 +112,7 @@ export const FAQConfig = {
     },
     { "id": 20,
       "question": "Do you charge mileage for out‑of‑town work?",
-      "answer": "Mileage is calculated from our shop at 112 Queensgate Cres #170, Blackfalds, AB. Travel within roughly **50 km** is included; beyond that a modest per‑kilometre fee is shown on your quote.",
+      "answer": "Mileage is calculated from our shop at 112 Queensgate Cres #170, Red Deer, AB. Travel within roughly **50 km** is included; beyond that a modest per‑kilometre fee is shown on your quote.",
       "category": "Estimates & Payment"
     },
 

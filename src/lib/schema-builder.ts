@@ -16,6 +16,7 @@ interface LocalBusinessSchema {
     streetAddress: string;
     addressLocality: string;
     addressRegion: string;
+    postalCode: string;
     addressCountry: string;
   };
   geo?: {
@@ -62,6 +63,7 @@ export function buildLocalBusinessSchema(location?: LocationData): LocalBusiness
       streetAddress: "170 112 Queensgate crescent",
       addressLocality: "Red Deer",
       addressRegion: "AB",
+      postalCode: "T4P 0P9",
       addressCountry: "CA"
     },
     areaServed: [
