@@ -1,20 +1,25 @@
 # Lacombe Gutters — Project Notes for Claude
 
-## PENDING: Flip MAIL_FROM to the authenticated domain
+## DONE: MAIL_FROM moved to the authenticated domain (2026-08-26)
 
-**Status as of 2026-05-24:** SendGrid domain authentication for `lacombeguttersltd.com` is already done (`em5789.lacombeguttersltd.com` shows verified — the 3 CNAMEs are already in the registrar's DNS). Link branding (`url694.lacombeguttersltd.com`) is also verified. **No DNS work remaining.**
+SendGrid domain authentication for `lacombeguttersltd.com` was already in place
+(`em5789.lacombeguttersltd.com` verified, 3 CNAMEs live in the registrar; link branding
+`url694.lacombeguttersltd.com` also verified). The remaining problem was that `MAIL_FROM`
+in Vercel still pointed at a Gmail address, so the visible From domain (`gmail.com`) didn't
+align with SendGrid's DKIM signature — Gmail answered `421 4.7.32 Deferred`.
 
-**Why this still needs to happen:**
-`MAIL_FROM` in Vercel is still pointing at a Gmail address. Gmail tightened DMARC enforcement in 2024/2025 and rejects mail where the From domain (`gmail.com`) doesn't match the authenticated sending domain (SendGrid) — causes a `4.7.32` deferral. Mail mostly still gets through on retries but it's unreliable and will get worse.
+`MAIL_FROM` is now `Lacombe Gutters <noreply@lacombeguttersltd.com>` (Vercel, Production).
+That mailbox does not exist and doesn't need to — nothing is ever delivered to it; it only
+has to be on the SendGrid-authenticated domain so DKIM aligns. `PROD_EMAIL_TO` stays as the
+Gmail address; receiving at Gmail was never the problem.
 
-**Remaining steps (~5 minutes, no code changes required):**
+Because the From is now a no-reply address, `Reply-To` headers were added in
+`src/lib/contactNotifications.ts`:
+- Business lead notifications reply to the customer (`data.email`).
+- Customer confirmations reply to `PROD_EMAIL_TO`.
 
-1. Vercel → Project Settings → Environment Variables → change `MAIL_FROM` from the current Gmail address to `noreply@lacombeguttersltd.com` (Production scope).
-2. Redeploy.
-
-That's it. `noreply@lacombeguttersltd.com` doesn't need a real inbox — it just needs to be on the SendGrid-authenticated domain so DKIM/SPF align. `PROD_EMAIL_TO` (the inbox that receives notifications) stays as the Gmail address.
-
-**Nothing in the codebase needs to change.** `src/lib/contactNotifications.ts:49` already reads `process.env.MAIL_FROM`, and the client-confirmation fallback at `:201` already defaults to `noreply@lacombeguttersltd.com`.
+If a deferral shows up again, confirm `MAIL_FROM` is still on `lacombeguttersltd.com`
+before touching DNS.
 
 ---
 

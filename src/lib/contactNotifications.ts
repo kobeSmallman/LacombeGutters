@@ -128,6 +128,9 @@ export async function sendEmail(data: ContactRequest): Promise<void> {
   const msg = {
     to: toEmail,
     from: fromEmail,
+    // From is now a no-reply address on the authenticated domain, so point
+    // replies at the customer instead of a mailbox that doesn't exist.
+    ...(data.email ? { replyTo: `${data.name} <${data.email}>` } : {}),
     subject: emailSubject,
     html: emailBody,
     attachments,
@@ -199,6 +202,10 @@ async function sendClientEmailConfirmation(data: ContactRequest): Promise<void> 
   }
 
   const fromEmail = process.env.MAIL_FROM || 'noreply@lacombeguttersltd.com';
+  // Customers replying to a no-reply From should still reach the business inbox.
+  const replyToBusiness = process.env.PROD_EMAIL_TO
+    ? { replyTo: process.env.PROD_EMAIL_TO }
+    : {};
   const servicesList = data.services?.length ? data.services.join(', ') : 'None specified';
   const contactMethod = data.contactMethod === 'sms' ? 'SMS' : 'email';
   const isJobApplication = data.source === 'job-application';
@@ -248,6 +255,7 @@ async function sendClientEmailConfirmation(data: ContactRequest): Promise<void> 
     await sgMail.send({
       to: data.email,
       from: fromEmail,
+      ...replyToBusiness,
       subject: 'Application Received - Lacombe Gutters Ltd',
       html: confirmationContent,
     });
@@ -300,6 +308,7 @@ async function sendClientEmailConfirmation(data: ContactRequest): Promise<void> 
   await sgMail.send({
     to: data.email,
     from: fromEmail,
+    ...replyToBusiness,
     subject: 'Thank You - Lacombe Gutters Ltd',
     html: confirmationContent,
   });
