@@ -7,7 +7,11 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Upload, X } from 'lucide-react';
-import CloudflareTurnstile from './CloudflareTurnstile';
+import CloudflareTurnstile, { TurnstileHandle } from './CloudflareTurnstile';
+import FormFailureHelp, { buildMessageSummary } from './FormFailureHelp';
+import { useAttachments } from '@/hooks/useAttachments';
+import { useFormDraft } from '@/hooks/useFormDraft';
+import { newSubmissionReference, submitContactForm, SubmitFailureKind } from '@/lib/submitForm';
 
 type FormData = {
   name: string;
@@ -33,27 +37,51 @@ const serviceOptions = [
   'Industrial/Commercial'
 ];
 
+const EMPTY_FORM: FormData = {
+  name: '',
+  email: '',
+  phone: '',
+  address: '',
+  message: '',
+  services: [],
+  contactMethod: 'email',
+  company_website: ''
+};
+
 const QuoteRequestWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
-    message: '',
-    services: [],
-    contactMethod: 'email',
-    company_website: ''
-  });
+  const [formData, setFormData] = useState<FormData>(EMPTY_FORM);
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [successReference, setSuccessReference] = useState('');
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [attachments, setAttachments] = useState<File[]>([]);
+  // Set only for failed sends, so we can offer copy/email/call alternatives
+  const [failure, setFailure] = useState<{ kind: SubmitFailureKind; summary: string } | null>(null);
+  const { attachments, rejected, isProcessing, add: addFiles, remove: removeAttachment, clear: clearAttachments, budgetLabel } = useAttachments();
   const formRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [turnstileToken, setTurnstileToken] = useState<string>('');
+  const turnstileRef = useRef<TurnstileHandle>(null);
+  // Same reference across retries of one filled-in form; new one after a success.
+  const [reference, setReference] = useState(newSubmissionReference);
+  const [reattachNotice, setReattachNotice] = useState(false);
+  const draft = useFormDraft<FormData>('quote-widget', ['contactMethod', 'company_website']);
+
+  // Restore an unsent draft (e.g. after a refresh)
+  useEffect(() => {
+    const saved = draft.load();
+    if (saved) {
+      setFormData({ ...EMPTY_FORM, ...saved.values, company_website: '' });
+      setReattachNotice(saved.attachmentCount > 0);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    draft.save(formData, attachments.length);
+  }, [draft, formData, attachments.length]);
 
   // Phone number formatting function
   const formatPhoneNumber = (value: string): string => {
@@ -137,52 +165,37 @@ const QuoteRequestWidget: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Handle file selection
+  // Handle file selection — photos are shrunk in the browser to fit the upload limit
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
-    const validFiles = files.filter(file => {
-      const isValidType = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'].includes(file.type);
-      const isValidSize = file.size <= 10 * 1024 * 1024; // 10MB
-      return isValidType && isValidSize;
-    });
-    setAttachments(prev => [...prev, ...validFiles]);
-  };
-
-  // Remove attachment
-  const removeAttachment = (index: number) => {
-    setAttachments(prev => prev.filter((_, i) => i !== index));
+    // Clear so picking the same file again still fires onChange
+    e.target.value = '';
+    setReattachNotice(false);
+    addFiles(files);
   };
 
   // Handle drag and drop
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
-    const files = Array.from(e.dataTransfer.files);
-    const validFiles = files.filter(file => {
-      const isValidType = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'].includes(file.type);
-      const isValidSize = file.size <= 10 * 1024 * 1024; // 10MB
-      return isValidType && isValidSize;
-    });
-    setAttachments(prev => [...prev, ...validFiles]);
+    setReattachNotice(false);
+    addFiles(e.dataTransfer.files);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('🚀 Widget form submission started');
-    console.log('📝 Form data:', formData);
-    
+
     if (!validateForm()) {
-      console.log('❌ Form validation failed');
       return;
     }
 
     setIsSubmitting(true);
     setShowError(false);
-    console.log('✅ Form validation passed, submitting...');
+    setFailure(null);
 
     try {
       // Create FormData to handle file uploads
       const apiFormData = new FormData();
-      
+
       // Add form fields
       Object.entries(formData).forEach(([key, value]) => {
         if (Array.isArray(value)) {
@@ -194,53 +207,46 @@ const QuoteRequestWidget: React.FC = () => {
       apiFormData.append('source', 'quote-widget');
       apiFormData.append('formType', 'quote-request');
       apiFormData.append('turnstile-token', turnstileToken);
-      
+
       // Add attachments
       attachments.forEach(file => {
         apiFormData.append('attachments', file);
       });
-      
-      console.log('📤 Sending request to /api/contact...');
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        body: apiFormData,
-      });
 
-      console.log('📥 Response status:', response.status);
-      const result = await response.json();
-      console.log('📦 Response data:', result);
+      const result = await submitContactForm(apiFormData, reference);
 
-      if (response.ok) {
-        console.log('✅ Form submitted successfully:', result);
+      if (result.ok) {
+        setSuccessReference(result.reference);
         setShowSuccess(true);
         // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          address: '',
-          message: '',
-          services: [],
-          contactMethod: 'email',
-          company_website: ''
-        });
-        setAttachments([]);
-        setTurnstileToken('');
+        setFormData(EMPTY_FORM);
+        clearAttachments();
+        setReference(newSubmissionReference());
+        draft.clear();
         // Longer timeout to give user time to read success message
         setTimeout(() => {
           setShowSuccess(false);
           setIsOpen(false);
         }, 5000);
       } else {
-        console.log('❌ Form submission failed:', result);
         setShowError(true);
-        setErrorMessage(result.message || 'We couldn\'t send your request. Please try again, or call us at 403-598-9137.');
+        setErrorMessage(result.message);
+        setFailure({
+          kind: result.kind,
+          summary: buildMessageSummary({
+            Name: formData.name,
+            Phone: formData.phone,
+            Email: formData.email,
+            Address: formData.address,
+            Services: formData.services,
+            'Preferred contact': formData.contactMethod === 'sms' ? 'Phone' : 'Email',
+          }, formData.message),
+        });
       }
-    } catch (error) {
-      console.error('😱 Error submitting form:', error);
-      setShowError(true);
-      setErrorMessage('Network error — please check your connection and try again, or call us at 403-598-9137.');
     } finally {
+      // Tokens are single-use — get a fresh one so the next Send works without a reload.
+      setTurnstileToken('');
+      turnstileRef.current?.reset();
       setIsSubmitting(false);
     }
   };
@@ -250,6 +256,7 @@ const QuoteRequestWidget: React.FC = () => {
     if (!isOpen) {
       setShowSuccess(false);
       setShowError(false);
+      setFailure(null);
       setErrors({});
       // Reset Turnstile token when reopening
       setTurnstileToken('');
@@ -348,6 +355,9 @@ const QuoteRequestWidget: React.FC = () => {
                         </div>
                         <h3 className="text-2xl font-bold text-gray-800">Request Sent Successfully</h3>
                         <p className="text-base text-gray-600">We&apos;ll contact you via your preferred method within 24 hours.</p>
+                        {successReference && (
+                          <p className="text-sm text-gray-500">Reference: {successReference}</p>
+                        )}
                       </div>
                     </div>
                   ) : (
@@ -403,6 +413,8 @@ const QuoteRequestWidget: React.FC = () => {
                           <label className="block text-base font-bold text-gray-700">Full Name *</label>
                           <div className="grid grid-cols-2 gap-2">
                             <Input
+                              name="given-name"
+                              autoComplete="given-name"
                               value={formData.name.split(' ')[0] || ''}
                               onChange={(e) => {
                                 const lastName = formData.name.split(' ').slice(1).join(' ');
@@ -412,6 +424,8 @@ const QuoteRequestWidget: React.FC = () => {
                               className={`text-sm p-3 h-10 ${errors.name ? 'border-red-500' : ''}`}
                             />
                             <Input
+                              name="family-name"
+                              autoComplete="family-name"
                               value={formData.name.split(' ').slice(1).join(' ') || ''}
                               onChange={(e) => {
                                 const firstName = formData.name.split(' ')[0] || '';
@@ -433,6 +447,8 @@ const QuoteRequestWidget: React.FC = () => {
                               </label>
                               <Input
                                 type="email"
+                                name="email"
+                                autoComplete="email"
                                 value={formData.email}
                                 onChange={(e) => handleInputChange('email', e.target.value)}
                                 placeholder="your.email@example.com"
@@ -446,6 +462,9 @@ const QuoteRequestWidget: React.FC = () => {
                               </label>
                               <Input
                                 type="tel"
+                                name="phone"
+                                autoComplete="tel"
+                                inputMode="tel"
                                 value={formData.phone}
                                 onChange={handlePhoneInput}
                                 placeholder="(123) 456-7890"
@@ -461,6 +480,8 @@ const QuoteRequestWidget: React.FC = () => {
                         <div className="space-y-1">
                           <label className="block text-base font-bold text-gray-700">Property Address</label>
                           <Input
+                            name="address"
+                            autoComplete="street-address"
                             value={formData.address}
                             onChange={(e) => handleInputChange('address', e.target.value)}
                             placeholder="123 Main St, City, Province"
@@ -523,7 +544,7 @@ const QuoteRequestWidget: React.FC = () => {
                               </button>
                             </p>
                             <p className="text-xs text-gray-500">
-                              JPG, PNG, WebP, PDF (max 10MB each)
+                              Photos or PDF, up to 6. Large photos are resized automatically.
                             </p>
                             {formData.contactMethod === 'sms' && (
                               <p className="text-xs text-amber-600 mt-1">
@@ -534,16 +555,34 @@ const QuoteRequestWidget: React.FC = () => {
                               ref={fileInputRef}
                               type="file"
                               multiple
-                              accept=".pdf,.jpg,.jpeg,.png,.webp"
+                              accept="image/*,.pdf"
                               onChange={handleFileSelect}
                               className="hidden"
                             />
                           </div>
                           
+                          {isProcessing && (
+                            <p className="text-xs text-gray-600">Optimizing photos…</p>
+                          )}
+
+                          {reattachNotice && attachments.length === 0 && (
+                            <p className="text-xs text-amber-700">
+                              We kept your message, but photos can&apos;t be saved — please re-attach them.
+                            </p>
+                          )}
+
+                          {rejected.length > 0 && (
+                            <ul className="space-y-1 text-xs text-red-600">
+                              {rejected.map((item, index) => (
+                                <li key={index}><strong>{item.name}:</strong> {item.reason}</li>
+                              ))}
+                            </ul>
+                          )}
+
                           {/* Display selected files */}
                           {attachments.length > 0 && (
                             <div className="mt-2">
-                              <p className="text-xs font-medium mb-1 text-gray-700">Selected Files:</p>
+                              <p className="text-xs font-medium mb-1 text-gray-700">Selected Files ({budgetLabel}):</p>
                               <div className="space-y-1">
                                 {attachments.map((file, index) => (
                                   <div key={index} className="flex items-center justify-between p-2 bg-gray-50 rounded border text-xs">
@@ -565,6 +604,7 @@ const QuoteRequestWidget: React.FC = () => {
                         {/* Cloudflare Turnstile */}
                         <div className="space-y-1">
                           <CloudflareTurnstile
+                            ref={turnstileRef}
                             siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAACLMknOrovBOqBYa'}
                             onVerify={(token) => {
                               setTurnstileToken(token);
@@ -585,6 +625,9 @@ const QuoteRequestWidget: React.FC = () => {
                         {showError && (
                           <div className="bg-red-50 border border-red-200 rounded-md p-3">
                             <p className="text-red-700 text-sm">{errorMessage}</p>
+                            {failure && failure.kind !== 'verification' && (
+                              <FormFailureHelp summary={failure.summary} subject="Estimate request from the website" />
+                            )}
                           </div>
                         )}
 
@@ -592,10 +635,10 @@ const QuoteRequestWidget: React.FC = () => {
                           <div className="mt-6 pt-4 border-t border-gray-200">
                             <Button
                               type="submit"
-                              disabled={isSubmitting}
+                              disabled={isSubmitting || isProcessing}
                               className="w-full bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 text-white text-base py-3 h-12 font-bold"
                             >
-                              {isSubmitting ? 'Sending...' : 'Send Request'}
+                              {isSubmitting ? 'Sending...' : isProcessing ? 'Preparing photos...' : 'Send Request'}
                             </Button>
                           </div>
                         </div>

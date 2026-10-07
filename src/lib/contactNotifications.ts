@@ -15,6 +15,8 @@ export interface ContactRequest {
   experience?: string;
   source?: string;
   formType?: string;
+  // Short code shown to the customer; repeats across retries of the same form.
+  reference?: string;
   attachments?: {
     filename: string;
     content: Buffer;
@@ -23,6 +25,9 @@ export interface ContactRequest {
 }
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
+// Fail fast instead of hanging until the browser gives up. Keep this plus the
+// Turnstile timeout in the contact route under the client's 25s timeout.
+sgMail.setTimeout(15_000);
 
 export let twilioClient: Twilio | null = null;
 if (process.env.TWILIO_SID && process.env.TWILIO_AUTH_TOKEN) {
@@ -58,7 +63,7 @@ export async function sendEmail(data: ContactRequest): Promise<void> {
                         data.source === 'job-application' ? 'Job Application' : 'Contact Inquiry';
 
   const messageContent = data.message || data.description;
-  const emailSubject = `${formTypeLabel} - ${data.name}`;
+  const emailSubject = `${formTypeLabel} - ${data.name}${data.reference ? ` (Ref ${data.reference})` : ''}`;
 
   const emailBody = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f5f7f9;">

@@ -1,13 +1,16 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { ChevronDown, ChevronUp, Send, Loader2, MapPin, CheckCircle, XCircle } from 'lucide-react';
 import { Button } from './button';
 import { Input } from './input';
 import { Textarea } from './textarea';
 import { Label } from './label';
 import { serviceLocations } from '@/lib/locations';
-import CloudflareTurnstile from '@/components/CloudflareTurnstile';
+import CloudflareTurnstile, { TurnstileHandle } from '@/components/CloudflareTurnstile';
+import FormFailureHelp, { buildMessageSummary } from '@/components/FormFailureHelp';
+import { useFormDraft } from '@/hooks/useFormDraft';
+import { newSubmissionReference, submitContactForm, SubmitFailureKind } from '@/lib/submitForm';
 
 // Simple checkbox component for service selection
 const Checkbox = ({ id, checked, onCheckedChange }: { id: string; checked: boolean; onCheckedChange: () => void }) => (
@@ -33,22 +36,63 @@ const SERVICE_OPTIONS: ServiceOption[] = [
   { id: 'repair', label: 'Repairs' },
 ];
 
+type ContactFields = {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+};
+
+const EMPTY_FIELDS: ContactFields = { name: '', email: '', phone: '', message: '' };
+
+type CityDraft = ContactFields & { city: string; services: string[] };
+
 export function QuoteRequestWidget() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [step, setStep] = useState<'location' | 'details' | 'success' | 'error'>('location');
+  const [step, setStep] = useState<'location' | 'details' | 'success'>('location');
   const [city, setCity] = useState('');
   const [locationStatus, setLocationStatus] = useState<'idle' | 'checking' | 'valid' | 'invalid'>('idle');
   const [locationMessage, setLocationMessage] = useState('');
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   const [turnstileToken, setTurnstileToken] = useState('');
+  const turnstileRef = useRef<TurnstileHandle>(null);
+  // Controlled so a failed send never wipes what the customer typed
+  const [fields, setFields] = useState<ContactFields>(EMPTY_FIELDS);
+  const [failure, setFailure] = useState<{ kind: SubmitFailureKind; message: string; summary: string } | null>(null);
+  // Same reference across retries of one filled-in form; new one after a success.
+  const [reference, setReference] = useState(newSubmissionReference);
+  const [successReference, setSuccessReference] = useState('');
+  const draft = useFormDraft<CityDraft>('city-widget');
 
-  // Form fields
-  const nameRef = useRef<HTMLInputElement>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
-  const phoneRef = useRef<HTMLInputElement>(null);
-  const messageRef = useRef<HTMLTextAreaElement>(null);
+  // Restore an unsent draft (e.g. after a refresh) and reopen where they left off
+  useEffect(() => {
+    const saved = draft.load();
+    if (!saved) return;
+    const { city: savedCity, services, ...savedFields } = saved.values;
+    setCity(savedCity || '');
+    setSelectedServices(services || []);
+    setFields({ ...EMPTY_FIELDS, ...savedFields });
+    if (savedCity && Object.values(savedFields).some(value => value?.trim())) {
+      setLocationStatus('valid');
+      setStep('details');
+      setIsExpanded(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    // Only the details step is worth restoring; the city alone is quick to retype.
+    if (step === 'details') draft.save({ ...fields, city, services: selectedServices });
+  }, [draft, step, fields, city, selectedServices]);
+
+  const updateField = (field: keyof ContactFields, value: string) => {
+    setFields(prev => ({ ...prev, [field]: value }));
+    if (validationErrors[field]) {
+      setValidationErrors(prev => ({ ...prev, [field]: '' }));
+    }
+  };
 
   // Handle location check
   const checkServiceArea = async () => {
@@ -97,12 +141,12 @@ export function QuoteRequestWidget() {
 
     const errors: Record<string, string> = {};
 
-    if (!nameRef.current?.value?.trim()) errors.name = 'Name is required';
-    if (!emailRef.current?.value?.trim()) errors.email = 'Email is required';
-    if (!phoneRef.current?.value?.trim()) errors.phone = 'Phone is required';
+    if (!fields.name.trim()) errors.name = 'Name is required';
+    if (!fields.email.trim()) errors.email = 'Email is required';
+    if (!fields.phone.trim()) errors.phone = 'Phone is required';
     if (selectedServices.length === 0) errors.services = 'Please select at least one service';
-    if (!messageRef.current?.value?.trim()) errors.message = 'Please describe your project';
-    else if (messageRef.current.value.trim().length < 10) errors.message = 'Please provide more detail (at least 10 characters)';
+    if (!fields.message.trim()) errors.message = 'Please describe your project';
+    else if (fields.message.trim().length < 10) errors.message = 'Please provide more detail (at least 10 characters)';
     if (!turnstileToken) errors.turnstile = 'Please complete the security verification';
 
     if (Object.keys(errors).length > 0) {
@@ -111,37 +155,48 @@ export function QuoteRequestWidget() {
     }
 
     setValidationErrors({});
+    setFailure(null);
     setIsSubmitting(true);
+
+    const serviceLabels = selectedServices.map(id => SERVICE_OPTIONS.find(s => s.id === id)?.label || id);
 
     try {
       const formData = new FormData();
-      formData.append('name', nameRef.current!.value);
-      formData.append('email', emailRef.current!.value);
-      formData.append('phone', phoneRef.current!.value);
+      formData.append('name', fields.name);
+      formData.append('email', fields.email);
+      formData.append('phone', fields.phone);
       formData.append('address', city);
-      formData.append('message', messageRef.current!.value);
+      formData.append('message', fields.message);
       formData.append('contactMethod', 'email');
       formData.append('source', 'city-page-widget');
       formData.append('formType', 'quote-request');
       formData.append('turnstile-token', turnstileToken);
-      selectedServices.forEach(id => {
-        const label = SERVICE_OPTIONS.find(s => s.id === id)?.label || id;
-        formData.append('services', label);
-      });
+      serviceLabels.forEach(label => formData.append('services', label));
 
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        body: formData,
-      });
+      const result = await submitContactForm(formData, reference);
 
-      if (response.ok) {
+      if (result.ok) {
+        setSuccessReference(result.reference);
+        setReference(newSubmissionReference());
+        draft.clear();
         setStep('success');
       } else {
-        setStep('error');
+        setFailure({
+          kind: result.kind,
+          message: result.message,
+          summary: buildMessageSummary({
+            Name: fields.name,
+            Phone: fields.phone,
+            Email: fields.email,
+            City: city,
+            Services: serviceLabels,
+          }, fields.message),
+        });
       }
-    } catch {
-      setStep('error');
     } finally {
+      // Tokens are single-use — get a fresh one so the next Send works without a reload.
+      setTurnstileToken('');
+      turnstileRef.current?.reset();
       setIsSubmitting(false);
     }
   };
@@ -154,12 +209,9 @@ export function QuoteRequestWidget() {
     setSelectedServices([]);
     setValidationErrors({});
     setTurnstileToken('');
+    setFailure(null);
+    setFields(EMPTY_FIELDS);
     setStep('location');
-
-    if (nameRef.current) nameRef.current.value = '';
-    if (emailRef.current) emailRef.current.value = '';
-    if (phoneRef.current) phoneRef.current.value = '';
-    if (messageRef.current) messageRef.current.value = '';
   };
 
   return (
@@ -235,7 +287,10 @@ export function QuoteRequestWidget() {
                   <Label htmlFor="name">Name *</Label>
                   <Input
                     id="name"
-                    ref={nameRef}
+                    name="name"
+                    autoComplete="name"
+                    value={fields.name}
+                    onChange={(e) => updateField('name', e.target.value)}
                     className={validationErrors.name ? 'border-red-500' : ''}
                   />
                   {validationErrors.name && <p className="text-xs text-red-600">{validationErrors.name}</p>}
@@ -245,7 +300,12 @@ export function QuoteRequestWidget() {
                   <Label htmlFor="phone">Phone *</Label>
                   <Input
                     id="phone"
-                    ref={phoneRef}
+                    name="phone"
+                    type="tel"
+                    autoComplete="tel"
+                    inputMode="tel"
+                    value={fields.phone}
+                    onChange={(e) => updateField('phone', e.target.value)}
                     className={validationErrors.phone ? 'border-red-500' : ''}
                   />
                   {validationErrors.phone && <p className="text-xs text-red-600">{validationErrors.phone}</p>}
@@ -256,8 +316,11 @@ export function QuoteRequestWidget() {
                 <Label htmlFor="email">Email *</Label>
                 <Input
                   id="email"
+                  name="email"
                   type="email"
-                  ref={emailRef}
+                  autoComplete="email"
+                  value={fields.email}
+                  onChange={(e) => updateField('email', e.target.value)}
                   className={validationErrors.email ? 'border-red-500' : ''}
                 />
                 {validationErrors.email && <p className="text-xs text-red-600">{validationErrors.email}</p>}
@@ -286,7 +349,8 @@ export function QuoteRequestWidget() {
                 <Label htmlFor="message">Project Details *</Label>
                 <Textarea
                   id="message"
-                  ref={messageRef}
+                  value={fields.message}
+                  onChange={(e) => updateField('message', e.target.value)}
                   placeholder="Tell us more about your project..."
                   className={`min-h-[100px] ${validationErrors.message ? 'border-red-500' : ''}`}
                 />
@@ -294,6 +358,7 @@ export function QuoteRequestWidget() {
               </div>
 
               <CloudflareTurnstile
+                ref={turnstileRef}
                 siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAACLMknOrovBOqBYa'}
                 onVerify={(token) => {
                   setTurnstileToken(token);
@@ -304,6 +369,18 @@ export function QuoteRequestWidget() {
                 size="normal"
               />
               {validationErrors.turnstile && <p className="text-xs text-red-600">{validationErrors.turnstile}</p>}
+
+              {failure && (
+                <div className="bg-red-50 border border-red-200 rounded-md p-3">
+                  <div className="flex items-start">
+                    <XCircle className="h-5 w-5 text-red-500 mt-0.5 mr-2 flex-shrink-0" />
+                    <p className="text-sm text-gray-800">{failure.message}</p>
+                  </div>
+                  {failure.kind !== 'verification' && (
+                    <FormFailureHelp summary={failure.summary} subject={`Quote request from the website${city ? ` (${city})` : ''}`} />
+                  )}
+                </div>
+              )}
 
               <div className="flex justify-between">
                 <Button type="button" variant="outline" onClick={() => setStep('location')}>
@@ -336,26 +413,13 @@ export function QuoteRequestWidget() {
               <p className="text-gray-500">
                 Thank you! We&apos;ve received your request and will contact you shortly.
               </p>
+              {successReference && (
+                <p className="text-sm text-gray-500">Reference: {successReference}</p>
+              )}
               <Button onClick={resetForm}>Submit Another Request</Button>
             </div>
           )}
 
-          {/* Error Step */}
-          {step === 'error' && (
-            <div className="text-center space-y-4">
-              <div className="inline-flex h-14 w-14 rounded-full bg-red-100 items-center justify-center mx-auto">
-                <XCircle className="h-8 w-8 text-red-600" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900">Something Went Wrong</h3>
-              <p className="text-gray-500">
-                Sorry, we encountered an error processing your request. Please try again.
-              </p>
-              <div className="flex space-x-2 justify-center">
-                <Button onClick={resetForm} variant="outline">Reset Form</Button>
-                <Button onClick={() => { setStep('details'); setIsSubmitting(false); }}>Try Again</Button>
-              </div>
-            </div>
-          )}
         </div>
       )}
     </div>

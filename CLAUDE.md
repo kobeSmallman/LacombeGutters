@@ -32,6 +32,18 @@ before touching DNS.
 - Twilio handles SMS notifications (optional, gracefully skipped if not configured)
 - Business email fails loudly now (returns error to user) — this is intentional so silent delivery failures are caught
 
+## Form submission (all four forms → `/api/contact`)
+
+- Vercel rejects request bodies over **4.5 MB** with a plain-text 413 before the route runs. Photos are
+  resized in the browser and capped at 6 files / 4 MB total (`src/lib/attachments.ts`, `src/hooks/useAttachments.ts`).
+- Always submit through `submitContactForm` (`src/lib/submitForm.ts`), never a bare `fetch` + `response.json()` —
+  that pattern turned every non-JSON reply into a misleading "Network error".
+- Turnstile tokens are single-use: reset the widget (`turnstileRef.current.reset()`) after every submit.
+- The route returns as soon as the business email is accepted; SMS + customer confirmation run in `after()`.
+  Timeouts: Turnstile 8s + SendGrid 15s on the server, 25s on the client — keep server < client.
+- A 6-char reference (stable across retries) is shown to the customer and appended to the email subject, so a
+  duplicate from a timed-out retry is recognisable.
+
 ## SEO Work Done (April 2026)
 
 Eavestrough/eavestroughing keyword expansion completed across:

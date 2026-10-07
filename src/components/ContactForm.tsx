@@ -3,18 +3,44 @@
 import { useState, useRef, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, AlertCircle, Upload, X } from "lucide-react";
-import CloudflareTurnstile from './CloudflareTurnstile';
+import CloudflareTurnstile, { TurnstileHandle } from './CloudflareTurnstile';
+import { formatBytes } from '@/lib/attachments';
+import FormFailureHelp, { buildMessageSummary } from './FormFailureHelp';
+import { useAttachments } from '@/hooks/useAttachments';
+import { useFormDraft } from '@/hooks/useFormDraft';
+import { newSubmissionReference, submitContactForm, SubmitFailureKind } from '@/lib/submitForm';
+
+type ContactDraft = {
+  name: string;
+  phone: string;
+  email: string;
+  address: string;
+  message: string;
+  services: string[];
+  contactMethod: 'email' | 'sms';
+};
+
+const TEXT_FIELDS = ['name', 'phone', 'email', 'address', 'message'] as const;
+
+type SubmitResultState =
+  | { success: true; message: string }
+  | { success: false; message: string; kind: SubmitFailureKind; summary: string };
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitResult, setSubmitResult] = useState<{success: boolean; message: string} | null>(null);
+  const [submitResult, setSubmitResult] = useState<SubmitResultState | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
   const [contactMethod, setContactMethod] = useState<'email' | 'sms'>('email');
-  const [attachments, setAttachments] = useState<File[]>([]);
+  const { attachments, rejected, isProcessing, add: addFiles, remove: removeAttachment, clear: clearAttachments, budgetLabel } = useAttachments();
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [turnstileToken, setTurnstileToken] = useState<string>('');
+  const turnstileRef = useRef<TurnstileHandle>(null);
+  // Same reference across retries of one filled-in form; new one after a success.
+  const [reference, setReference] = useState(newSubmissionReference);
+  const [reattachNotice, setReattachNotice] = useState(false);
+  const draft = useFormDraft<ContactDraft>('contact-page', ['contactMethod']);
 
   // Function to format phone number as user types
   const formatPhoneNumber = (value: string) => {
@@ -55,16 +81,52 @@ export default function ContactForm() {
     return mapping[serviceName] || 'other';
   };
 
-  // Check for preselected service from sessionStorage
+  // Restore an unsent draft (e.g. after a refresh), otherwise check for a
+  // preselected service from the services page.
   useEffect(() => {
+    const saved = draft.load();
     const selectedService = sessionStorage.getItem('selectedService');
     if (selectedService) {
-      const mappedService = mapServiceNameToValue(selectedService);
-      setSelectedServices([mappedService]);
       // Clear the sessionStorage after using it
       sessionStorage.removeItem('selectedService');
     }
+
+    if (saved && formRef.current) {
+      const { values } = saved;
+      TEXT_FIELDS.forEach(field => {
+        const input = formRef.current?.elements.namedItem(field) as HTMLInputElement | HTMLTextAreaElement | null;
+        if (input && values[field]) input.value = values[field];
+      });
+      setSelectedServices(values.services || []);
+      setContactMethod(values.contactMethod || 'email');
+      setReattachNotice(saved.attachmentCount > 0);
+    } else if (selectedService) {
+      setSelectedServices([mapServiceNameToValue(selectedService)]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const readDraftValues = (): ContactDraft => {
+    const formData = formRef.current ? new FormData(formRef.current) : new FormData();
+    const text = (field: string) => (formData.get(field) as string) || '';
+    return {
+      name: text('name'),
+      phone: text('phone'),
+      email: text('email'),
+      address: text('address'),
+      message: text('message'),
+      services: selectedServices,
+      contactMethod,
+    };
+  };
+
+  const saveDraft = () => draft.save(readDraftValues(), attachments.length);
+
+  // Services, contact method and attachments live in React state, so save when they change too.
+  useEffect(() => {
+    saveDraft();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedServices, contactMethod, attachments.length]);
 
   // Handle service checkbox changes
   const handleServiceChange = (service: string, checked: boolean) => {
@@ -154,32 +216,13 @@ export default function ContactForm() {
     return Object.keys(errors).length === 0;
   };
 
-  // Handle file attachment
+  // Handle file attachment — photos are shrunk in the browser to fit the upload limit
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
-    const validFiles = files.filter(file => {
-      // Allow common image formats and PDFs
-      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'application/pdf'];
-      const maxSize = 10 * 1024 * 1024; // 10MB limit
-      
-      if (!allowedTypes.includes(file.type)) {
-        alert(`File ${file.name} is not a supported format. Please use JPG, PNG, GIF, WebP, or PDF.`);
-        return false;
-      }
-      
-      if (file.size > maxSize) {
-        alert(`File ${file.name} is too large. Please use files under 10MB.`);
-        return false;
-      }
-      
-      return true;
-    });
-    
-    setAttachments(prev => [...prev, ...validFiles]);
-  };
-
-  const removeAttachment = (index: number) => {
-    setAttachments(prev => prev.filter((_, i) => i !== index));
+    // Clear so picking the same file again still fires onChange
+    e.target.value = '';
+    setReattachNotice(false);
+    addFiles(files);
   };
 
 
@@ -211,13 +254,11 @@ export default function ContactForm() {
     }
     
     setIsSubmitting(true);
-    
+
     try {
-      console.log('Starting form submission...');
-      
       // Create FormData for file upload support
       const apiFormData = new FormData();
-      
+
       // Add form fields
       apiFormData.append('name', formData.get('name') as string);
       apiFormData.append('email', formData.get('email') as string);
@@ -228,63 +269,58 @@ export default function ContactForm() {
       apiFormData.append('source', 'contact-page');
       apiFormData.append('formType', 'contact-form');
       apiFormData.append('turnstile-token', turnstileToken);
-      
+
       // Add services
       selectedServices.forEach(service => {
         apiFormData.append('services', service);
       });
-      
+
       // Add attachments
       attachments.forEach(file => {
         apiFormData.append('attachments', file);
       });
-      
-      console.log('Submitting form with', selectedServices.length, 'services and', attachments.length, 'attachments');
-      
-      // Send data to API endpoint
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        body: apiFormData, // Use FormData instead of JSON
-      });
-      
-      const result = await response.json();
-      
-      if (response.ok) {
-        console.log('Form submitted successfully:', result);
+
+      const result = await submitContactForm(apiFormData, reference);
+
+      if (result.ok) {
         setSubmitResult({
           success: true,
-          message: 'Your request has been sent successfully! We will contact you via your preferred method within 24 hours.'
+          message: `Your request has been sent successfully (ref ${result.reference}). We will contact you via your preferred method within 24 hours.`
         });
-        
+
         // Reset form
         form.reset();
         setContactMethod('email');
-        setAttachments([]);
+        clearAttachments();
         setSelectedServices([]);
-        setTurnstileToken('');
-        if (fileInputRef.current) {
-          fileInputRef.current.value = '';
-        }
+        setReference(newSubmissionReference());
+        draft.clear();
       } else {
-        console.error('API error:', result);
+        const values = readDraftValues();
         setSubmitResult({
           success: false,
-          message: result.message || 'Something went wrong. Please try again, or call us at 403-598-9137.'
+          kind: result.kind,
+          message: result.message,
+          summary: buildMessageSummary({
+            Name: values.name,
+            Phone: values.phone,
+            Email: values.email,
+            Address: values.address,
+            Services: values.services,
+            'Preferred contact': values.contactMethod === 'sms' ? 'Text message' : 'Email',
+          }, values.message),
         });
       }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      setSubmitResult({
-        success: false,
-        message: 'Network error — please check your connection and try again, or call us at 403-598-9137.'
-      });
     } finally {
+      // Tokens are single-use — get a fresh one so the next Send works without a reload.
+      setTurnstileToken('');
+      turnstileRef.current?.reset();
       setIsSubmitting(false);
     }
   };
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} method="POST" className="space-y-6">
+    <form ref={formRef} onSubmit={handleSubmit} onInput={saveDraft} method="POST" className="space-y-6">
       {/* Honeypot field - hidden from users */}
       <input
         type="text"
@@ -333,6 +369,7 @@ export default function ContactForm() {
             type="text"
             id="name"
             name="name"
+            autoComplete="name"
             className={`w-full px-3 py-2 border ${validationErrors['name'] ? 'border-red-500 bg-red-50' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-1 focus:ring-primary`}
             required
             data-error={!!validationErrors['name']}
@@ -350,6 +387,8 @@ export default function ContactForm() {
             type="tel"
             id="phone"
             name="phone"
+            autoComplete="tel"
+            inputMode="tel"
             className={`w-full px-3 py-2 border ${validationErrors['phone'] ? 'border-red-500 bg-red-50' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-1 focus:ring-primary`}
             pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
             placeholder="123-456-7890"
@@ -375,6 +414,7 @@ export default function ContactForm() {
           type="email"
           id="email"
           name="email"
+          autoComplete="email"
           className={`w-full px-3 py-2 border ${validationErrors['email'] ? 'border-red-500 bg-red-50' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-1 focus:ring-primary`}
           required={contactMethod === 'email'}
           data-error={!!validationErrors['email']}
@@ -395,6 +435,7 @@ export default function ContactForm() {
           type="text"
           id="address"
           name="address"
+          autoComplete="street-address"
           className={`w-full px-3 py-2 border ${validationErrors['address'] ? 'border-red-500 bg-red-50' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-1 focus:ring-primary`}
           placeholder="Street address, city"
           required
@@ -519,7 +560,7 @@ export default function ContactForm() {
               <strong>Upload photos to help us provide accurate estimates</strong>
             </p>
             <p className="text-xs text-gray-500" style={{color: "black"}}>
-              JPG, PNG, GIF, WebP, or PDF files up to 10MB each
+              Photos or PDF files, up to 6. Large photos are resized automatically.
             </p>
             {contactMethod === 'sms' && (
               <p className="text-xs text-amber-600 mt-2">
@@ -539,22 +580,37 @@ export default function ContactForm() {
               variant="outline"
               size="sm"
               onClick={() => fileInputRef.current?.click()}
+              disabled={isProcessing}
             >
-              Choose Files
+              {isProcessing ? 'Optimizing photos…' : 'Choose Files'}
             </Button>
           </div>
         </div>
         
+        {reattachNotice && attachments.length === 0 && (
+          <p className="mt-2 text-sm text-amber-700">
+            We kept your message, but photos can&apos;t be saved — please re-attach them.
+          </p>
+        )}
+
+        {rejected.length > 0 && (
+          <ul className="mt-2 space-y-1 text-sm text-red-600">
+            {rejected.map((item, index) => (
+              <li key={index}><strong>{item.name}:</strong> {item.reason}</li>
+            ))}
+          </ul>
+        )}
+
         {/* Show selected files */}
         {attachments.length > 0 && (
           <div className="mt-3 space-y-2">
             <p className="text-sm font-medium text-gray-700" style={{color: "black"}}>
-              Selected files ({attachments.length}):
+              Selected files ({budgetLabel}):
             </p>
             {attachments.map((file, index) => (
               <div key={index} className="flex items-center justify-between bg-gray-50 p-2 rounded border">
                 <span className="text-sm text-gray-700 truncate" style={{color: "black"}}>
-                  {file.name} ({(file.size / 1024 / 1024).toFixed(1)}MB)
+                  {file.name} ({formatBytes(file.size)})
                 </span>
                 <button
                   type="button"
@@ -572,6 +628,7 @@ export default function ContactForm() {
       {/* Cloudflare Turnstile */}
       <div>
         <CloudflareTurnstile
+          ref={turnstileRef}
           siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAACLMknOrovBOqBYa'}
           onVerify={(token) => {
             setTurnstileToken(token);
@@ -595,9 +652,9 @@ export default function ContactForm() {
           type="submit" 
           size="lg"
           className={`w-full sm:w-auto bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-600 hover:to-blue-500 text-white font-bold transition-colors ${isSubmitting ? 'bg-gray-400' : ''}`}
-          disabled={isSubmitting}
+          disabled={isSubmitting || isProcessing}
         >
-          {isSubmitting ? 'Sending...' : 'Submit Request'}
+          {isSubmitting ? 'Sending...' : isProcessing ? 'Preparing photos...' : 'Submit Request'}
         </Button>
       </div>
       
@@ -622,9 +679,14 @@ export default function ContactForm() {
               </Button>
             </div>
           ) : (
-            <div className="flex items-start">
-              <AlertCircle className="text-red-500 h-6 w-6 mr-3 flex-shrink-0" />
-              <p className="text-gray-700" style={{color: "black"}}>{submitResult.message}</p>
+            <div>
+              <div className="flex items-start">
+                <AlertCircle className="text-red-500 h-6 w-6 mr-3 flex-shrink-0" />
+                <p className="text-gray-700" style={{color: "black"}}>{submitResult.message}</p>
+              </div>
+              {submitResult.kind !== 'verification' && (
+                <FormFailureHelp summary={submitResult.summary} subject="Estimate request from the website" />
+              )}
             </div>
           )}
         </div>

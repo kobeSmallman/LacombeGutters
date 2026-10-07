@@ -1,9 +1,17 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, AlertCircle, Upload, X } from "lucide-react";
-import CloudflareTurnstile from './CloudflareTurnstile';
+import CloudflareTurnstile, { TurnstileHandle } from './CloudflareTurnstile';
+import FormFailureHelp, { buildMessageSummary } from './FormFailureHelp';
+import { useAttachments } from '@/hooks/useAttachments';
+import { useFormDraft } from '@/hooks/useFormDraft';
+import { newSubmissionReference, submitContactForm, SubmitFailureKind } from '@/lib/submitForm';
+
+type SubmitResultState =
+  | { success: true; message: string }
+  | { success: false; message: string; kind: SubmitFailureKind; summary: string };
 
 type JobFormData = {
   name: string;
@@ -14,24 +22,45 @@ type JobFormData = {
   contactMethod: 'email' | 'sms';
 };
 
+const EMPTY_FORM: JobFormData = {
+  name: '',
+  email: '',
+  phone: '',
+  position: '',
+  experience: '',
+  contactMethod: 'email'
+};
+
 export default function JobApplicationForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitResult, setSubmitResult] = useState<{success: boolean; message: string} | null>(null);
+  const [submitResult, setSubmitResult] = useState<SubmitResultState | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
-  const [attachments, setAttachments] = useState<File[]>([]);
+  const { attachments, rejected, isProcessing, add: addFiles, remove: removeAttachment, clear: clearAttachments, budgetLabel } = useAttachments();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [turnstileToken, setTurnstileToken] = useState<string>('');
+  const turnstileRef = useRef<TurnstileHandle>(null);
+  // Same reference across retries of one filled-in form; new one after a success.
+  const [reference, setReference] = useState(newSubmissionReference);
+  const [reattachNotice, setReattachNotice] = useState(false);
+  const draft = useFormDraft<JobFormData>('job-application', ['contactMethod']);
 
-  const [formData, setFormData] = useState<JobFormData>({
-    name: '',
-    email: '',
-    phone: '',
-    position: '',
-    experience: '',
-    contactMethod: 'email'
-  });
-  
+  const [formData, setFormData] = useState<JobFormData>(EMPTY_FORM);
+
+  // Restore an unsent draft (e.g. after a refresh)
+  useEffect(() => {
+    const saved = draft.load();
+    if (saved) {
+      setFormData({ ...EMPTY_FORM, ...saved.values });
+      setReattachNotice(saved.attachmentCount > 0);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    draft.save(formData, attachments.length);
+  }, [draft, formData, attachments.length]);
+
   const handleInputChange = (field: keyof JobFormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     
@@ -103,35 +132,21 @@ export default function JobApplicationForm() {
     return Object.keys(errors).length === 0;
   };
 
-  // Handle file selection
+  // Handle file selection — photos are shrunk in the browser to fit the upload limit
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
-    const validFiles = files.filter(file => {
-      const isValidType = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'].includes(file.type);
-      const isValidSize = file.size <= 10 * 1024 * 1024; // 10MB
-      return isValidType && isValidSize;
-    });
-    setAttachments(prev => [...prev, ...validFiles]);
-  };
-
-  // Remove attachment
-  const removeAttachment = (index: number) => {
-    setAttachments(prev => prev.filter((_, i) => i !== index));
+    // Clear so picking the same file again still fires onChange
+    e.target.value = '';
+    setReattachNotice(false);
+    addFiles(files);
   };
 
   // Handle drag and drop
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
-    const files = Array.from(e.dataTransfer.files);
-    const validFiles = files.filter(file => {
-      const isValidType = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'].includes(file.type);
-      const isValidSize = file.size <= 10 * 1024 * 1024; // 10MB
-      return isValidType && isValidSize;
-    });
-    setAttachments(prev => [...prev, ...validFiles]);
+    setReattachNotice(false);
+    addFiles(e.dataTransfer.files);
   };
-
-
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -153,8 +168,6 @@ export default function JobApplicationForm() {
     setIsSubmitting(true);
     
     try {
-      console.log('Starting job application submission...');
-      
       // Create FormData to handle file uploads
       const apiFormData = new FormData();
       
@@ -170,42 +183,41 @@ export default function JobApplicationForm() {
         apiFormData.append('attachments', file);
       });
       
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        body: apiFormData,
-      });
-      
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
+      const result = await submitContactForm(apiFormData, reference);
+
+      if (result.ok) {
+        // Show success message
+        setSubmitResult({
+          success: true,
+          message: `Thank you for your application (ref ${result.reference})! We have received your submission and will respond ASAP, usually within 24 hours.`
+        });
+
+        // Reset form
+        setFormData(EMPTY_FORM);
+        clearAttachments();
+        setReference(newSubmissionReference());
+        draft.clear();
+
+        if (formRef.current) {
+          formRef.current.reset();
+        }
+      } else {
+        setSubmitResult({
+          success: false,
+          kind: result.kind,
+          message: result.message,
+          summary: buildMessageSummary({
+            Name: formData.name,
+            Phone: formData.phone,
+            Email: formData.email,
+            Position: formData.position,
+          }, formData.experience),
+        });
       }
-      
-      // Show success message
-      setSubmitResult({
-        success: true,
-        message: 'Thank you for your application! We have received your submission and will respond ASAP, usually within 24 hours.'
-      });
-      
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        position: '',
-        experience: '',
-        contactMethod: 'email'
-      });
-      
-      if (formRef.current) {
-        formRef.current.reset();
-      }
-      
-    } catch (error) {
-      console.error('Error submitting application:', error);
-      setSubmitResult({
-        success: false,
-        message: 'There was a problem submitting your application. Please try again or contact us directly.'
-      });
     } finally {
+      // Tokens are single-use — get a fresh one so the next Send works without a reload.
+      setTurnstileToken('');
+      turnstileRef.current?.reset();
       setIsSubmitting(false);
     }
   };
@@ -217,13 +229,8 @@ export default function JobApplicationForm() {
           Join Our Team
         </h2>
         
-        {submitResult ? (
-          <div className={`p-6 rounded-md mb-4 flex flex-col items-center ${
-            submitResult.success 
-              ? 'bg-green-50 border border-green-200' 
-              : 'bg-red-50 border border-red-200'
-          }`}>
-            {submitResult.success ? (
+        {submitResult?.success ? (
+          <div className="p-6 rounded-md mb-4 flex flex-col items-center bg-green-50 border border-green-200">
               <div className="flex flex-col items-center w-full">
                 <CheckCircle2 className="h-12 w-12 text-green-500 mb-4" />
                 <p className="text-lg font-medium text-center mb-4" style={{color: "black"}}>{submitResult.message}</p>
@@ -240,19 +247,6 @@ export default function JobApplicationForm() {
                   Submit Another Application
                 </Button>
               </div>
-            ) : (
-              <div className="flex flex-col items-center">
-                <AlertCircle className="h-12 w-12 text-red-500 mb-4" />
-                <p className="text-lg font-medium text-center" style={{color: "black"}}>{submitResult.message}</p>
-                <Button 
-                  className="mt-6"
-                  onClick={() => setSubmitResult(null)}
-                  variant="outline"
-                >
-                  Try Again
-                </Button>
-              </div>
-            )}
           </div>
         ) : (
           <form ref={formRef} onSubmit={handleSubmit}>
@@ -264,9 +258,11 @@ export default function JobApplicationForm() {
                 <label htmlFor="name" className="block text-sm font-medium" style={{color: "black"}}>
                   Full Name <span className="text-red-600">*</span>
                 </label>
-                <input 
-                  type="text" 
-                  id="name" 
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  autoComplete="name"
                   value={formData.name}
                   onChange={(e) => handleInputChange('name', e.target.value)}
                   className={`mt-1 block w-full rounded-md shadow-sm p-2.5 border ${validationErrors['name'] ? 'border-red-500' : 'border-gray-300'}`}
@@ -284,9 +280,11 @@ export default function JobApplicationForm() {
                 <label htmlFor="email" className="block text-sm font-medium" style={{color: "black"}}>
                   Email <span className="text-red-600">*</span>
                 </label>
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   id="email"
+                  name="email"
+                  autoComplete="email"
                   value={formData.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
                   className={`mt-1 block w-full rounded-md shadow-sm p-2.5 border ${validationErrors['email'] ? 'border-red-500' : 'border-gray-300'}`}
@@ -304,9 +302,12 @@ export default function JobApplicationForm() {
                 <label htmlFor="phone" className="block text-sm font-medium" style={{color: "black"}}>
                   Phone Number <span className="text-red-600">*</span>
                 </label>
-                <input 
-                  type="tel" 
+                <input
+                  type="tel"
                   id="phone"
+                  name="phone"
+                  autoComplete="tel"
+                  inputMode="tel"
                   value={formData.phone}
                   onChange={handlePhoneInput}
                   className={`mt-1 block w-full rounded-md shadow-sm p-2.5 border ${validationErrors['phone'] ? 'border-red-500' : 'border-gray-300'}`}
@@ -388,7 +389,7 @@ export default function JobApplicationForm() {
                     </button>
                   </p>
                   <p className="text-xs text-gray-500" style={{color: "black"}}>
-                    Accepted formats: PDF, JPG, PNG, WebP (max 10MB each)
+                    PDF or photos, up to 6 files. Large photos are resized automatically.
                   </p>
                   {formData.contactMethod === 'sms' && (
                     <p className="text-xs text-amber-600 mt-2">
@@ -399,16 +400,34 @@ export default function JobApplicationForm() {
                     ref={fileInputRef}
                     type="file"
                     multiple
-                    accept=".pdf,.jpg,.jpeg,.png,.webp"
+                    accept="image/*,.pdf"
                     onChange={handleFileSelect}
                     className="hidden"
                   />
                 </div>
                 
+                {isProcessing && (
+                  <p className="mt-2 text-sm text-gray-600">Optimizing photos…</p>
+                )}
+
+                {reattachNotice && attachments.length === 0 && (
+                  <p className="mt-2 text-sm text-amber-700">
+                    We kept your application, but files can&apos;t be saved — please re-attach them.
+                  </p>
+                )}
+
+                {rejected.length > 0 && (
+                  <ul className="mt-2 space-y-1 text-sm text-red-600">
+                    {rejected.map((item, index) => (
+                      <li key={index}><strong>{item.name}:</strong> {item.reason}</li>
+                    ))}
+                  </ul>
+                )}
+
                 {/* Display selected files */}
                 {attachments.length > 0 && (
                   <div className="mt-4">
-                    <p className="text-sm font-medium mb-2" style={{color: "black"}}>Selected Files:</p>
+                    <p className="text-sm font-medium mb-2" style={{color: "black"}}>Selected Files ({budgetLabel}):</p>
                     <div className="space-y-2">
                       {attachments.map((file, index) => (
                         <div key={index} className="flex items-center justify-between p-2 bg-gray-50 rounded border">
@@ -430,6 +449,7 @@ export default function JobApplicationForm() {
             
             <div className="mb-4">
               <CloudflareTurnstile
+                ref={turnstileRef}
                 siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAACLMknOrovBOqBYa'}
                 onVerify={(token) => setTurnstileToken(token)}
                 onError={() => setTurnstileToken('')}
@@ -443,11 +463,23 @@ export default function JobApplicationForm() {
             <Button
               type="submit"
               className="w-full bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-600 hover:to-blue-500 text-white font-bold"
-              disabled={isSubmitting}
+              disabled={isSubmitting || isProcessing}
             >
-              {isSubmitting ? 'Sending...' : 'Submit Application'}
+              {isSubmitting ? 'Sending...' : isProcessing ? 'Preparing files...' : 'Submit Application'}
             </Button>
-          </form>
+
+            {submitResult && !submitResult.success && (
+              <div className="mt-4 p-4 rounded-md bg-red-50 border border-red-200">
+                <div className="flex items-start">
+                  <AlertCircle className="text-red-500 h-6 w-6 mr-3 flex-shrink-0" />
+                  <p className="text-gray-700" style={{color: "black"}}>{submitResult.message}</p>
+                </div>
+                {submitResult.kind !== 'verification' && (
+                  <FormFailureHelp summary={submitResult.summary} subject="Job application from the website" />
+                )}
+              </div>
+            )}
+</form>
         )}
         
 

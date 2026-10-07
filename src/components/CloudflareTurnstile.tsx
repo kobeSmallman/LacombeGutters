@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useEffect, useRef } from 'react';
+import { forwardRef, memo, useEffect, useImperativeHandle, useRef } from 'react';
 
 interface TurnstileProps {
   siteKey: string;
@@ -11,10 +11,18 @@ interface TurnstileProps {
   size?: 'normal' | 'compact';
 }
 
+// Tokens are single-use: once the server has checked one, a retry needs a fresh
+// token. reset() gets one in place without reloading the page (which would lose
+// attached photos).
+export interface TurnstileHandle {
+  reset: () => void;
+}
+
 declare global {
   interface Window {
     turnstile: {
       render: (element: HTMLElement, options: Record<string, unknown>) => string;
+      reset: (widgetId?: string) => void;
       remove: (widgetId: string) => void;
     };
     onloadTurnstileCallback?: () => void;
@@ -22,25 +30,36 @@ declare global {
 }
 
 // Memoize to prevent re-renders
-const CloudflareTurnstile = memo(({
+const CloudflareTurnstile = memo(forwardRef<TurnstileHandle, TurnstileProps>(({
   siteKey,
   onVerify,
   onError,
   onExpire,
   theme = 'auto',
   size = 'normal'
-}: TurnstileProps) => {
+}, ref) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
   const renderedRef = useRef(false);
 
+  useImperativeHandle(ref, () => ({
+    reset: () => {
+      if (!window.turnstile || !widgetIdRef.current) return;
+      try {
+        window.turnstile.reset(widgetIdRef.current);
+      } catch (error) {
+        console.error('Turnstile reset error:', error);
+      }
+    },
+  }), []);
+
   useEffect(() => {
     // Only run once
     if (renderedRef.current) return;
-    
+
     const renderWidget = () => {
       if (!containerRef.current || widgetIdRef.current) return;
-      
+
       try {
         widgetIdRef.current = window.turnstile.render(containerRef.current, {
           sitekey: siteKey,
@@ -75,7 +94,7 @@ const CloudflareTurnstile = memo(({
   }, []); // Empty deps - only run once
 
   return <div ref={containerRef} />;
-}, 
+}),
 // Custom comparison - never re-render
 () => true
 );

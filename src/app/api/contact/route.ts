@@ -1,7 +1,13 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, after } from 'next/server';
 import { sendEmail, sendSMS, sendClientConfirmation, twilioClient, ContactRequest } from '@/lib/contactNotifications';
 
 export const runtime = 'nodejs';
+// Safety net only — Turnstile (8s) and SendGrid (15s) time out well before this.
+export const maxDuration = 30;
+
+function newReference(): string {
+  return crypto.randomUUID().replace(/-/g, '').slice(0, 6).toUpperCase();
+}
 
 function getClientIP(request: Request): string {
   const forwarded = request.headers.get('x-forwarded-for');
@@ -46,12 +52,13 @@ export async function POST(request: Request) {
             response: turnstileToken,
             remoteip: getClientIP(request),
           }),
+          signal: AbortSignal.timeout(8000),
         });
         const turnstileResult = await turnstileResponse.json();
         if (!turnstileResult.success) {
           console.warn('Turnstile verification failed:', turnstileResult['error-codes']);
           return NextResponse.json(
-            { success: false, message: 'Security verification failed. Please try again.' },
+            { success: false, code: 'turnstile', message: 'Security verification failed. Please try again.' },
             { status: 400 }
           );
         }
@@ -59,8 +66,8 @@ export async function POST(request: Request) {
       } catch (error) {
         console.error('Error verifying Turnstile token:', error);
         return NextResponse.json(
-          { success: false, message: 'Security verification error. Please try again.' },
-          { status: 500 }
+          { success: false, code: 'turnstile', message: 'Security verification error. Please try again.' },
+          { status: 503 }
         );
       }
     } else if (process.env.NODE_ENV === 'production') {
@@ -69,6 +76,10 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    // The client sends the same reference on retries so duplicates are recognisable.
+    const submittedReference = (formData.get('reference') as string || '').trim().toUpperCase();
+    const reference = /^[A-Z0-9]{4,12}$/.test(submittedReference) ? submittedReference : newReference();
 
     // Parse fields
     const data: ContactRequest = {
@@ -83,6 +94,7 @@ export async function POST(request: Request) {
       source: formData.get('source') as string || 'contact-form',
       formType: formData.get('formType') as string || 'contact',
       services: formData.getAll('services') as string[],
+      reference,
     };
 
     // Handle file attachments
@@ -166,22 +178,26 @@ export async function POST(request: Request) {
     // Send business email — fail the request if this fails
     await sendEmail(data);
 
-    // Send SMS and client confirmation — non-critical, log failures only
-    const secondary: Promise<void>[] = [];
-    if (data.contactMethod === 'sms' && twilioClient) {
-      secondary.push(sendSMS(data));
-    }
-    secondary.push(sendClientConfirmation(data));
-
-    const results = await Promise.allSettled(secondary);
-    results.forEach((result, i) => {
-      if (result.status === 'rejected') {
-        console.error(`❌ Secondary notification ${i} failed:`, result.reason);
+    // The lead has reached us — answer the customer now. SMS and the customer's
+    // confirmation are non-critical and run after the response is sent, so a slow
+    // Twilio/SendGrid call can't turn a successful submission into an apparent failure.
+    after(async () => {
+      const secondary: Promise<void>[] = [];
+      if (data.contactMethod === 'sms' && twilioClient) {
+        secondary.push(sendSMS(data));
       }
+      secondary.push(sendClientConfirmation(data));
+
+      const results = await Promise.allSettled(secondary);
+      results.forEach((result, i) => {
+        if (result.status === 'rejected') {
+          console.error(`❌ Secondary notification ${i} failed (ref ${reference}):`, result.reason);
+        }
+      });
     });
 
     return NextResponse.json(
-      { success: true, message: "Thank you! Your request has been submitted. We'll contact you soon via your preferred method." },
+      { success: true, reference, message: "Thank you! Your request has been submitted. We'll contact you soon via your preferred method." },
       { status: 200 }
     );
 
