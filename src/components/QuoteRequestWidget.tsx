@@ -223,11 +223,7 @@ const QuoteRequestWidget: React.FC = () => {
         clearAttachments();
         setReference(newSubmissionReference());
         draft.clear();
-        // Longer timeout to give user time to read success message
-        setTimeout(() => {
-          setShowSuccess(false);
-          setIsOpen(false);
-        }, 5000);
+        // Stays open until the customer closes it, so they can note the reference.
       } else {
         setShowError(true);
         setErrorMessage(result.message);
@@ -358,6 +354,17 @@ const QuoteRequestWidget: React.FC = () => {
                         {successReference && (
                           <p className="text-sm text-gray-500">Reference: {successReference}</p>
                         )}
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="mt-2"
+                          onClick={() => {
+                            setShowSuccess(false);
+                            setIsOpen(false);
+                          }}
+                        >
+                          Close
+                        </Button>
                       </div>
                     </div>
                   ) : (
